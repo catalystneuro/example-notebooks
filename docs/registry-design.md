@@ -1,66 +1,119 @@
-# Notebook Registry — design proposal
+# Notebook Registry: design proposal
 
-Status: draft. Starting point: `dandi/example-notebooks` (77 notebooks, uv/Colab
-lock tooling, per-group Docker images, weekly sweep, PR previews,
-`notebooks.json` index).
+Status: draft. Starting point: `dandi/example-notebooks`. It has 77 notebooks,
+uv/Colab lock tooling, per-group Docker images, a weekly test sweep, PR
+previews, and a `notebooks.json` index.
 
 ## Goal
 
 Turn a single-archive example repo into a general **registry of reproducible
-notebooks**. It should not be tied to DANDI. A notebook entry can be linked to
-papers, datasets in any archive (DANDI, OpenNeuro, Zenodo, Figshare, EMBER,
-IBL, ...), journals, courses, or projects. Every entry is tested, locked,
-containerized, and runnable in Colab. Every entry has named owners who
-maintain it.
+notebooks**. The registry is not tied to DANDI. An entry can be linked to
+papers, to datasets in any archive (DANDI, OpenNeuro, Zenodo, Figshare, EMBER,
+IBL, ...), and to journals, courses, or projects. Every entry is tested, locked,
+containerized, and runnable in Colab. Every entry has named maintainers who own
+it.
 
-## Submission model: follow conda-forge
+People submit either through a pull request or through a web app that needs no
+code. The web app takes one or more notebooks, plus an optional README and an
+optional `requirements.in`.
 
-conda-forge scales to about 25k community-maintained packages with a small
-core team. Its process fits this problem well:
+## Model: one registry repo, with maintainer ownership
 
-| conda-forge | Notebook registry |
-|---|---|
-| `staged-recipes` repo, one PR per new recipe | `staged-notebooks` repo, one PR per new entry |
-| `meta.yaml` with `extra.recipe-maintainers` | `notebook.yaml` with `maintainers` |
-| On merge, the bot creates `<pkg>-feedstock` and gives the maintainers commit rights | On merge, the bot creates `<entry>-feedstock` and gives the maintainers commit rights |
-| `conda-smithy` rerenders shared CI into each feedstock | `notebook-smithy` rerenders shared CI (these workflows) into each feedstock |
-| `regro-cf-autotick-bot` opens version-bump PRs | `relock-bot` opens re-lock PRs (Colab snapshot drift, weekly failures) |
-| Maintainers merge their own feedstock PRs | Maintainers merge their own feedstock PRs, with no core review after acceptance |
-| `conda-forge.org` package index | Registry website + `registry.json` |
+The registry is **one repository**. It follows [bioconda](https://github.com/bioconda/bioconda-recipes)
+(about 10k recipes in one repo, run by a small core team) and nixpkgs (about
+100k packages, where each package's maintainers merge their own changes through
+a bot). It also borrows one idea from the [Julia General registry](https://github.com/JuliaRegistries/General):
+an entry can point to code that lives in the author's own repository.
 
-The key property is that **ownership lives in the feedstock**. Maintainers
-control their own repo. The core team reviews each entry once, at intake.
-Maintenance is spread across owners, and the bot does the routine work.
+Ideas taken from these projects:
 
-### Repos (new GitHub org, e.g. `notebook-registry`)
+- **Core review happens once, at intake.** A new entry needs one core-team
+  approval. After that, the entry's maintainers merge their own changes.
+- **Ownership lives in metadata.** Each entry's `notebook.yaml` lists its
+  maintainers. A merge bot enforces it, so maintainers need no write access to
+  the repo.
+- **A bot does the routine upkeep.** It re-locks environments when Colab's
+  runtime drifts and reports weekly test failures to the entry's maintainers.
+
+### Why not a repo per entry (conda-forge feedstocks)
+
+conda-forge gives every package its own repo because packages change all the
+time: new upstream releases, rebuilds when dependencies change, many platforms,
+and active maintainers. Notebooks are mostly published once and fixed now and
+then. For notebooks, a repo per entry would mean:
+
+- tens to hundreds of repos, each with CI that has to be kept in sync
+- per-repo permissions and container packages
+- a crawler just to rebuild the catalog
+- breaking the DANDI JupyterHub clone, which expects one repo
+- many abandoned repos, because authors are often not software maintainers
+
+If the registry reaches thousands of entries, or a community wants its own
+governance, entries can be split out into their own repos later. The metadata
+and tooling do not depend on the layout.
+
+## Two kinds of entries
+
+An **entry** is any directory that contains a `notebook.yaml`.
+
+### Hosted entries
+
+The notebooks live in the registry repo. This is what the web app produces,
+and it is how every existing notebook works today.
 
 ```
-staged-notebooks/            # intake: PRs add entries/<name>/
-  entries/<name>/
-    notebook.yaml            # metadata + maintainers (schema below)
-    README.md                # optional; generated from notebook.yaml if absent
-    requirements.in          # direct deps (or environment.yml, see Environments)
-    *.ipynb
-    helpers/…                # optional colocated .py
-<name>-feedstock/            # one per accepted entry, maintainers have write
-  same layout as above, plus rendered .github/workflows/*
-notebook-smithy/             # the tooling: today's .github/scripts, packaged
-  lock, run, build-image, lint, render-feedstock, reusable workflows
-registry/                    # aggregator: crawls feedstocks → registry.json + site
-registry-web/                # submission/dashboard app (below)
+entries/<slug>/
+  notebook.yaml          # metadata + maintainers (schema below)
+  README.md              # optional; rendered from notebook.yaml if absent
+  requirements.in        # direct dependencies
+  requirements.lock.txt  # generated full pin set (image input, reviewable diff)
+  *.ipynb                # with generated Colab bootstrap cells
+  helpers/…              # optional colocated .py files
 ```
 
-`dandi/example-notebooks` stays as a DANDI-branded view: a filtered catalog of
-entries with `dandi:` resources. It stops being where notebooks are stored.
+Existing directories (`000055/BruntonLab/peterson21/`, `tutorials/…`) **stay
+where they are** and get a `notebook.yaml`. That way no GitHub, Colab, or
+paper link breaks. Only new entries go under `entries/`.
+
+### External entries
+
+The code stays in the author's repository. The registry keeps only metadata
+plus the environment lock:
+
+```yaml
+source:
+  repo: https://github.com/somelab/paper-code
+  ref: 3f2a9c1e…            # full commit SHA; tags are resolved to SHAs at intake
+  notebooks: [analysis/fig2.ipynb, analysis/fig3.ipynb]
+```
+
+```
+entries/<slug>/
+  notebook.yaml
+  requirements.in        # only if upstream has none; otherwise read from source
+  requirements.lock.txt
+```
+
+- CI checks out `repo@ref` and tests the listed notebooks with the same
+  harness used for hosted entries.
+- The registry can't add a Colab install cell to someone else's notebook.
+  Instead, CI publishes a **prepared copy**: the notebook plus a Colab badge
+  and install cell, written to a `dist` branch. Colab and the catalog link to
+  that copy, and the catalog also links to the upstream source.
+- To publish a new version, a maintainer bumps `ref` in a PR, which the merge
+  bot can merge. An optional GitHub Action in the upstream repo can open that
+  PR automatically, similar to Julia's Registrator.
+- The lint step checks that the upstream license allows redistribution. The
+  prepared copy and the Docker image both redistribute the author's code.
 
 ## Metadata: `notebook.yaml`
 
 ```yaml
 schema_version: 1
-name: peterson21-brunton-ecog          # registry-unique slug → feedstock name
+name: peterson21-brunton-ecog          # registry-unique slug
 title: Behavioral and neural variability of naturalistic arm movements
 description: Reproduces figures 2–4 of Peterson et al. 2021.
-maintainers:                           # GitHub handles; ORCID optional
+maintainers:                           # GitHub handles; ORCID optional, used for attribution/search
   - github: stepeter
     orcid: 0000-0002-xxxx-xxxx
 license: BSD-3-Clause
@@ -68,144 +121,205 @@ notebooks:
   - path: figure2.ipynb
     title: Movement event detection
     runtime_minutes: 4                 # CI timeout hint
-    colab: true
     test: true                         # replaces notebook-test-exclusions.txt
-    test_skip_reason: null
-related:                               # typed, prefix-resolved identifiers
-  - id: dandi:000055                   # optional version: dandi:000055/0.220127.0436
-    relation: uses_data                # uses_data | reproduces | describes | tutorial_for | derived_from
+    colab: true                        # replaces notebook-colab-exclusions.txt
+    image: true                        # replaces notebook-image-inclusions.txt
+    skip_reason: null                  # required when test or colab is false
+related:
+  - id: dandi:000055                   # optionally versioned: dandi:000055/0.220127.0436
+    relation: uses_data
   - id: doi:10.1523/ENEURO.0007-21.2021
     relation: reproduces
   - id: rrid:SCR_017571
     relation: uses_software
 keywords: [ecog, naturalistic-behavior]
-collections: [dandi, cosyne-2023]      # curated groupings (conferences, journals, courses)
+collections: [dandi, cosyne-2023]      # curated groupings: conferences, journals, courses
 ```
 
-- **Identifiers**: use [identifiers.org](https://identifiers.org)/Bioregistry
-  prefixes: `dandi:`, `doi:`, `openneuro:`, `zenodo:`, `rrid:`, `arxiv:`,
-  `pmid:`, and others. One resolver plugin per prefix supplies the title,
-  URL, and license for the index. DANDI's plugin reuses
-  `get_dandiset_metadata()` from `collect_and_render.py`. Supporting a new
-  archive then only needs a small plugin, with no schema change.
-- **Relations** map to DataCite `relationType` (`References`, `IsSupplementTo`,
-  …). This allows a later mint of a DOI per entry version (for example via
-  Zenodo), with correct links back to papers and datasets.
-- **Per-notebook flags replace the three `.github/*.txt` lists**
-  (`test`/`colab`/image inclusion). Each notebook's flags live in its own
-  entry.
-- A JSON Schema lives in `notebook-smithy`. It is used by the linter, the web
-  form, and the index.
+- **Identifiers** use [Bioregistry](https://bioregistry.io)/identifiers.org
+  prefixes, such as `dandi:`, `doi:`, `openneuro:`, `zenodo:`, `rrid:`,
+  `arxiv:`, and `pmid:`. Each prefix has a small **resolver plugin** that
+  returns a title, URL, and license for the catalog, and checks that the ID
+  exists at lint time. The DANDI plugin reuses `get_dandiset_metadata()` from
+  `collect_and_render.py`. Supporting a new archive means writing a plugin;
+  the schema does not change.
+- **Relations** (`uses_data`, `reproduces`, `describes`, `tutorial_for`,
+  `derived_from`, `uses_software`) map onto DataCite `relationType`. That
+  keeps the option open to mint a DOI for each entry version later, with
+  correct links to papers and datasets.
+- **Per-notebook flags replace the three `.github/*.txt` lists.** Each entry
+  carries its own settings and the reasons for them.
+- The JSON Schema is shared by the linter, the web form, and the catalog.
+
+## Ownership and the merge bot
+
+GitHub's native `CODEOWNERS` doesn't fit here. It only honors users who have
+write access to the repo. Giving hundreds of notebook authors write access to
+a shared repo would also let them approve changes to each other's entries. So
+ownership is enforced by a **merge bot**, modeled on the
+[nixpkgs merge bot](https://github.com/NixOS/nixpkgs-merge-bot).
+
+A maintainer comments `@registry-bot merge` on a PR. The bot merges it when all
+of these hold:
+
+1. Every changed file is inside entries where the commenter is a maintainer.
+   The bot reads the maintainer list from **`main`**, not from the PR, so a PR
+   can't add its own author as a maintainer and then merge itself.
+2. The PR does not create a new entry. New entries need core review.
+3. It does not touch tooling, workflows, or shared config. Those also need core
+   review.
+4. All required checks pass: lint, test of the changed notebooks, and the
+   image build dry run.
+
+Other rules:
+
+- **Adding a maintainer** needs approval from an existing maintainer. A
+  maintainer can remove themselves at any time.
+- **Notifications.** When a PR touches an entry, the bot @-mentions that
+  entry's maintainers and requests their review. This covers the notification
+  part that CODEOWNERS would otherwise provide.
+- **Relock PRs** opened by the bot on an entry can be merged by any of its
+  maintainers the same way. The core team can also batch-merge relock PRs that
+  pass CI.
 
 ## Environments
 
-The current pipeline is: `requirements.in` → `uv pip compile` constrained by
-the Colab snapshot → pinned install cell → Docker image. Keep that as the
-default, because it is what makes the Colab button work. Add:
+The current pipeline stays the default, because it is what makes the Colab
+button work:
 
-- **`environment.yml` (conda) as an option**, locked with `pixi`/`conda-lock`
-  to `conda-lock.yml`. It is for notebooks that need non-PyPI dependencies
-  (MATLAB runtime, CUDA, R, compiled neuro tools). The Docker image builds from
-  the conda lock. The Colab button is only shown when a pip-only lock also
-  resolves, or it goes through `condacolab`.
-- **Locks live next to the notebook, not only inside the install cell.** Add
-  `requirements.lock.txt`, which is the image input and makes diffs readable.
-  The install cell is still regenerated from it.
-- The relock-bot runs `refresh_colab_snapshot.py --relock` for each feedstock
-  and opens PRs. Maintainers merge them after CI passes.
-- Images publish to `ghcr.io/notebook-registry/<name>:{latest,YYYY-MM-DD,sha-,hash-}`
-  (same tag scheme as today).
+`requirements.in` → `uv pip compile` (constrained by the Colab snapshot) →
+pinned install cell + `requirements.lock.txt` → Docker image.
 
-## Web interface (`registry-web`)
+- `requirements.lock.txt` is new. It is committed next to the notebooks, so
+  lock diffs can be reviewed and the image build has a single input. The
+  install cell is still generated from it.
+- The relock bot runs `refresh_colab_snapshot.py --relock` and opens one PR
+  per entry. Today it opens one PR for the whole repo. Splitting it up lets
+  each entry's maintainers merge their own relock.
+- **Later:** optional `environment.yml`, locked with pixi or conda-lock, for
+  notebooks that need non-PyPI dependencies (R, CUDA, compiled tools). Those
+  entries get a Docker image, but a Colab button only when a pip lock also
+  resolves.
+- Images are published as `ghcr.io/<org>/notebooks/<slug>` with the current
+  tag scheme (`latest`, `YYYY-MM-DD`, `sha-…`, `hash-…`).
 
-The web app is a front end over GitHub. It is not a second source of truth.
-Everything it does becomes a commit or a PR, so review, history, CI, and
-ownership keep working the same way.
+## CI
 
-**Accounts**: sign in with GitHub, which is required because ownership means
-GitHub commit rights. Users can link an ORCID for attribution and for
-"my notebooks" search. The app is a **GitHub App** installed on the org, and
-it opens PRs on behalf of users.
+Almost everything carries over. The changes:
 
-**Flows**
-
-1. *Submit* (no code): drag in one or more `.ipynb`, plus an optional
-   `README.md` and `requirements.in`/`environment.yml`. A form collects
-   title, description, related resources, co-maintainers, and license.
-   Related resources autocomplete from the resolver plugins: paste a DOI or
-   a DANDI URL and the app resolves it.
-   - If there is no `requirements.in`, the app infers direct dependencies
-     from the imports (`backfill_requirements.py` already does this) and
-     shows them for confirmation.
-   - Before the PR, the app runs static checks in the browser or backend:
-     nbformat, headless gotchas (`fig.show()`, `input()`, local paths),
-     notebook size, and output stripping.
-   - The app opens a PR to `staged-notebooks` authored by the GitHub App, with
-     `Co-authored-by` set to the user. The existing CI runs, and the
-     PR-preview checklist shows up on the user's dashboard as well as on
-     GitHub.
-2. *Dashboard*: entries where the user is a maintainer (read from
-   `notebook.yaml` across feedstocks), with CI status, weekly-sweep status,
-   image tags, Colab link, open bot PRs, and a one-click "merge relock PR".
-3. *Update*: upload a new notebook version or edit metadata. The app opens a
-   PR on the feedstock, which the maintainer can merge from the dashboard.
-4. *Browse/search*: faceted by related resource, archive, collection,
-   keyword, and status. It is backed by `registry.json`, so the site can be
-   static plus a small API.
-
-**Stack** (suggested): FastAPI backend (GitHub App + OAuth, static checks,
-upload staging in S3/R2), a small Postgres cache of `registry.json` for
-search and dashboards (rebuildable from GitHub at any time), and a
-React/Next or SvelteKit front end. The catalog pages can also be pre-rendered
-statically.
-
-## CI (moved into `notebook-smithy`, largely unchanged)
-
-| Existing | Becomes |
+| Existing | Change |
 |---|---|
-| `lock_notebook.py`, `run_notebook.py`, `build_notebook_image.py`, `pr_preview.py` | `notebook-smithy` package (`pip install notebook-smithy`) |
-| `test-changed-notebooks.yml`, `pr_preview.yml`, `deploy-executed-notebooks.yml` | reusable workflows called from staged-notebooks + each feedstock |
-| `build-notebook-images.yml` | reusable workflow; one image per feedstock (or per pin-group within it) |
-| `test-all-notebooks-weekly.yml` | central sweep across all feedstocks. It opens issues **on the feedstock** and pings maintainers, and marks the entry `failing` in the index after N weeks |
-| `index_workflow.yml` + `collect_and_render.py` | `registry` crawler; DANDI-specific parts become the `dandi:` resolver plugin |
-| exclusion `.txt` files | per-notebook flags in `notebook.yaml` |
-| new | `lint`: schema validation, identifier resolution, headless checks, license present, maintainers exist |
-| new | `render-feedstock`: create repo, set team permissions, render workflows (the conda-smithy role) |
+| `lock_notebook.py`, `run_notebook.py`, `build_notebook_image.py`, `pr_preview.py` | Read settings from `notebook.yaml`; write `requirements.lock.txt`; understand external entries (check out `repo@ref`) |
+| `list_notebooks.py` + exclusion `.txt` files | Discover entries by `notebook.yaml`; use the per-notebook flags |
+| `test-changed-notebooks.yml`, PR preview | Also triggered by `notebook.yaml` changes, including a bumped `ref` on an external entry |
+| `test-all-notebooks-weekly.yml` | Split into shards to stay under the 256-job matrix limit. Open **one issue per failing entry**, labeled with the entry and mentioning its maintainers, instead of one issue for everything |
+| `index_workflow.yml` + `collect_and_render.py` | Generate `registry.json` from all `notebook.yaml` files. DANDI-specific code becomes the `dandi:` resolver plugin. Keep publishing `notebooks.json` for DANDI as a filtered view |
+| new: `lint.yml` | Schema validation, identifier resolution, maintainer handles exist, license present, headless-gotcha checks, output size limits |
+| new: merge bot | See above |
+| new: `dist` branch publish | Prepared copies of external-entry notebooks for Colab |
 
-## Migration of the existing 77 notebooks
+**Entry health.** The weekly sweep sets a status on each entry in
+`registry.json`: `passing`, `failing` (failed for N weeks in a row), or
+`unmaintained` (failing, and maintainers have not responded for M weeks).
+Unmaintained entries are hidden from the default catalog view but never
+deleted.
 
-1. Write `notebook.yaml` for each current directory by script. Maintainers
-   come from git blame / PR authors, `related` from the dandiset ID in the
-   path plus README DOIs, and flags from the three `.txt` lists. Humans review
-   the result.
-2. Create feedstocks in bulk with `render-feedstock`. Invite the original
-   authors as maintainers. Until they accept, DANDI core stays as a fallback
-   maintainer.
-3. Keep `dandi/example-notebooks` working: it becomes a generated view
-   (for JupyterHub clone compatibility). `notebooks.dandiarchive.org/notebooks.json`
-   keeps its shape, populated from `registry.json` filtered to `dandi:`.
+**Security.** Uploaded notebooks are untrusted code. Tests run with a read-only
+token and no secrets. Deploys (previews, images) run in separate
+`workflow_run` jobs, as `deploy-executed-notebooks.yml` already does. The web
+app opens PRs **from a bot-owned fork**, so its PRs are treated like any other
+fork PR and never run with the main repo's secrets.
+
+## Catalog
+
+`registry.json` is built from a single repo checkout, so no crawler is needed.
+It feeds:
+
+- a static catalog site (GitHub Pages), faceted by related resource, archive,
+  collection, keyword, and health status
+- the DANDI view (`notebooks.dandiarchive.org/notebooks.json`, same shape as
+  today) and, later, similar filtered views for other archives or journals
+- embeddable "notebooks that use this dataset" widgets for archive and
+  journal pages (later)
+
+## Web app
+
+The web app is a thin front end over GitHub. **GitHub stays the only source
+of truth.** Every action in the app becomes a PR or a bot command. The app
+keeps no ownership records of its own; at most it caches data from
+`registry.json`.
+
+- **Accounts:** sign in with GitHub. A maintainer is anyone whose GitHub
+  handle is listed in an entry's `notebook.yaml`. Users can link an ORCID
+  for attribution.
+- **Submit:**
+  1. The user uploads one or more `.ipynb` files, plus an optional README and
+     an optional `requirements.in`, or pastes the URL of an external repo and
+     picks notebooks from it.
+  2. A form, generated from the JSON Schema, collects title, description,
+     license, co-maintainers, and related resources. Pasting a DOI or DANDI
+     URL resolves it through the resolver plugins.
+  3. With no `requirements.in`, the app infers direct dependencies from the
+     imports (reusing `backfill_requirements.py`) and asks the user to confirm
+     them.
+  4. The app runs lint checks up front (headless gotchas, local paths,
+     notebook size) so obvious problems show up before CI does.
+  5. The app opens a PR from the bot fork, with a `Co-authored-by` credit for
+     the user. The PR preview checklist and CI status are shown in the app.
+- **Dashboard:** the user's entries, with test and health status, image tags,
+  Colab links, open PRs (including relock PRs), and a **Merge** button that
+  posts the merge-bot command.
+- **Update:** upload a new notebook version, edit metadata, or bump an
+  external `ref`. Each opens a PR that the maintainer merges from the
+  dashboard.
+
+**Stack (suggested):** a FastAPI backend that acts as a GitHub App (OAuth,
+opening PRs, reading check status) and stages uploads in object storage. The
+front end is a small SPA or server-rendered UI, deployed on its own. Browse
+and search can use the static catalog, so the app only handles the signed-in
+flows.
+
+## Migration of the existing notebooks
+
+1. Generate a `notebook.yaml` for each current directory with a script:
+   - **Maintainers:** the original PR authors and git history.
+   - **`related`:** the dandiset ID from the path, plus DOIs found in the
+     README.
+   - **Flags:** from the three `.txt` lists.
+
+   A person reviews the output. Where no author can be identified, the DANDI
+   core team is the maintainer.
+2. Directories stay in place, so no Colab badge, JupyterHub clone, or cited
+   link breaks.
+3. Retire the `.txt` lists once the flags are in place.
+4. If the registry moves to a neutral org, **transfer** the repo rather than
+   creating a new one. GitHub redirects old repo URLs after a transfer. Check
+   that Colab badge links and the JupyterHub clone follow the redirect before
+   relying on it.
 
 ## Phasing
 
-1. **Schema + smithy**: `notebook.yaml` schema, extract scripts into
-   `notebook-smithy`, per-notebook flags, lint. Still runs in this monorepo.
-2. **Staged + feedstocks**: `staged-notebooks`, `render-feedstock`, relock-bot,
-   central weekly sweep, and migration of existing notebooks.
-3. **Registry index + site**: crawler, resolver plugins (dandi, doi,
-   openneuro, zenodo), faceted catalog, DANDI filtered view.
-4. **Web app**: GitHub App, upload → PR, dashboard, metadata editing.
-5. **Later**: conda-lock envs, DOI minting per release, embeddable widgets
-   for archives and journals ("notebooks using this dataset"), and GPU and
-   long-running runners.
+1. **Metadata:** `notebook.yaml` schema, lint, per-notebook flags, generated
+   metadata for existing notebooks, `requirements.lock.txt`, and
+   `registry.json`. The current `notebooks.json` keeps working.
+2. **Ownership:** merge bot, maintainer notifications, per-entry weekly-failure
+   issues, per-entry relock PRs, and health status.
+3. **External entries:** `source:` support in the harness, the `dist` branch,
+   and the optional upstream Action for bumping `ref`.
+4. **Catalog:** resolver plugins (dandi, doi, openneuro, zenodo, rrid), the
+   faceted static site, and the DANDI view.
+5. **Web app:** GitHub App, upload → PR, dashboard, and metadata editing.
+6. **Later:** conda/pixi environments, a DOI per entry release, embeddable
+   widgets, GPU and long-running runners.
 
 ## Open questions
 
-- Org and name, and whether DANDI hosts it or a neutral org does.
-- GitHub-only accounts, or also ORCID-only submitters? ORCID-only would need
-  bot-owned feedstocks with ownership recorded in the app rather than in git
-  permissions.
-- Feedstock-per-entry vs. a single monorepo with CODEOWNERS. Feedstocks
-  scale ownership better. A monorepo is simpler below ~200 entries and keeps
-  the JupyterHub clone trivial.
-- Compute budget for the sweep once non-DANDI entries arrive (GitHub-hosted
-  runners vs. self-hosted).
+- **Name and home:** a neutral org, or start under `dandi` and transfer later.
+- **Accounts:** GitHub-only at first. Accepting submitters with only an ORCID
+  would require the app to store ownership, which breaks the rule that
+  GitHub is the only source of truth. Defer.
+- **Compute:** whether GitHub-hosted runners can handle the weekly sweep once
+  non-DANDI entries arrive, or whether self-hosted or sponsored runners are
+  needed. Also a policy on `runtime_minutes` limits.
+- **Intake criteria:** what core review checks (scope, data availability,
+  license), and who is on the core team.
