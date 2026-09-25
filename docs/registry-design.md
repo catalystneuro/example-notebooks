@@ -376,9 +376,15 @@ It feeds:
   - launch links: Colab, Binder, and `docker run`
   - its related papers and datasets
 - the DANDI view (`notebooks.dandiarchive.org/notebooks.json`, same shape as
-  today) and, later, similar filtered views for other archives or journals
-- embeddable "notebooks that use this dataset" widgets for archive and
-  journal pages (later)
+  today)
+- **a per-resource lookup for archives.** A static JSON file is generated for
+  each referenced resource, such as `api/related/dandi/000055.json` or
+  `api/related/openneuro/ds000246.json`. It lists the entries that reference
+  the resource, with status, launch links, and DOIs. An archive shows
+  "notebooks that use this dataset" on its dataset pages with a single
+  fetch: no API server, no auth, and caching through a CDN.
+- an embeddable widget (one `<script>` tag) that renders that list, for
+  archives that don't want to build their own UI
 
 ## Web app
 
@@ -470,23 +476,34 @@ flows.
    upstream DOIs.
 6. **Web app:** GitHub App, upload → PR, dashboard, curator queue, release
    button, and metadata editing.
-7. **Later:** conda/pixi environments, embeddable widgets, direct DataCite
-   minting, GPU and long-running runners.
+7. **Later:** conda/pixi environments, direct DataCite minting, GPU and
+   long-running runners, and journal workflows.
 
 Phases 4 and 5 are independent of each other, and phase 6 can start as soon
-as phase 2 lands. If journals turn out to be the main audience, move phase 6
-ahead of phase 5.
+as phase 2 lands.
+
+**Year-one audience: DANDI and other data archives.** That sets these
+priorities:
+
+- **Archive integration comes first.** The per-resource lookup and the widget
+  are part of phase 4, not "later". Resolver plugins are built in the order
+  archives are onboarded: dandi, then openneuro, then ember, zenodo, and
+  figshare. doi and rrid are needed from the start for paper and software
+  links.
+- **Each archive gets a collection** whose curators are that archive's staff.
+  DANDI is the pilot. Onboarding a second archive is the milestone that shows
+  the registry works beyond DANDI.
+- **External entries (phase 5) come before the web app (phase 6).** Many
+  dataset authors already keep analysis code in their own repos.
+- **Journal-specific needs are deferred:** ORCID-only maintainers, journal
+  submission workflows, and review-time access for editors.
 
 ## Open questions
 
 - **Name and home:** a neutral org, or start under `dandi` and transfer later.
-- **Main audience for year one:** the DANDI community and similar data
-  archives, or journals. The answer changes the phase order (see Phasing)
-  and how much the web app matters.
-- **Accounts:** maintainers need GitHub, while authors can be credited with
-  only an ORCID. Letting people *maintain* an entry without GitHub would
-  require the app to store ownership, which breaks the rule that GitHub is
-  the only source of truth. Defer unless journals need it.
+- **Second archive:** which archive to onboard after DANDI. It should be
+  one whose staff will curate a collection and put the widget or lookup on
+  their dataset pages.
 - **Compute:** whether GitHub-hosted runners can handle the weekly sweep once
   non-DANDI entries arrive, or whether self-hosted or sponsored runners are
   needed. Also a policy on `runtime_minutes` limits.
