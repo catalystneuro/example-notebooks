@@ -34,7 +34,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from merge_bot import gh_api, gh_paginated  # noqa: E402
-from registry import entry_activity, load_entries  # noqa: E402
+from registry import entry_activity, load_entries, mention  # noqa: E402
 
 REPO = os.environ.get("GITHUB_REPOSITORY", "dandi/example-notebooks")
 FAILING_AFTER = 2
@@ -131,7 +131,7 @@ def failure_lines(o: Outcome) -> list[str]:
 
 
 def new_issue_body(o: Outcome, run_url: str | None) -> str:
-    mentions = " ".join(f"@{m}" for m in o.maintainers) or "(no maintainers listed)"
+    mentions = " ".join(mention(m) for m in o.maintainers) or "(no maintainers listed)"
     return "\n".join([
         MARKER.format(name=o.name),
         f"The scheduled notebook sweep found failures in entry `{o.name}` (`{o.directory}`).",

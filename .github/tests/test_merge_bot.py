@@ -157,3 +157,11 @@ def test_checks_pending_or_failed():
 def test_bot_jobs_do_not_gate_themselves():
     runs = [{"name": "registry-bot-merge", "status": "in_progress", "conclusion": None}]
     assert check_problems(runs, []) == []
+
+
+def test_quiet_mode_never_pings(monkeypatch):
+    import registry
+    monkeypatch.setattr(registry, "QUIET", True)
+    changed = [ChangedFile("001550/PaganLab/a.ipynb", "modified")]
+    body = approvers_comment(evaluate(changed, MAIN, COLLECTIONS, {}))
+    assert "@alice" not in body and "`alice`" in body

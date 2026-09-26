@@ -49,7 +49,7 @@ from pathlib import Path, PurePosixPath
 import yaml
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from registry import ENTRY_FILE, load_collections, load_entries  # noqa: E402
+from registry import ENTRY_FILE, load_collections, load_entries, mention  # noqa: E402
 
 REPO = os.environ.get("GITHUB_REPOSITORY", "dandi/example-notebooks")
 COMMAND = "/merge"
@@ -220,16 +220,18 @@ def check_problems(check_runs: list[dict], statuses: list[dict]) -> list[str]:
     return problems
 
 
-def approvers_comment(ev: Evaluation) -> str:
+def approvers_comment(ev: Evaluation, mention_fn=None) -> str:
     """The sticky comment listing who can approve each part of the PR.
 
     People are @-mentioned (and so notified) only when they can actually act:
     the PR needs no core-team row and touches at most MAX_MENTIONED_ROWS parts.
-    Sweeping PRs (re-locks, tooling) list names without pinging anyone.
+    Sweeping PRs (re-locks, tooling) list names without pinging anyone, and
+    quiet mode (registry.QUIET) never pings.
     """
+    mention_fn = mention_fn or mention
     core_only = any(r.core or not r.approvers for r in ev.requirements)
-    mention = not core_only and len(ev.requirements) <= MAX_MENTIONED_ROWS
-    fmt = (lambda a: f"@{a}") if mention else (lambda a: f"`{a}`")
+    ping = not core_only and len(ev.requirements) <= MAX_MENTIONED_ROWS
+    fmt = mention_fn if ping else (lambda a: f"`{a}`")
     rows = []
     for r in ev.requirements:
         who = CORE if r.core else (", ".join(fmt(a) for a in sorted(r.approvers, key=str.lower))

@@ -25,6 +25,7 @@ import argparse
 import datetime
 import functools
 import json
+import os
 import subprocess
 import sys
 from dataclasses import dataclass
@@ -46,6 +47,17 @@ DEFAULT_BRANCH = "master"
 
 # Directories never searched for entries or notebooks.
 SKIP_DIRS = {".git", "output", "node_modules", ".ipynb_checkpoints", "nwb-cache"}
+# Quiet mode (repository variable REGISTRY_QUIET=true, passed in by the
+# workflows): the bots name people without @-mentioning them, so a fork or
+# staging copy of the registry never notifies real maintainers.
+QUIET = os.environ.get("REGISTRY_QUIET", "").strip().lower() == "true"
+
+
+def mention(login: str) -> str:
+    """`@login`, or a plain `login` in quiet mode."""
+    return f"`{login}`" if QUIET else f"@{login}"
+
+
 # A commit touching this many entries is repo-wide maintenance (re-locks,
 # codespell runs, reorganizations), not activity on any one of them.
 SWEEP_ENTRIES = 3

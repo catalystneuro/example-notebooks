@@ -23,6 +23,9 @@ permissions:
 jobs:
   list:
     name: List notebooks to test
+    # Forks and staging copies set REGISTRY_QUIET=true: no scheduled sweeps
+    # (and so no failure issues); manual runs still work, without @-mentions.
+    if: github.event_name != 'schedule' || vars.REGISTRY_QUIET != 'true'
     runs-on: ubuntu-latest
     outputs:
       notebooks: ${{ steps.list.outputs.notebooks }}
@@ -104,8 +107,8 @@ jobs:
 
   report:
     name: Aggregate results, update entry health and issues
-    needs: test
-    if: always()
+    needs: [list, test]
+    if: always() && needs.list.result == 'success'
     runs-on: ubuntu-latest
     # Publishes to gh-pages alongside the index deploy; never run both at once.
     concurrency:
@@ -189,6 +192,7 @@ jobs:
       - name: Update entry health and per-entry issues
         env:
           GH_TOKEN: ${{ github.token }}
+          REGISTRY_QUIET: ${{ vars.REGISTRY_QUIET }}
           RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
         run: |
           set -euo pipefail

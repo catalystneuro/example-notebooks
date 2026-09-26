@@ -221,6 +221,10 @@ Other rules:
   and `issue_comment`) run with a write token, so the workflow checks out only
   the default branch and reads the PR as data through the API. It never
   checks out PR code.
+- **Quiet mode.** Forks and staging copies set the repository variable
+  `REGISTRY_QUIET=true`. The bots then name people without @-mentioning them,
+  and the scheduled sweep and Colab re-lock don't run (manual runs still
+  work). A copy of the registry never notifies real maintainers.
 - **Token.** Merges made with the default `GITHUB_TOKEN` don't trigger other
   workflows, including the image build and index deploy. For those to run
   after a bot merge, the bot needs a GitHub App token

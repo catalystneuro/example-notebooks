@@ -25,6 +25,9 @@ concurrency:
 jobs:
   refresh:
     name: Refresh snapshot and re-lock
+    # Forks and staging copies set REGISTRY_QUIET=true: no scheduled re-lock
+    # PRs. Manual runs still work.
+    if: github.event_name != 'schedule' || vars.REGISTRY_QUIET != 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

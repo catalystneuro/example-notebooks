@@ -90,3 +90,12 @@ def test_issue_body_mentions_maintainers_and_marker():
     (a,) = [o for o in outcomes if o.failed]
     body = new_issue_body(a, "https://run")
     assert "<!-- registry-entry:001550-paganlab -->" in body and "@alice" in body
+
+
+def test_quiet_mode_issue_body_has_no_mentions(monkeypatch):
+    import registry
+    monkeypatch.setattr(registry, "QUIET", True)
+    _, outcomes = run({}, FAIL_A, T0)
+    (a,) = [o for o in outcomes if o.failed]
+    body = new_issue_body(a, "https://run")
+    assert "@alice" not in body and "`alice`" in body
