@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated": "2026-09-26T02:00:30+00:00",
+  "generated": "2026-09-26T03:58:27+00:00",
   "source": "https://github.com/dandi/example-notebooks",
   "collections": {
     "dandi": {
@@ -531,8 +531,8 @@
       "metadata_url": "https://github.com/dandi/example-notebooks/blob/master/000108/chunglab/demo/notebook.yaml",
       "authors": [],
       "maintainers": [
-        "LeeKamentsky",
         "satra",
+        "LeeKamentsky",
         "djarecka"
       ],
       "license": "Apache-2.0",
@@ -1093,7 +1093,8 @@
       "metadata_url": "https://github.com/dandi/example-notebooks/blob/master/000971/lernerlab/seiler_2024/notebook.yaml",
       "authors": [],
       "maintainers": [
-        "pauladkisson"
+        "pauladkisson",
+        "bendichter"
       ],
       "license": "Apache-2.0",
       "keywords": [],
@@ -1174,7 +1175,8 @@
       "metadata_url": "https://github.com/dandi/example-notebooks/blob/master/001075/notebook.yaml",
       "authors": [],
       "maintainers": [
-        "CodyCBakerPhD"
+        "CodyCBakerPhD",
+        "bendichter"
       ],
       "license": "Apache-2.0",
       "keywords": [],
@@ -1276,7 +1278,8 @@
       "metadata_url": "https://github.com/dandi/example-notebooks/blob/master/001172/HigleyLab/notebook.yaml",
       "authors": [],
       "maintainers": [
-        "alessandratrapani"
+        "alessandratrapani",
+        "bendichter"
       ],
       "license": "Apache-2.0",
       "keywords": [],
@@ -1635,6 +1638,7 @@
       "metadata_url": "https://github.com/dandi/example-notebooks/blob/master/001933/DombeckLab/notebook.yaml",
       "authors": [],
       "maintainers": [
+        "weiglszonja",
         "bendichter"
       ],
       "license": "Apache-2.0",
@@ -1703,8 +1707,8 @@
       "metadata_url": "https://github.com/dandi/example-notebooks/blob/master/dandi/notebook.yaml",
       "authors": [],
       "maintainers": [
-        "bendichter",
         "yarikoptic",
+        "bendichter",
         "satra"
       ],
       "license": "Apache-2.0",
@@ -1757,6 +1761,7 @@
       "metadata_url": "https://github.com/dandi/example-notebooks/blob/master/demos/notebook.yaml",
       "authors": [],
       "maintainers": [
+        "bendichter",
         "satra"
       ],
       "license": "Apache-2.0",
@@ -1875,7 +1880,8 @@
       "metadata_url": "https://github.com/dandi/example-notebooks/blob/master/tutorials/cosyne_2023/notebook.yaml",
       "authors": [],
       "maintainers": [
-        "CodyCBakerPhD"
+        "CodyCBakerPhD",
+        "bendichter"
       ],
       "license": "Apache-2.0",
       "keywords": [
@@ -1920,7 +1926,8 @@
       "metadata_url": "https://github.com/dandi/example-notebooks/blob/master/tutorials/neurodatarehack_2024/notebook.yaml",
       "authors": [],
       "maintainers": [
-        "CodyCBakerPhD"
+        "CodyCBakerPhD",
+        "bendichter"
       ],
       "license": "Apache-2.0",
       "keywords": [
