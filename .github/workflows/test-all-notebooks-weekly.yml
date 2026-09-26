@@ -28,6 +28,9 @@ jobs:
         with:
           python-version: '3.13'
 
+      - name: Install registry dependencies
+        run: pip install --no-cache-dir pyyaml
+
       - name: List all testable notebooks
         id: list
         run: |
@@ -65,7 +68,7 @@ jobs:
           python-version: '3.13'
 
       - name: Install runner dependencies
-        run: pip install --no-cache-dir uv nbformat
+        run: pip install --no-cache-dir uv nbformat pyyaml
 
       - name: Run notebook
         id: run
@@ -127,9 +130,9 @@ jobs:
               lines.append("## Notebooks missing the Colab-bootstrap install cell")
               lines.append("")
               lines.append("These notebooks lack a `!uv pip install --system` install cell. ")
-              lines.append("Either add the bootstrap (see PR #149 for the pattern) or add the ")
-              lines.append("notebook to `.github/notebook-test-exclusions.txt` with a comment ")
-              lines.append("explaining why it can't be tested.")
+              lines.append("Either add the bootstrap (run `lock_notebook.py`) or set ")
+              lines.append("`test: false` with a `test_skip_reason` for the notebook in its ")
+              lines.append("entry's `notebook.yaml`.")
               lines.append("")
               for r in missing_bootstrap:
                   lines.append(f"- `{r['notebook']}`")

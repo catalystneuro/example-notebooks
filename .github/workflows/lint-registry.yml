@@ -1,0 +1,44 @@
+name: Lint registry metadata
+
+# Validates every notebook.yaml and collections/*.yaml against the schemas in
+# .github/schemas/, checks that every notebook belongs to an entry and that
+# install cells agree with their lock files, and runs the tooling's unit tests.
+
+on:
+  pull_request:
+    paths:
+      - '**.ipynb'
+      - '**/notebook.yaml'
+      - '**/requirements*.in'
+      - '**/*requirements.lock.txt'
+      - 'collections/**'
+      - '.github/schemas/**'
+      - '.github/scripts/**'
+      - '.github/tests/**'
+      - '.github/workflows/lint-registry.yml'
+  push:
+    branches: [master]
+
+permissions:
+  contents: read
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+
+      - name: Install dependencies
+        run: pip install --no-cache-dir pyyaml jsonschema nbformat pytest
+
+      - name: Lint
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python .github/scripts/lint_registry.py --online
+
+      - name: Unit tests
+        run: python -m pytest -q .github/tests

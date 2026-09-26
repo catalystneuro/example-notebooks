@@ -1,8 +1,9 @@
-# Adding a notebook: CI, Colab, and the exclusion lists
+# Adding a notebook: metadata, CI, and Colab
 
 This guide explains what happens to a notebook after you open a Pull Request —
-how it is tested, how it is made runnable in Google Colab, and the three
-`.github/*.txt` lists that control that behavior. For the basic file layout,
+how it is tested, how it is made runnable in Google Colab, and the
+`notebook.yaml` file that describes it and controls that behavior. For the
+basic file layout,
 see the [README](../README.md#submission-instructions); this doc picks up
 where that leaves off.
 
@@ -11,6 +12,9 @@ where that leaves off.
 - [ ] Place it under `<dandiset id>/<org or lab>/<mnemonic>/` with a `README.md`
       and a `requirements.in` listing the notebook's **direct** dependencies
       (see main README).
+- [ ] Add a [`notebook.yaml`](#notebookyaml-entry-metadata) describing the
+      entry: title, maintainers, license, notebooks, and related datasets and
+      papers.
 - [ ] Run `python .github/scripts/lock_notebook.py <notebook>.ipynb` to
       generate the **Colab-bootstrap cells** (badge → install intro → pinned
       install cell → restart admonition). See
@@ -22,8 +26,11 @@ where that leaves off.
       renderer, no `cv2.imshow`, no `%matplotlib widget`, no `input()`. See
       [headless gotchas](#headless-gotchas).
 - [ ] Open the PR. CI runs the changed notebook end-to-end. Green = good.
-- [ ] If it genuinely can't run in CI (or shouldn't get a Colab button), add it
-      to the right [exclusion list](#the-three-github-lists) with a one-line reason.
+- [ ] If it genuinely can't run in CI (or shouldn't get a Colab button), set
+      [`test: false` or `colab: false`](#per-notebook-flags) with a one-line
+      reason.
+- [ ] Run `python .github/scripts/lint_registry.py` (needs `pyyaml`,
+      `jsonschema`, `nbformat`). CI runs it too.
 
 ## How CI tests a notebook
 
@@ -69,8 +76,8 @@ touched again (or until the weekly sweep catches it). Don't assume "it's on
 master, so it's green."
 
 A brand-new notebook **without** an install cell fails by design — CI can't
-know what to install. Add the bootstrap, or add the notebook to an exclusion
-list with a reason.
+know what to install. Add the bootstrap, or set `test: false` with a reason
+in the entry's `notebook.yaml`.
 
 ## The Colab bootstrap cells
 
@@ -201,8 +208,8 @@ Guidelines:
 
 - **Don't** `dandi download` a dandiset, read `../path/to/local.nwb`, or assume a
   file exists on disk — that fails in CI and gives Colab users a broken notebook.
-  (Hardcoded local paths are a common reason a notebook lands on the
-  [exclusion lists](#the-three-github-lists).)
+  (Hardcoded local paths are a common reason a notebook ends up with
+  [`test: false`](#per-notebook-flags).)
 - **Do** wrap the remote file in a cache so re-runs don't re-fetch:
   `remfile.File(s3_url, disk_cache=remfile.DiskCache("nwb-cache"))`.
 - Pin `remfile` (and/or `fsspec`/`s3fs`) in the [install cell](#the-colab-bootstrap-cells).
@@ -227,14 +234,84 @@ The plotly case is the most common surprise: a notebook works in Colab (which
 has a notebook renderer + preinstalled plotly) but fails in CI. The fix is the
 one-line `pio.renderers.default` setting above — keep it in CI **and** Colab.
 
-## The three `.github` lists
+## `notebook.yaml`: entry metadata
 
-These three files control different things and are **independent** of each
-other. Add a notebook to whichever applies, always with a one-line reason.
+Every directory of notebooks is a registry **entry** and carries a
+`notebook.yaml` next to its README. The schema is
+[`.github/schemas/notebook.schema.json`](../.github/schemas/notebook.schema.json);
+[`docs/registry-design.md`](registry-design.md) explains the model. Example:
 
-### `colab-preinstalled.txt`
-[`.github/colab-preinstalled.txt`](../.github/colab-preinstalled.txt) — **not**
-an exclusion list. It's a snapshot of Colab's preinstalled package versions,
+```yaml
+schema_version: 1
+name: 001550-paganlab              # unique slug; also the container image name
+version: 0.1.0                     # releases (>= 1.0.0) will get a DOI
+title: Pagan Lab behavioral and optogenetics notebooks
+description: How to access data from DANDI:001550.
+authors:                           # credited people; required from 1.0.0
+  - name: Jane Doe
+    orcid: 0000-0002-1825-0097
+maintainers:                       # GitHub accounts that maintain the entry
+  - github: janedoe
+license: Apache-2.0
+notebooks:
+  - path: 01_behavior_demo.ipynb
+    title: Behavioral data
+  - path: 02_optogenetics_demo.ipynb
+related:
+  - id: dandi:001550               # prefixes: dandi, doi, openneuro, zenodo, rrid, ...
+    relation: uses_data            # uses_data | reproduces | describes | tutorial_for |
+  - id: doi:10.1101/2024.01.01.000000  #   derived_from | uses_software | references
+    relation: reproduces
+collections: [dandi]               # see collections/
+```
+
+Every `.ipynb` in the repo must be listed in exactly one `notebook.yaml`; the
+lint step fails otherwise. Supported identifier prefixes and their syntax are
+in [`.github/scripts/identifiers.py`](../.github/scripts/identifiers.py).
+
+### Per-notebook flags
+
+Three flags on each `notebooks:` item control CI. They are **independent**,
+and each `false` needs a one-line reason:
+
+| Flag | Default | Meaning when `false` |
+|---|---|---|
+| `test` | `true` | Skipped by the CI test sweep (`test_skip_reason` required). |
+| `colab` | `true` | No "Open in Colab" button on the index (`colab_skip_reason` required). |
+| `image` | same as `test` | No container image. Set `image: true` on a `test: false` notebook that fails on the slim CI runner but runs in the image, which ships extra system libraries. |
+
+Set `test: false` when a notebook can't run cleanly on a headless CI runner:
+needs a database/credentials, hits a headless-incompatible API the slim runner
+image lacks, a pre-existing content bug, or an upstream break not yet fixed.
+Set `colab: false` when clicking "Open in Colab" would give a broken experience
+even on a fresh Colab runtime: stale data paths, missing creds, removed
+upstream APIs, wheels lacking a needed feature, or runtimes too long for a
+tutorial. Removing the flag re-enables the behavior once the issue is fixed;
+changing a `notebook.yaml` in a PR re-tests that entry's notebooks.
+
+A notebook can have one flag off but not the other:
+
+- **Not tested but Colab-OK:** `read_avi.ipynb` uses OpenCV's `libxcb`, which
+  the slim CI image lacks but Colab has → `test: false`, `colab` left on (and
+  `image: true`, since the image ships `libxcb`).
+- **Tested but no Colab button:** rare, but e.g. a notebook that runs in CI yet
+  points users at data they can't access interactively.
+- **Both off:** the DataJoint examples need a MySQL server that neither CI nor
+  Colab provides.
+
+### Lock files
+
+`lock_notebook.py` writes the resolved pins to a lock file next to the
+requirements file (`requirements.in` → `requirements.lock.txt`,
+`<stem>.requirements.in` → `<stem>.requirements.lock.txt`) as well as into the
+install cell. Commit both. The lint step fails when a CI-tested notebook's
+install cell disagrees with its lock file — usually because only one of the
+notebooks sharing a `requirements.in` was re-locked.
+
+## The Colab snapshot
+
+[`.github/colab-preinstalled.txt`](../.github/colab-preinstalled.txt) is a
+snapshot of Colab's preinstalled package versions,
 used as the `uv pip compile --constraint` when generating install-cell pins (see
 [above](#generating-the-install-cell)). Colab rebuilds its image every week or
 two, and once the snapshot is stale the install cells downgrade Colab's newer
@@ -253,34 +330,6 @@ re-locks every CI-tested notebook. A re-lock keeps each package at its current
 pin unless the snapshot or `requirements.in` forces a change, so packages Colab
 does not ship (dandi, pynwb, ...) stay at the versions the notebook was tested
 with. Pass `--upgrade` to `lock_notebook.py` to float those as well.
-
-### `notebook-test-exclusions.txt` → "skip in CI"
-[`.github/notebook-test-exclusions.txt`](../.github/notebook-test-exclusions.txt)
-— notebooks the CI test sweep should skip. Add a notebook here when it can't run
-cleanly on a headless CI runner: needs a database/credentials, hits a
-headless-incompatible API the slim runner image lacks, a pre-existing content
-bug, or an upstream break not yet fixed. Lines are fnmatch globs relative to the
-repo root. Removing the line re-enables testing once the issue is fixed.
-
-### `notebook-colab-exclusions.txt` → "no Colab button"
-[`.github/notebook-colab-exclusions.txt`](../.github/notebook-colab-exclusions.txt)
-— notebooks that should **not** show an "Open in Colab" button on the index
-page (consumed by `collect_and_render.py`). Add a notebook here when clicking
-"Open in Colab" would give a broken experience even on a fresh Colab runtime:
-stale data paths, missing creds, removed upstream APIs, wheels lacking a needed
-feature, or runtimes too long for a tutorial.
-
-### They are independent
-
-A notebook can be on one list but not the other:
-
-- **Test-excluded but Colab-OK:** `read_avi.ipynb` uses OpenCV's `libxcb`, which
-  the slim CI image lacks but Colab has → on test-exclusions, **not** on
-  colab-exclusions.
-- **Colab-excluded but test-OK:** rare, but e.g. a notebook that runs in CI yet
-  points users at data they can't access interactively.
-- **Both:** the DataJoint examples need a MySQL server that neither CI nor Colab
-  provides → on both lists.
 
 ## Where to get help
 

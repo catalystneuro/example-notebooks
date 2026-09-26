@@ -39,7 +39,7 @@ jobs:
           python-version: '3.13'
 
       - name: Install tooling
-        run: pip install --no-cache-dir uv nbformat
+        run: pip install --no-cache-dir uv nbformat pyyaml
 
       - name: Refresh snapshot and re-lock notebooks
         id: refresh
@@ -67,7 +67,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git checkout -B "$BRANCH"
-          git add -A -- .github/colab-preinstalled.txt '*.ipynb'
+          git add -A -- .github/colab-preinstalled.txt '*.ipynb' '*.lock.txt'
           git commit -m "Refresh the Colab snapshot and re-lock notebooks"
           git push --force origin "$BRANCH"
 

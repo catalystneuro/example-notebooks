@@ -4,7 +4,8 @@ on:
   pull_request:
     paths:
       - '**.ipynb'
-      - '.github/notebook-test-exclusions.txt'
+      - '**/notebook.yaml'
+      - '.github/scripts/registry.py'
       - '.github/scripts/run_notebook.py'
       - '.github/scripts/list_notebooks.py'
       - '.github/scripts/pr_preview.py'
@@ -31,7 +32,10 @@ jobs:
         with:
           python-version: '3.13'
 
-      - name: List changed .ipynb files (after exclusions)
+      - name: Install registry dependencies
+        run: pip install --no-cache-dir pyyaml
+
+      - name: List changed notebooks that CI tests
         id: list
         run: |
           set -euo pipefail
@@ -69,7 +73,7 @@ jobs:
           python-version: '3.13'
 
       - name: Install runner dependencies
-        run: pip install --no-cache-dir uv nbformat
+        run: pip install --no-cache-dir uv nbformat pyyaml
 
       - name: Run notebook
         id: run

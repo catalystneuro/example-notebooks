@@ -147,10 +147,10 @@ notebooks:
   - path: figure2.ipynb
     title: Movement event detection
     runtime_minutes: 4                 # CI timeout hint
-    test: true                         # replaces notebook-test-exclusions.txt
-    colab: true                        # replaces notebook-colab-exclusions.txt
-    image: true                        # replaces notebook-image-inclusions.txt
-    skip_reason: null                  # required when test or colab is false
+    test: true                         # replaced notebook-test-exclusions.txt
+    colab: true                        # replaced notebook-colab-exclusions.txt
+    image: true                        # replaced notebook-image-inclusions.txt; defaults to `test`
+    # test_skip_reason / colab_skip_reason: required when test / colab is false
 related:
   - id: dandi:000055                   # optionally versioned: dandi:000055/0.220127.0436
     relation: uses_data
@@ -436,10 +436,18 @@ flows.
    - **Maintainers:** the original PR authors and git history.
    - **`related`:** the dandiset ID from the path, plus DOIs found in the
      README.
-   - **Authors:** from the README and the linked paper.
-   - **Flags:** from the three `.txt` lists.
-   - **Collections:** `dandi` for everything, plus `cosyne-2023`,
-     `bcm-2024`, and so on for `tutorials/`.
+   - **Authors:** left empty for the maintainers to fill in. They are
+     required from `1.0.0`.
+   - **Flags:** from the three `.txt` lists, using each pattern's comment as
+     the skip reason.
+   - **Collections:** `dandi` for everything. Tutorial events (`cosyne-2023`,
+     `bcm-2024`, ...) become keywords rather than collections, since they
+     have no curators of their own. Archive-level tutorials relate to the
+     DANDI Archive itself (`rrid:SCR_017571`, `tutorial_for`).
+   - **Lock files:** written from the install cells of the CI-tested
+     notebooks.
+
+   Done in phase 1 by `.github/scripts/migrate_to_registry.py`.
 
    A person reviews the output. Where no author can be identified, the DANDI
    core team is the maintainer. Existing entries start at `version: 0.1.0`
@@ -447,7 +455,7 @@ flows.
    is credited on a DOI without having reviewed the metadata.
 2. Directories stay in place, so no Colab badge, JupyterHub clone, or cited
    link breaks.
-3. Retire the `.txt` lists once the flags are in place.
+3. Retire the `.txt` lists once the flags are in place (done in phase 1).
 4. If the registry moves to a neutral org, **transfer** the repo rather than
    creating a new one. GitHub redirects old repo URLs after a transfer. Check
    that Colab badge links and the JupyterHub clone follow the redirect before

@@ -12,11 +12,11 @@ on:
     paths:
       - '**.ipynb'
       - '**/requirements.in'
+      - '**/notebook.yaml'
       - '.github/docker/**'
       - '.github/scripts/build_notebook_image.py'
       - '.github/scripts/run_notebook.py'
-      - '.github/notebook-test-exclusions.txt'
-      - '.github/notebook-image-inclusions.txt'
+      - '.github/scripts/registry.py'
       - '.github/workflows/build-notebook-images.yml'
   workflow_dispatch:
     inputs:
@@ -51,7 +51,7 @@ jobs:
           python-version: '3.13'
 
       - name: Install runner dependencies
-        run: pip install --no-cache-dir nbformat
+        run: pip install --no-cache-dir nbformat pyyaml
 
       - name: List image groups
         id: groups
@@ -93,7 +93,7 @@ jobs:
           python-version: '3.13'
 
       - name: Install runner dependencies
-        run: pip install --no-cache-dir nbformat
+        run: pip install --no-cache-dir nbformat pyyaml
 
       - name: Prepare build context
         id: prepare
@@ -213,7 +213,7 @@ jobs:
           python-version: '3.13'
 
       - name: Install runner dependencies
-        run: pip install --no-cache-dir nbformat
+        run: pip install --no-cache-dir nbformat pyyaml
 
       - name: Recompute image name and build hash
         id: prepare
