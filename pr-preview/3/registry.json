@@ -1,0 +1,1997 @@
+{
+  "schema_version": 1,
+  "generated": "2026-09-26T02:00:30+00:00",
+  "source": "https://github.com/dandi/example-notebooks",
+  "collections": {
+    "dandi": {
+      "title": "DANDI Archive",
+      "description": "Notebooks that use data from the DANDI Archive, plus tutorials for the archive and its tooling.",
+      "homepage": "https://dandiarchive.org",
+      "curators": [
+        "bendichter"
+      ]
+    }
+  },
+  "entries": [
+    {
+      "name": "000004-rutishauserlab",
+      "version": "0.1.0",
+      "title": "Read Data and Meta-data",
+      "description": null,
+      "directory": "000004/RutishauserLab",
+      "metadata_url": "https://github.com/dandi/example-notebooks/blob/master/000004/RutishauserLab/notebook.yaml",
+      "authors": [],
+      "maintainers": [
+        "bendichter"
+      ],
+      "license": "Apache-2.0",
+      "keywords": [],
+      "collections": [
+        "dandi"
+      ],
+      "related": [
+        {
+          "id": "dandi:000004",
+          "relation": "uses_data",
+          "url": "https://dandiarchive.org/dandiset/000004"
+        }
+      ],
+      "notebooks": [
+        {
+          "path": "000004/RutishauserLab/000004_demo_analysis.ipynb",
+          "title": "Read Data and Meta-data",
+          "test": false,
+          "github_url": "https://github.com/dandi/example-notebooks/blob/master/000004/RutishauserLab/000004_demo_analysis.ipynb",
+          "colab_url": null,
+          "docker_image": null
+        }
+      ]
+    },
+    {
+      "name": "000005-datajoint-dj-nwb-yu-gutnisky-2016",
+      "version": "0.1.0",
+      "title": "Yu, Gutnisky et al., 2016 - A DataJoint example",
+      "description": null,
+      "directory": "000005/DataJoint/DJ-NWB-Yu-Gutnisky-2016",
+      "metadata_url": "https://github.com/dandi/example-notebooks/blob/master/000005/DataJoint/DJ-NWB-Yu-Gutnisky-2016/notebook.yaml",
+      "authors": [],
+      "maintainers": [
+        "bendichter"
+      ],
+      "license": "Apache-2.0",
+      "keywords": [],
+      "collections": [
+        "dandi"
+      ],
+      "related": [
+        {
+          "id": "dandi:000005",
+          "relation": "uses_data",
+          "url": "https://dandiarchive.org/dandiset/000005"
+        },
+        {
+          "id": "doi:10.1038/nn.4412",
+          "relation": "references",
+          "url": "https://doi.org/10.1038/nn.4412"
+        }
+      ],
+      "notebooks": [
+        {
+          "path": "000005/DataJoint/DJ-NWB-Yu-Gutnisky-2016/notebooks/Yu-Gutnisky-2016-examples.ipynb",
+          "title": "Yu, Gutnisky et al., 2016 - A DataJoint example",
+          "test": false,
+          "github_url": "https://github.com/dandi/example-notebooks/blob/master/000005/DataJoint/DJ-NWB-Yu-Gutnisky-2016/notebooks/Yu-Gutnisky-2016-examples.ipynb",
+          "colab_url": null,
+          "docker_image": null
+        }
+      ]
+    },
+    {
+      "name": "000006-datajoint-dj-nwb-economo-2018",
+      "version": "0.1.0",
+      "title": "Economo et al., 2018 - A DataJoint example",
+      "description": null,
+      "directory": "000006/DataJoint/DJ-NWB-Economo-2018",
+      "metadata_url": "https://github.com/dandi/example-notebooks/blob/master/000006/DataJoint/DJ-NWB-Economo-2018/notebook.yaml",
+      "authors": [],
+      "maintainers": [
+        "bendichter"
+      ],
+      "license": "Apache-2.0",
+      "keywords": [],
+      "collections": [
+        "dandi"
+      ],
+      "related": [
+        {
+          "id": "dandi:000006",
+          "relation": "uses_data",
+          "url": "https://dandiarchive.org/dandiset/000006"
+        },
+        {
+          "id": "doi:10.1038/s41586-018-0642-9",
+          "relation": "references",
+          "url": "https://doi.org/10.1038/s41586-018-0642-9"
+        },
+        {
+          "id": "doi:10.25378/janelia.7007846",
+          "relation": "references",
+          "url": "https://doi.org/10.25378/janelia.7007846"
+        }
+      ],
+      "notebooks": [
+        {
+          "path": "000006/DataJoint/DJ-NWB-Economo-2018/notebooks/Economo-2018-examples.ipynb",
+          "title": "Economo et al., 2018 - A DataJoint example",
+          "test": false,
+          "github_url": "https://github.com/dandi/example-notebooks/blob/master/000006/DataJoint/DJ-NWB-Economo-2018/notebooks/Economo-2018-examples.ipynb",
+          "colab_url": null,
+          "docker_image": null
+        }
+      ]
+    },
+    {
+      "name": "000007-datajoint-dj-nwb-gao-2018",
+      "version": "0.1.0",
+      "title": "Gao et al., 2018",
+      "description": "This repository sets up the data pipeline for Gao et al., 2018. A cortico-cerebellar loop for motor planning, replicates a subset of the major results (Figure 2c, 3e-f, and 4i), and exports the data into nwb files.",
+      "directory": "000007/DataJoint/DJ-NWB-Gao-2018",
+      "metadata_url": "https://github.com/dandi/example-notebooks/blob/master/000007/DataJoint/DJ-NWB-Gao-2018/notebook.yaml",
+      "authors": [],
+      "maintainers": [
+        "bendichter"
+      ],
+      "license": "Apache-2.0",
+      "keywords": [],
+      "collections": [
+        "dandi"
+      ],
+      "related": [
+        {
+          "id": "dandi:000007",
+          "relation": "uses_data",
+          "url": "https://dandiarchive.org/dandiset/000007"
+        }
+      ],
+      "notebooks": [
+        {
+          "path": "000007/DataJoint/DJ-NWB-Gao-2018/notebooks/Gao-2018-examples.ipynb",
+          "title": "Gao et al., 2018 - A DataJoint example",
+          "test": false,
+          "github_url": "https://github.com/dandi/example-notebooks/blob/master/000007/DataJoint/DJ-NWB-Gao-2018/notebooks/Gao-2018-examples.ipynb",
+          "colab_url": null,
+          "docker_image": null
+        },
+        {
+          "path": "000007/DataJoint/DJ-NWB-Gao-2018/notebooks/erd.ipynb",
+          "title": "Subject",
+          "test": false,
+          "github_url": "https://github.com/dandi/example-notebooks/blob/master/000007/DataJoint/DJ-NWB-Gao-2018/notebooks/erd.ipynb",
+          "colab_url": null,
+          "docker_image": null
+        }
+      ]
+    },
+    {
+      "name": "000009-datajoint-dj-nwb-guo-inagaki-2017",
+      "version": "0.1.0",
+      "title": "Guo, Inagaki et al., 2017",
+      "description": "Data pipeline for Guo, Inagaki et al., 2017 from Svoboda Lab.",
+      "directory": "000009/DataJoint/DJ-NWB-Guo-Inagaki-2017",
+      "metadata_url": "https://github.com/dandi/example-notebooks/blob/master/000009/DataJoint/DJ-NWB-Guo-Inagaki-2017/notebook.yaml",
+      "authors": [],
+      "maintainers": [
+        "bendichter"
+      ],
+      "license": "Apache-2.0",
+      "keywords": [],
+      "collections": [
+        "dandi"
+      ],
+      "related": [
+        {
+          "id": "dandi:000009",
+          "relation": "uses_data",
+          "url": "https://dandiarchive.org/dandiset/000009"
+        },
+        {
+          "id": "doi:10.1038/nature22324",
+          "relation": "references",
+          "url": "https://doi.org/10.1038/nature22324"
+        }
+      ],
+      "notebooks": [
+        {
+          "path": "000009/DataJoint/DJ-NWB-Guo-Inagaki-2017/notebooks/Guo-Inagaki-2017-NWB-examples.ipynb",
+          "title": "Guo-Inagaki-2017 - An NWB example",
+          "test": false,
+          "github_url": "https://github.com/dandi/example-notebooks/blob/master/000009/DataJoint/DJ-NWB-Guo-Inagaki-2017/notebooks/Guo-Inagaki-2017-NWB-examples.ipynb",
+          "colab_url": null,
+          "docker_image": null
+        },
+        {
+          "path": "000009/DataJoint/DJ-NWB-Guo-Inagaki-2017/notebooks/Guo-Inagaki-2017-examples.ipynb",
+          "title": "Guo, Inagaki et al., 2017 - A DataJoint example",
+          "test": false,
+          "github_url": "https://github.com/dandi/example-notebooks/blob/master/000009/DataJoint/DJ-NWB-Guo-Inagaki-2017/notebooks/Guo-Inagaki-2017-examples.ipynb",
+          "colab_url": null,
+          "docker_image": null
+        }
+      ]
+    },
+    {
+      "name": "000010-datajoint-dj-nwb-li-2015b",
+      "version": "0.1.0",
+      "title": "Li et al., 2015b",
+      "description": "This repository sets up the data pipeline corresponding to Figure 4 in Li et al., (2015). \"A motor cortex circuit for motor planning and movement.\" and provides the notebook for the figure replication.",
+      "directory": "000010/DataJoint/DJ-NWB-Li-2015b",
+      "metadata_url": "https://github.com/dandi/example-notebooks/blob/master/000010/DataJoint/DJ-NWB-Li-2015b/notebook.yaml",
+      "authors": [],
+      "maintainers": [
+        "bendichter"
+      ],
+      "license": "Apache-2.0",
+      "keywords": [],
+      "collections": [
+        "dandi"
+      ],
+      "related": [
+        {
+          "id": "dandi:000010",
+          "relation": "uses_data",
+          "url": "https://dandiarchive.org/dandiset/000010"
+        },
+        {
+          "id": "doi:10.1038/nature14178",
+          "relation": "references",
+          "url": "https://doi.org/10.1038/nature14178"
+        },
+        {
+          "id": "doi:10.6080/K0MS3QNT",
+          "relation": "references",
+          "url": "https://doi.org/10.6080/K0MS3QNT"
+        }
+      ],
+      "notebooks": [
+        {
+          "path": "000010/DataJoint/DJ-NWB-Li-2015b/notebooks/Li-2015b-examples.ipynb",
+          "title": "Li et al., 2015b - A DataJoint Example",
+          "test": false,
+          "github_url": "https://github.com/dandi/example-notebooks/blob/master/000010/DataJoint/DJ-NWB-Li-2015b/notebooks/Li-2015b-examples.ipynb",
+          "colab_url": null,
+          "docker_image": null
+        },
+        {
+          "path": "000010/DataJoint/DJ-NWB-Li-2015b/notebooks/Schemas.ipynb",
+          "title": null,
+          "test": false,
+          "github_url": "https://github.com/dandi/example-notebooks/blob/master/000010/DataJoint/DJ-NWB-Li-2015b/notebooks/Schemas.ipynb",
+          "colab_url": null,
+          "docker_image": null
+        }
+      ]
+    },
+    {
+      "name": "000010-datajoint-dj-nwb-li-daie-2015-2016",
+      "version": "0.1.0",
+      "title": "Li et al., 2015 and Li, Daie et al., 2016",
+      "description": "DataJoint-NWB conversion project for Li et al. (2015) and Li, Daie et al. (2016) papers.",
+      "directory": "000010/DataJoint/DJ-NWB-Li-Daie-2015-2016",
+      "metadata_url": "https://github.com/dandi/example-notebooks/blob/master/000010/DataJoint/DJ-NWB-Li-Daie-2015-2016/notebook.yaml",
+      "authors": [],
+      "maintainers": [
+        "bendichter"
+      ],
+      "license": "Apache-2.0",
+      "keywords": [],
+      "collections": [
+        "dandi"
+      ],
+      "related": [
+        {
+          "id": "dandi:000010",
+          "relation": "uses_data",
+          "url": "https://dandiarchive.org/dandiset/000010"
+        },
+        {
+          "id": "doi:10.1038/nature14178",
+          "relation": "references",
+          "url": "https://doi.org/10.1038/nature14178"
+        },
+        {
+          "id": "doi:10.1038/nature17643",
+          "relation": "references",
+          "url": "https://doi.org/10.1038/nature17643"
+        }
+      ],
+      "notebooks": [
+        {
+          "path": "000010/DataJoint/DJ-NWB-Li-Daie-2015-2016/notebooks/Li-2015-examples.ipynb",
+          "title": "Li et al., 2015 - A DataJoint example",
+          "test": false,
+          "github_url": "https://github.com/dandi/example-notebooks/blob/master/000010/DataJoint/DJ-NWB-Li-Daie-2015-2016/notebooks/Li-2015-examples.ipynb",
+          "colab_url": null,
+          "docker_image": null
+        },
+        {
+          "path": "000010/DataJoint/DJ-NWB-Li-Daie-2015-2016/notebooks/Li-Daie-2016-examples.ipynb",
+          "title": "Li, Daie et al., 2016 - A DataJoint example",
+          "test": false,
+          "github_url": "https://github.com/dandi/example-notebooks/blob/master/000010/DataJoint/DJ-NWB-Li-Daie-2015-2016/notebooks/Li-Daie-2016-examples.ipynb",
+          "colab_url": null,
+          "docker_image": null
+        }
+      ]
+    },
+    {
+      "name": "000013-datajoint-dj-nwb-hires-gutnisky-2015",
+      "version": "0.1.0",
+      "title": "Hires, Gutnisky et al., 2015 - A DataJoint example",
+      "description": "This notebook presents data and results associated with the following papers: >Samuel Andrew Hires, Diego A Gutnisky, Jianing Yu, Daniel H O\u2019Connor, and Karel Svoboda. \"Low-noise encoding of active touch by layer 4 in the somatosensory cortex\" (2015) eLife (http://doi.org/10.7554/eLife.06619)",
+      "directory": "000013/DataJoint/DJ-NWB-Hires-Gutnisky-2015",
+      "metadata_url": "https://github.com/dandi/example-notebooks/blob/master/000013/DataJoint/DJ-NWB-Hires-Gutnisky-2015/notebook.yaml",
+      "authors": [],
+      "maintainers": [
+        "bendichter"
+      ],
+      "license": "Apache-2.0",
+      "keywords": [],
+      "collections": [
+        "dandi"
+      ],
+      "related": [
+        {
+          "id": "dandi:000013",
+          "relation": "uses_data",
+          "url": "https://dandiarchive.org/dandiset/000013"
+        },
+        {
+          "id": "doi:10.7554/eLife.06619",
+          "relation": "references",
+          "url": "https://doi.org/10.7554/eLife.06619"
+        }
+      ],
+      "notebooks": [
+        {
+          "path": "000013/DataJoint/DJ-NWB-Hires-Gutnisky-2015/notebooks/Hires-Gutnisky-2015-examples.ipynb",
+          "title": "Hires, Gutnisky et al., 2015 - A DataJoint example",
+          "test": false,
+          "github_url": "https://github.com/dandi/example-notebooks/blob/master/000013/DataJoint/DJ-NWB-Hires-Gutnisky-2015/notebooks/Hires-Gutnisky-2015-examples.ipynb",
+          "colab_url": null,
+          "docker_image": null
+        }
+      ]
+    },
+    {
+      "name": "000015-datajoint-dj-nwb-chen-2017",
+      "version": "0.1.0",
+      "title": "Chen et al., 2017",
+      "description": "This project sets up the data pipeline corresponding to the data from Chen et al., (2017). \"A Map of Anticipatory Activity in Mouse Motor Cortex.\" and provides a Jupyter Notebook demonstrating the use of the DataJoint pipeline in replicating some of the main figures.",
+      "directory": "000015/DataJoint/DJ-NWB-Chen-2017",
+      "metadata_url": "https://github.com/dandi/example-notebooks/blob/master/000015/DataJoint/DJ-NWB-Chen-2017/notebook.yaml",
+      "authors": [],
+      "maintainers": [
+        "bendichter"
+      ],
+      "license": "Apache-2.0",
+      "keywords": [],
+      "collections": [
+        "dandi"
+      ],
+      "related": [
+        {
+          "id": "dandi:000015",
+          "relation": "uses_data",
+          "url": "https://dandiarchive.org/dandiset/000015"
+        },
+        {
+          "id": "doi:10.1016/j.neuron.2017.05.005",
+          "relation": "references",
+          "url": "https://doi.org/10.1016/j.neuron.2017.05.005"
+        }
+      ],
+      "notebooks": [
+        {
+          "path": "000015/DataJoint/DJ-NWB-Chen-2017/notebooks/Chen-2017-examples.ipynb",
+          "title": "Chen et al. 2017 - A DataJoint example",
+          "test": false,
+          "github_url": "https://github.com/dandi/example-notebooks/blob/master/000015/DataJoint/DJ-NWB-Chen-2017/notebooks/Chen-2017-examples.ipynb",
+          "colab_url": null,
+          "docker_image": null
+        },
+        {
+          "path": "000015/DataJoint/DJ-NWB-Chen-2017/notebooks/Schemas.ipynb",
+          "title": null,
+          "test": false,
+          "github_url": "https://github.com/dandi/example-notebooks/blob/master/000015/DataJoint/DJ-NWB-Chen-2017/notebooks/Schemas.ipynb",
+          "colab_url": null,
+          "docker_image": null
+        }
+      ]
+    },
+    {
+      "name": "000039-alleninstitute",
+      "version": "0.1.0",
+      "title": "Compute and plot contrast tuning curves",
+      "description": "This folder contains notebooks that demonstrate how to work with data in dandiset 000039.",
+      "directory": "000039/AllenInstitute",
+      "metadata_url": "https://github.com/dandi/example-notebooks/blob/master/000039/AllenInstitute/notebook.yaml",
+      "authors": [],
+      "maintainers": [
+        "saskiad"
+      ],
+      "license": "Apache-2.0",
+      "keywords": [],
+      "collections": [
+        "dandi"
+      ],
+      "related": [
+        {
+          "id": "dandi:000039",
+          "relation": "uses_data",
+          "url": "https://dandiarchive.org/dandiset/000039"
+        }
+      ],
+      "notebooks": [
+        {
+          "path": "000039/AllenInstitute/Contrast_analysis.ipynb",
+          "title": "Compute and plot contrast tuning curves",
+          "test": false,
+          "github_url": "https://github.com/dandi/example-notebooks/blob/master/000039/AllenInstitute/Contrast_analysis.ipynb",
+          "colab_url": null,
+          "docker_image": null
+        },
+        {
+          "path": "000039/AllenInstitute/Create_manifest.ipynb",
+          "title": "Create Manifest",
+          "test": false,
+          "github_url": "https://github.com/dandi/example-notebooks/blob/master/000039/AllenInstitute/Create_manifest.ipynb",
+          "colab_url": null,
+          "docker_image": null
+        }
+      ]
+    },
+    {
+      "name": "000055-bruntonlab-peterson21",
+      "version": "0.1.0",
+      "title": "Plot example coarse behavioral labelling trace",
+      "description": null,
+      "directory": "000055/BruntonLab/peterson21",
+      "metadata_url": "https://github.com/dandi/example-notebooks/blob/master/000055/BruntonLab/peterson21/notebook.yaml",
+      "authors": [],
+      "maintainers": [
+        "bendichter"
+      ],
+      "license": "Apache-2.0",
+      "keywords": [],
+      "collections": [
+        "dandi"
+      ],
+      "related": [
+        {
+          "id": "dandi:000055",
+          "relation": "uses_data",
+          "url": "https://dandiarchive.org/dandiset/000055"
+        },
+        {
+          "id": "doi:10.1523/ENEURO.0007-21.2021",
+          "relation": "references",
+          "url": "https://doi.org/10.1523/ENEURO.0007-21.2021"
+        }
+      ],
+      "notebooks": [
+        {
+          "path": "000055/BruntonLab/peterson21/Fig_coarse_labels.ipynb",
+          "title": "Plot example coarse behavioral labelling trace",
+          "test": false,
+          "github_url": "https://github.com/dandi/example-notebooks/blob/master/000055/BruntonLab/peterson21/Fig_coarse_labels.ipynb",
+          "colab_url": null,
+          "docker_image": null
+        },
+        {
+          "path": "000055/BruntonLab/peterson21/Fig_pow_spectra.ipynb",
+          "title": "Plot ECoG electrode locations",
+          "test": false,
+          "github_url": "https://github.com/dandi/example-notebooks/blob/master/000055/BruntonLab/peterson21/Fig_pow_spectra.ipynb",
+          "colab_url": null,
+          "docker_image": null
+        },
+        {
+          "path": "000055/BruntonLab/peterson21/Table_coarse_labels.ipynb",
+          "title": "Print tables of coarse label durations across participants",
+          "test": false,
+          "github_url": "https://github.com/dandi/example-notebooks/blob/master/000055/BruntonLab/peterson21/Table_coarse_labels.ipynb",
+          "colab_url": null,
+          "docker_image": null
+        },
+        {
+          "path": "000055/BruntonLab/peterson21/Table_part_characteristics.ipynb",
+          "title": "Individual participant characteristics",
+          "test": false,
+          "github_url": "https://github.com/dandi/example-notebooks/blob/master/000055/BruntonLab/peterson21/Table_part_characteristics.ipynb",
+          "colab_url": null,
+          "docker_image": null
+        },
+        {
+          "path": "000055/BruntonLab/peterson21/dashboard.ipynb",
+          "title": null,
+          "test": false,
+          "github_url": "https://github.com/dandi/example-notebooks/blob/master/000055/BruntonLab/peterson21/dashboard.ipynb",
+          "colab_url": null,
+          "docker_image": null
+        }
+      ]
+    },
+    {
+      "name": "000108-chunglab-demo",
+      "version": "0.1.0",
+      "title": "Reading volumes from the Chung lab dataset (Dandiset 000108)",
+      "description": null,
+      "directory": "000108/chunglab/demo",
+      "metadata_url": "https://github.com/dandi/example-notebooks/blob/master/000108/chunglab/demo/notebook.yaml",
+      "authors": [],
+      "maintainers": [
+        "LeeKamentsky",
+        "satra",
+        "djarecka"
+      ],
+      "license": "Apache-2.0",
+      "keywords": [],
+      "collections": [
+        "dandi"
+      ],
+      "related": [
+        {
+          "id": "dandi:000108",
+          "relation": "uses_data",
+          "url": "https://dandiarchive.org/dandiset/000108"
+        }
+      ],
+      "notebooks": [
+        {
+          "path": "000108/chunglab/demo/2021-09-27_dandi-demo.ipynb",
+          "title": "Reading volumes from the Chung lab dataset (Dandiset 000108)",
+          "test": true,
+          "github_url": "https://github.com/dandi/example-notebooks/blob/master/000108/chunglab/demo/2021-09-27_dandi-demo.ipynb",
+          "colab_url": "https://colab.research.google.com/github/dandi/example-notebooks/blob/master/000108/chunglab/demo/2021-09-27_dandi-demo.ipynb",
+          "docker_image": "ghcr.io/dandi/example-notebooks/000108-chunglab-demo:latest"
+        },
+        {
+          "path": "000108/chunglab/demo/dashboard.ipynb",
+          "title": "Work on a dashboard for a specific dandiset",
+          "test": true,
+          "github_url": "https://github.com/dandi/example-notebooks/blob/master/000108/chunglab/demo/dashboard.ipynb",
+          "colab_url": "https://colab.research.google.com/github/dandi/example-notebooks/blob/master/000108/chunglab/demo/dashboard.ipynb",
+          "docker_image": "ghcr.io/dandi/example-notebooks/000108-chunglab-demo:latest"
+        },
+        {
+          "path": "000108/chunglab/demo/validate_lev6.ipynb",
+          "title": "Getting assets for a specific dandiset",
+          "test": false,
+          "github_url": "https://github.com/dandi/example-notebooks/blob/master/000108/chunglab/demo/validate_lev6.ipynb",
+          "colab_url": null,
+          "docker_image": null
+        }
+      ]
+    },
+    {
+      "name": "000129-mathislab-schneider2023-cebra",
+      "version": "0.1.0",
+      "title": "NeuroDataReHack 2023 -- CEBRA workshop",
+      "description": null,
+      "directory": "000129/MathisLab/Schneider2023_CEBRA",
+      "metadata_url": "https://github.com/dandi/example-notebooks/blob/master/000129/MathisLab/Schneider2023_CEBRA/notebook.yaml",
+      "authors": [],
+      "maintainers": [
+        "bendichter"
+      ],
+      "license": "Apache-2.0",
+      "keywords": [],
+      "collections": [
+        "dandi"
+      ],
+      "related": [
+        {
+          "id": "dandi:000129",
+          "relation": "uses_data",
+          "url": "https://dandiarchive.org/dandiset/000129"
+        }
+      ],
+      "notebooks": [
+        {
+          "path": "000129/MathisLab/Schneider2023_CEBRA/230905_NeuroDataReHack_2023_CEBRA.ipynb",
+          "title": "NeuroDataReHack 2023 -- CEBRA workshop",
+          "test": false,
+          "github_url": "https://github.com/dandi/example-notebooks/blob/master/000129/MathisLab/Schneider2023_CEBRA/230905_NeuroDataReHack_2023_CEBRA.ipynb",
+          "colab_url": null,
+          "docker_image": null
+        }
+      ]
+    },
+    {
+      "name": "000363-map-demo",
+      "version": "0.1.0",
+      "title": "Browse datasets on DANDI",
+      "description": "This folder contains a notebook that demonstrates how to work with dandiset 000363.",
+      "directory": "000363/MAP/demo",
+      "metadata_url": "https://github.com/dandi/example-notebooks/blob/master/000363/MAP/demo/notebook.yaml",
+      "authors": [],
+      "maintainers": [
+        "kushalbakshi"
+      ],
+      "license": "Apache-2.0",
+      "keywords": [],
+      "collections": [
+        "dandi"
+      ],
+      "related": [
+        {
+          "id": "dandi:000363",
+          "relation": "uses_data",
+          "url": "https://dandiarchive.org/dandiset/000363"
+        }
+      ],
+      "notebooks": [
+        {
+          "path": "000363/MAP/demo/browse_map_ephys_data.ipynb",
+          "title": "Browse datasets on DANDI",
+          "test": false,
+          "github_url": "https://github.com/dandi/example-notebooks/blob/master/000363/MAP/demo/browse_map_ephys_data.ipynb",
+          "colab_url": null,
+          "docker_image": null
+        }
+      ]
+    },
+    {
+      "name": "000402-microns-coregistration",
+      "version": "0.1.0",
+      "title": "MICrONS Co-registration Analysis Notebook",
+      "description": "This project was developed during the 2023 NWB NeuroData ReHack workshop held in Granada, Spain. Please contact us at info@bossdb.org if you have any questions.",
+      "directory": "000402/MICrONS/coregistration",
+      "metadata_url": "https://github.com/dandi/example-notebooks/blob/master/000402/MICrONS/coregistration/notebook.yaml",
+      "authors": [],
+      "maintainers": [
+        "dxenes1"
+      ],
+      "license": "Apache-2.0",
+      "keywords": [],
+      "collections": [
+        "dandi"
+      ],
+      "related": [
+        {
+          "id": "dandi:000402",
+          "relation": "uses_data",
+          "url": "https://dandiarchive.org/dandiset/000402"
+        },
+        {
+          "id": "doi:10.7554/eLife.78362",
+          "relation": "references",
+          "url": "https://doi.org/10.7554/eLife.78362"
+        },
+        {
+          "id": "doi:10.1101/2021.07.28.454025",
+          "relation": "references",
+          "url": "https://doi.org/10.1101/2021.07.28.454025"
+        },
+        {
+          "id": "doi:10.1101/2023.03.13.531369",
+          "relation": "references",
+          "url": "https://doi.org/10.1101/2023.03.13.531369"
+        }
+      ],
+      "notebooks": [
+        {
+          "path": "000402/MICrONS/coregistration/microns_nwb_coreg_notebook.ipynb",
+          "title": "MICrONS Co-registration and Visualization",
+          "test": false,
+          "github_url": "https://github.com/dandi/example-notebooks/blob/master/000402/MICrONS/coregistration/microns_nwb_coreg_notebook.ipynb",
+          "colab_url": null,
+          "docker_image": null
+        }
+      ]
+    },
+    {
+      "name": "000402-microns-demo",
+      "version": "0.1.0",
+      "title": "MICrONS NWB tutorial",
+      "description": null,
+      "directory": "000402/MICrONS/demo",
+      "metadata_url": "https://github.com/dandi/example-notebooks/blob/master/000402/MICrONS/demo/notebook.yaml",
+      "authors": [],
+      "maintainers": [
+        "weiglszonja"
+      ],
+      "license": "Apache-2.0",
+      "keywords": [],
+      "collections": [
+        "dandi"
+      ],
+      "related": [
+        {
+          "id": "dandi:000402",
+          "relation": "uses_data",
+          "url": "https://dandiarchive.org/dandiset/000402"
+        }
+      ],
+      "notebooks": [
+        {
+          "path": "000402/MICrONS/demo/000402_microns_demo.ipynb",
+          "title": "MICrONS NWB tutorial",
+          "test": true,
+          "github_url": "https://github.com/dandi/example-notebooks/blob/master/000402/MICrONS/demo/000402_microns_demo.ipynb",
+          "colab_url": "https://colab.research.google.com/github/dandi/example-notebooks/blob/master/000402/MICrONS/demo/000402_microns_demo.ipynb",
+          "docker_image": "ghcr.io/dandi/example-notebooks/000402-microns-demo:latest"
+        }
+      ]
+    },
+    {
+      "name": "000409-ibl",
+      "version": "0.1.0",
+      "title": "Locate Examples",
+      "description": "This notebook provides a comprehensive guide to accessing and analyzing data from the IBL Brain Wide Map dataset (dandiset 000409) in NWB format.",
+      "directory": "000409/IBL",
+      "metadata_url": "https://github.com/dandi/example-notebooks/blob/master/000409/IBL/notebook.yaml",
+      "authors": [],
+      "maintainers": [
+        "h-mayorquin"
+      ],
+      "license": "Apache-2.0",
+      "keywords": [],
+      "collections": [
+        "dandi"
+      ],
+      "related": [
+        {
+          "id": "dandi:000409",
+          "relation": "uses_data",
+          "url": "https://dandiarchive.org/dandiset/000409"
+        }
+      ],
+      "notebooks": [
+        {
+          "path": "000409/IBL/bwm_usage_notebook.ipynb",
+          "title": "Locate Examples",
+          "test": true,
+          "github_url": "https://github.com/dandi/example-notebooks/blob/master/000409/IBL/bwm_usage_notebook.ipynb",
+          "colab_url": "https://colab.research.google.com/github/dandi/example-notebooks/blob/master/000409/IBL/bwm_usage_notebook.ipynb",
+          "docker_image": "ghcr.io/dandi/example-notebooks/000409-ibl:latest"
+        }
+      ]
+    },
+    {
+      "name": "000458-alleninstitute",
+      "version": "0.1.0",
+      "title": "Reanalysis of Dandiset 000458",
+      "description": "This submission provides a walkthrough of basic reanalysis of Dandiset #000458: reanalysis.ipynb",
+      "directory": "000458/AllenInstitute",
+      "metadata_url": "https://github.com/dandi/example-notebooks/blob/master/000458/AllenInstitute/notebook.yaml",
+      "authors": [],
+      "maintainers": [
+        "pauladkisson"
+      ],
+      "license": "Apache-2.0",
+      "keywords": [],
+      "collections": [
+        "dandi"
+      ],
+      "related": [
+        {
+          "id": "dandi:000458",
+          "relation": "uses_data",
+          "url": "https://dandiarchive.org/dandiset/000458"
+        },
+        {
+          "id": "doi:10.1016/j.neuron.2023.08.005",
+          "relation": "references",
+          "url": "https://doi.org/10.1016/j.neuron.2023.08.005"
+        }
+      ],
+      "notebooks": [
+        {
+          "path": "000458/AllenInstitute/reanalysis.ipynb",
+          "title": "Reanalyzing Dandiset #000458",
+          "test": true,
+          "github_url": "https://github.com/dandi/example-notebooks/blob/master/000458/AllenInstitute/reanalysis.ipynb",
+          "colab_url": "https://colab.research.google.com/github/dandi/example-notebooks/blob/master/000458/AllenInstitute/reanalysis.ipynb",
+          "docker_image": "ghcr.io/dandi/example-notebooks/000458-alleninstitute:latest"
+        }
+      ]
+    },
+    {
+      "name": "000458-flatironinstitute",
+      "version": "0.1.0",
+      "title": "Exploration of Dandiset 000458",
+      "description": "See also ../AllenInstitute/README.md.",
+      "directory": "000458/FlatironInstitute",
+      "metadata_url": "https://github.com/dandi/example-notebooks/blob/master/000458/FlatironInstitute/notebook.yaml",
+      "authors": [],
+      "maintainers": [
+        "magland"
+      ],
+      "license": "Apache-2.0",
+      "keywords": [],
+      "collections": [
+        "dandi"
+      ],
+      "related": [
+        {
+          "id": "dandi:000458",
+          "relation": "uses_data",
+          "url": "https://dandiarchive.org/dandiset/000458"
+        }
+      ],
+      "notebooks": [
+        {
+          "path": "000458/FlatironInstitute/000_lindi_vs_fsspec_streaming.ipynb",
+          "title": null,
+          "test": true,
+          "github_url": "https://github.com/dandi/example-notebooks/blob/master/000458/FlatironInstitute/000_lindi_vs_fsspec_streaming.ipynb",
+          "colab_url": "https://colab.research.google.com/github/dandi/example-notebooks/blob/master/000458/FlatironInstitute/000_lindi_vs_fsspec_streaming.ipynb",
+          "docker_image": "ghcr.io/dandi/example-notebooks/000458-flatironinstitute:latest"
+        },
+        {
+          "path": "000458/FlatironInstitute/001_summarize_contents.ipynb",
+          "title": "000458 - summarize contents",
+          "test": true,
+          "github_url": "https://github.com/dandi/example-notebooks/blob/master/000458/FlatironInstitute/001_summarize_contents.ipynb",
+          "colab_url": "https://colab.research.google.com/github/dandi/example-notebooks/blob/master/000458/FlatironInstitute/001_summarize_contents.ipynb",
+          "docker_image": "ghcr.io/dandi/example-notebooks/000458-flatironinstitute:latest"
+        }
+      ]
+    },
+    {
+      "name": "000559-dattalab-markowitz-gillis-nature-2023",
+      "version": "0.1.0",
+      "title": "Figure Reproductions for Dandiset 000559",
+      "description": "This submission provides three figure reproductions for the Dandiset 000559, which corresponds to the 2023 Nature paper: Spontaneous behavior is structured by reinforcement without explicit reward by Markowitz et al.",
+      "directory": "000559/dattalab/markowitz_gillis_nature_2023",
+      "metadata_url": "https://github.com/dandi/example-notebooks/blob/master/000559/dattalab/markowitz_gillis_nature_2023/notebook.yaml",
+      "authors": [],
+      "maintainers": [
+        "pauladkisson",
+        "bendichter"
+      ],
+      "license": "Apache-2.0",
+      "keywords": [],
+      "collections": [
+        "dandi"
+      ],
+      "related": [
+        {
+          "id": "dandi:000559",
+          "relation": "uses_data",
+          "url": "https://dandiarchive.org/dandiset/000559"
+        },
+        {
+          "id": "doi:10.1038/s41586-022-05611-2",
+          "relation": "references",
+          "url": "https://doi.org/10.1038/s41586-022-05611-2"
+        }
+      ],
+      "notebooks": [
+        {
+          "path": "000559/dattalab/markowitz_gillis_nature_2023/read_avi.ipynb",
+          "title": "Read AVI Files",
+          "test": false,
+          "github_url": "https://github.com/dandi/example-notebooks/blob/master/000559/dattalab/markowitz_gillis_nature_2023/read_avi.ipynb",
+          "colab_url": "https://colab.research.google.com/github/dandi/example-notebooks/blob/master/000559/dattalab/markowitz_gillis_nature_2023/read_avi.ipynb",
+          "docker_image": "ghcr.io/dandi/example-notebooks/000559-dattalab-markowitz-gillis-nature-2023-read-avi:latest"
+        },
+        {
+          "path": "000559/dattalab/markowitz_gillis_nature_2023/reproduce_figure1d.ipynb",
+          "title": null,
+          "test": true,
+          "github_url": "https://github.com/dandi/example-notebooks/blob/master/000559/dattalab/markowitz_gillis_nature_2023/reproduce_figure1d.ipynb",
+          "colab_url": "https://colab.research.google.com/github/dandi/example-notebooks/blob/master/000559/dattalab/markowitz_gillis_nature_2023/reproduce_figure1d.ipynb",
+          "docker_image": "ghcr.io/dandi/example-notebooks/000559-dattalab-markowitz-gillis-nature-2023-reproduce-figure1d:latest"
+        },
+        {
+          "path": "000559/dattalab/markowitz_gillis_nature_2023/reproduce_figure_S1.ipynb",
+          "title": null,
+          "test": true,
+          "github_url": "https://github.com/dandi/example-notebooks/blob/master/000559/dattalab/markowitz_gillis_nature_2023/reproduce_figure_S1.ipynb",
+          "colab_url": "https://colab.research.google.com/github/dandi/example-notebooks/blob/master/000559/dattalab/markowitz_gillis_nature_2023/reproduce_figure_S1.ipynb",
+          "docker_image": "ghcr.io/dandi/example-notebooks/000559-dattalab-markowitz-gillis-nature-2023-reproduce-figure-s1:latest"
+        },
+        {
+          "path": "000559/dattalab/markowitz_gillis_nature_2023/reproduce_figure_S3.ipynb",
+          "title": null,
+          "test": false,
+          "github_url": "https://github.com/dandi/example-notebooks/blob/master/000559/dattalab/markowitz_gillis_nature_2023/reproduce_figure_S3.ipynb",
+          "colab_url": null,
+          "docker_image": null
+        }
+      ]
+    },
+    {
+      "name": "000582-sargolini2006",
+      "version": "0.1.0",
+      "title": "Educational notebook based on Sargolini 2006",
+      "description": "This example notebook demonstrates how to access the dataset published in Sargolini et al. (Science, 2006) using dandi. The dataset contains spike times for recorded grid cells from the Medial Entorhinal Cortex (MEC) in rats that explored two-dimensional environments. The behavioral data includes position from the tracking LED(s).",
+      "directory": "000582/Sargolini2006",
+      "metadata_url": "https://github.com/dandi/example-notebooks/blob/master/000582/Sargolini2006/notebook.yaml",
+      "authors": [],
+      "maintainers": [
+        "weiglszonja"
+      ],
+      "license": "Apache-2.0",
+      "keywords": [],
+      "collections": [
+        "dandi"
+      ],
+      "related": [
+        {
+          "id": "dandi:000582",
+          "relation": "uses_data",
+          "url": "https://dandiarchive.org/dandiset/000582"
+        },
+        {
+          "id": "doi:10.1126/science.1125572",
+          "relation": "references",
+          "url": "https://doi.org/10.1126/science.1125572"
+        }
+      ],
+      "notebooks": [
+        {
+          "path": "000582/Sargolini2006/000582_Sargolini2006_demo.ipynb",
+          "title": "Educational notebook based on Sargolini 2006",
+          "test": true,
+          "github_url": "https://github.com/dandi/example-notebooks/blob/master/000582/Sargolini2006/000582_Sargolini2006_demo.ipynb",
+          "colab_url": "https://colab.research.google.com/github/dandi/example-notebooks/blob/master/000582/Sargolini2006/000582_Sargolini2006_demo.ipynb",
+          "docker_image": "ghcr.io/dandi/example-notebooks/000582-sargolini2006:latest"
+        }
+      ]
+    },
+    {
+      "name": "000718-cailab-zaki-2024",
+      "version": "0.1.0",
+      "title": "Offline ensemble co-reactivation links memories across days",
+      "description": "This example notebook demonstrates how to access the dataset published at DANDI:000718.",
+      "directory": "000718/CaiLab/zaki_2024",
+      "metadata_url": "https://github.com/dandi/example-notebooks/blob/master/000718/CaiLab/zaki_2024/notebook.yaml",
+      "authors": [],
+      "maintainers": [
+        "alessandratrapani"
+      ],
+      "license": "Apache-2.0",
+      "keywords": [],
+      "collections": [
+        "dandi"
+      ],
+      "related": [
+        {
+          "id": "dandi:000718",
+          "relation": "uses_data",
+          "url": "https://dandiarchive.org/dandiset/000718"
+        }
+      ],
+      "notebooks": [
+        {
+          "path": "000718/CaiLab/zaki_2024/000718_demo.ipynb",
+          "title": "Offline ensemble co-reactivation links memories across days",
+          "test": true,
+          "github_url": "https://github.com/dandi/example-notebooks/blob/master/000718/CaiLab/zaki_2024/000718_demo.ipynb",
+          "colab_url": "https://colab.research.google.com/github/dandi/example-notebooks/blob/master/000718/CaiLab/zaki_2024/000718_demo.ipynb",
+          "docker_image": "ghcr.io/dandi/example-notebooks/000718-cailab-zaki-2024:latest"
+        }
+      ]
+    },
+    {
+      "name": "000727-clandinin-simple-data-access",
+      "version": "0.1.0",
+      "title": "How to use the data in this dandiset",
+      "description": "This is just a simple notebook to demonstrate how to access data on DANDI using the Python API.",
+      "directory": "000727/clandinin/simple_data_access",
+      "metadata_url": "https://github.com/dandi/example-notebooks/blob/master/000727/clandinin/simple_data_access/notebook.yaml",
+      "authors": [],
+      "maintainers": [
+        "h-mayorquin"
+      ],
+      "license": "Apache-2.0",
+      "keywords": [],
+      "collections": [
+        "dandi"
+      ],
+      "related": [
+        {
+          "id": "dandi:000727",
+          "relation": "uses_data",
+          "url": "https://dandiarchive.org/dandiset/000727"
+        },
+        {
+          "id": "doi:10.1101/2022.03.20.485047",
+          "relation": "references",
+          "url": "https://doi.org/10.1101/2022.03.20.485047"
+        }
+      ],
+      "notebooks": [
+        {
+          "path": "000727/clandinin/simple_data_access/reading_data.ipynb",
+          "title": "How to use the data in this dandiset",
+          "test": true,
+          "github_url": "https://github.com/dandi/example-notebooks/blob/master/000727/clandinin/simple_data_access/reading_data.ipynb",
+          "colab_url": "https://colab.research.google.com/github/dandi/example-notebooks/blob/master/000727/clandinin/simple_data_access/reading_data.ipynb",
+          "docker_image": "ghcr.io/dandi/example-notebooks/000727-clandinin-simple-data-access:latest"
+        }
+      ]
+    },
+    {
+      "name": "000728-alleninstitute",
+      "version": "0.1.0",
+      "title": "Allen Institute - Visual Coding - Optical Physiology",
+      "description": "This notebook and accompanying JSON metadata files are a full demo of the Visual Coding (Ophys) dataset corresponding to Dandiset 000728.",
+      "directory": "000728/AllenInstitute",
+      "metadata_url": "https://github.com/dandi/example-notebooks/blob/master/000728/AllenInstitute/notebook.yaml",
+      "authors": [],
+      "maintainers": [
+        "CodyCBakerPhD"
+      ],
+      "license": "Apache-2.0",
+      "keywords": [],
+      "collections": [
+        "dandi"
+      ],
+      "related": [
+        {
+          "id": "dandi:000728",
+          "relation": "uses_data",
+          "url": "https://dandiarchive.org/dandiset/000728"
+        }
+      ],
+      "notebooks": [
+        {
+          "path": "000728/AllenInstitute/visual_coding_ophys_tutorial.ipynb",
+          "title": "1.1 Experiment containers & sessions",
+          "test": true,
+          "github_url": "https://github.com/dandi/example-notebooks/blob/master/000728/AllenInstitute/visual_coding_ophys_tutorial.ipynb",
+          "colab_url": "https://colab.research.google.com/github/dandi/example-notebooks/blob/master/000728/AllenInstitute/visual_coding_ophys_tutorial.ipynb",
+          "docker_image": "ghcr.io/dandi/example-notebooks/000728-alleninstitute:latest"
+        }
+      ]
+    },
+    {
+      "name": "000947-turnerlab-public-demo",
+      "version": "0.1.0",
+      "title": "Reach-related Single Unit Activity in the Parkinsonian Macaque Tutorial",
+      "description": "This example notebook demonstrates how to access the dataset published at DANDI:000947.",
+      "directory": "000947/TurnerLab/public_demo",
+      "metadata_url": "https://github.com/dandi/example-notebooks/blob/master/000947/TurnerLab/public_demo/notebook.yaml",
+      "authors": [],
+      "maintainers": [
+        "weiglszonja"
+      ],
+      "license": "Apache-2.0",
+      "keywords": [],
+      "collections": [
+        "dandi"
+      ],
+      "related": [
+        {
+          "id": "dandi:000947",
+          "relation": "uses_data",
+          "url": "https://dandiarchive.org/dandiset/000947"
+        }
+      ],
+      "notebooks": [
+        {
+          "path": "000947/TurnerLab/public_demo/000947_demo.ipynb",
+          "title": "Reach-related Single Unit Activity in the Parkinsonian Macaque Tutorial",
+          "test": true,
+          "github_url": "https://github.com/dandi/example-notebooks/blob/master/000947/TurnerLab/public_demo/000947_demo.ipynb",
+          "colab_url": "https://colab.research.google.com/github/dandi/example-notebooks/blob/master/000947/TurnerLab/public_demo/000947_demo.ipynb",
+          "docker_image": "ghcr.io/dandi/example-notebooks/000947-turnerlab-public-demo:latest"
+        }
+      ]
+    },
+    {
+      "name": "000971-lernerlab-seiler-2024",
+      "version": "0.1.0",
+      "title": "Example Sessions for Dandiset 000971",
+      "description": "This submission provides 2 notebooks showcasing example sessions for the Dandiset 000971, which corresponds to the 2022 Current Biology paper: Dopamine signaling in the dorsomedial striatum promotes compulsive behavior by Seiler et al.",
+      "directory": "000971/lernerlab/seiler_2024",
+      "metadata_url": "https://github.com/dandi/example-notebooks/blob/master/000971/lernerlab/seiler_2024/notebook.yaml",
+      "authors": [],
+      "maintainers": [
+        "pauladkisson"
+      ],
+      "license": "Apache-2.0",
+      "keywords": [],
+      "collections": [
+        "dandi"
+      ],
+      "related": [
+        {
+          "id": "dandi:000971",
+          "relation": "uses_data",
+          "url": "https://dandiarchive.org/dandiset/000971"
+        },
+        {
+          "id": "doi:10.1016/j.cub.2022.01.055",
+          "relation": "references",
+          "url": "https://doi.org/10.1016/j.cub.2022.01.055"
+        }
+      ],
+      "notebooks": [
+        {
+          "path": "000971/lernerlab/seiler_2024/fiber_photometry_example_notebook.ipynb",
+          "title": "Fiber Photometry Example Session",
+          "test": true,
+          "github_url": "https://github.com/dandi/example-notebooks/blob/master/000971/lernerlab/seiler_2024/fiber_photometry_example_notebook.ipynb",
+          "colab_url": "https://colab.research.google.com/github/dandi/example-notebooks/blob/master/000971/lernerlab/seiler_2024/fiber_photometry_example_notebook.ipynb",
+          "docker_image": "ghcr.io/dandi/example-notebooks/000971-lernerlab-seiler-2024:latest"
+        },
+        {
+          "path": "000971/lernerlab/seiler_2024/optogenetics_example_notebook.ipynb",
+          "title": "Optogenetics Example Session",
+          "test": true,
+          "github_url": "https://github.com/dandi/example-notebooks/blob/master/000971/lernerlab/seiler_2024/optogenetics_example_notebook.ipynb",
+          "colab_url": "https://colab.research.google.com/github/dandi/example-notebooks/blob/master/000971/lernerlab/seiler_2024/optogenetics_example_notebook.ipynb",
+          "docker_image": "ghcr.io/dandi/example-notebooks/000971-lernerlab-seiler-2024:latest"
+        }
+      ]
+    },
+    {
+      "name": "001038-dombecklab",
+      "version": "0.1.0",
+      "title": "Unique functional responses differentially map onto genetic subtypes of dopamine neurons tutorial",
+      "description": "This example notebook demonstrates how to access the dataset published at DANDI:001038.",
+      "directory": "001038/DombeckLab",
+      "metadata_url": "https://github.com/dandi/example-notebooks/blob/master/001038/DombeckLab/notebook.yaml",
+      "authors": [],
+      "maintainers": [
+        "weiglszonja"
+      ],
+      "license": "Apache-2.0",
+      "keywords": [],
+      "collections": [
+        "dandi"
+      ],
+      "related": [
+        {
+          "id": "dandi:001038",
+          "relation": "uses_data",
+          "url": "https://dandiarchive.org/dandiset/001038"
+        }
+      ],
+      "notebooks": [
+        {
+          "path": "001038/DombeckLab/001038_demo.ipynb",
+          "title": "Azcorra 2023 demo",
+          "test": true,
+          "github_url": "https://github.com/dandi/example-notebooks/blob/master/001038/DombeckLab/001038_demo.ipynb",
+          "colab_url": "https://colab.research.google.com/github/dandi/example-notebooks/blob/master/001038/DombeckLab/001038_demo.ipynb",
+          "docker_image": "ghcr.io/dandi/example-notebooks/001038-dombecklab:latest"
+        }
+      ]
+    },
+    {
+      "name": "001075",
+      "version": "0.1.0",
+      "title": "001075 - Neural signal propagation atlas of Caenorhabditis elegans",
+      "description": "Randi, Francesco; Sharma, Anuj; Dvali, Sophie; Leifer, Andrew M. (2024) Neural signal propagation atlas of Caenorhabditis elegans (Version 0.240930.1859) [Data set]. DANDI archive. https://doi.org/10.48324/dandi.001075/0.240930.1859",
+      "directory": "001075",
+      "metadata_url": "https://github.com/dandi/example-notebooks/blob/master/001075/notebook.yaml",
+      "authors": [],
+      "maintainers": [
+        "CodyCBakerPhD"
+      ],
+      "license": "Apache-2.0",
+      "keywords": [],
+      "collections": [
+        "dandi"
+      ],
+      "related": [
+        {
+          "id": "dandi:001075",
+          "relation": "uses_data",
+          "url": "https://dandiarchive.org/dandiset/001075"
+        }
+      ],
+      "notebooks": [
+        {
+          "path": "001075/001075_paper_figure_1d.ipynb",
+          "title": null,
+          "test": true,
+          "github_url": "https://github.com/dandi/example-notebooks/blob/master/001075/001075_paper_figure_1d.ipynb",
+          "colab_url": "https://colab.research.google.com/github/dandi/example-notebooks/blob/master/001075/001075_paper_figure_1d.ipynb",
+          "docker_image": "ghcr.io/dandi/example-notebooks/001075:latest"
+        }
+      ]
+    },
+    {
+      "name": "001084-howelab",
+      "version": "0.1.0",
+      "title": "Targeted micro-fiber arrays for measuring and manipulating localized multi-scale neural dynamics over large, deep brain volumes during behavior tutorial",
+      "description": "This example notebook demonstrates how to access the dataset published at DANDI:001084.",
+      "directory": "001084/HoweLab",
+      "metadata_url": "https://github.com/dandi/example-notebooks/blob/master/001084/HoweLab/notebook.yaml",
+      "authors": [],
+      "maintainers": [
+        "weiglszonja"
+      ],
+      "license": "Apache-2.0",
+      "keywords": [],
+      "collections": [
+        "dandi"
+      ],
+      "related": [
+        {
+          "id": "dandi:001084",
+          "relation": "uses_data",
+          "url": "https://dandiarchive.org/dandiset/001084"
+        }
+      ],
+      "notebooks": [
+        {
+          "path": "001084/HoweLab/001084_demo.ipynb",
+          "title": "Vu 2024 demo",
+          "test": true,
+          "github_url": "https://github.com/dandi/example-notebooks/blob/master/001084/HoweLab/001084_demo.ipynb",
+          "colab_url": "https://colab.research.google.com/github/dandi/example-notebooks/blob/master/001084/HoweLab/001084_demo.ipynb",
+          "docker_image": "ghcr.io/dandi/example-notebooks/001084-howelab:latest"
+        }
+      ]
+    },
+    {
+      "name": "001170-reimerlab-public-demo",
+      "version": "0.1.0",
+      "title": "Mesoscale Two-Photon Calcium Imaging of Population Level Odor Responses from the Mouse Olfactory Bulb",
+      "description": "This example notebook demonstrates how to access the dataset published at DANDI:001170.",
+      "directory": "001170/ReimerLab/public_demo",
+      "metadata_url": "https://github.com/dandi/example-notebooks/blob/master/001170/ReimerLab/public_demo/notebook.yaml",
+      "authors": [],
+      "maintainers": [
+        "alessandratrapani"
+      ],
+      "license": "Apache-2.0",
+      "keywords": [],
+      "collections": [
+        "dandi"
+      ],
+      "related": [
+        {
+          "id": "dandi:001170",
+          "relation": "uses_data",
+          "url": "https://dandiarchive.org/dandiset/001170"
+        }
+      ],
+      "notebooks": [
+        {
+          "path": "001170/ReimerLab/public_demo/001170_demo.ipynb",
+          "title": "Tutorial for Mesoscale Two-Photon Calcium Imaging of Population Level Odor Responses from the Mouse Olfactory Bulb",
+          "test": true,
+          "github_url": "https://github.com/dandi/example-notebooks/blob/master/001170/ReimerLab/public_demo/001170_demo.ipynb",
+          "colab_url": "https://colab.research.google.com/github/dandi/example-notebooks/blob/master/001170/ReimerLab/public_demo/001170_demo.ipynb",
+          "docker_image": "ghcr.io/dandi/example-notebooks/001170-reimerlab-public-demo:latest"
+        }
+      ]
+    },
+    {
+      "name": "001172-higleylab",
+      "version": "0.1.0",
+      "title": "Dual-color mesoscopic imaging of both ACh and calcium across the neocortex of awake mice",
+      "description": "This example notebook demonstrates how to access the dataset published at DANDI:001172.",
+      "directory": "001172/HigleyLab",
+      "metadata_url": "https://github.com/dandi/example-notebooks/blob/master/001172/HigleyLab/notebook.yaml",
+      "authors": [],
+      "maintainers": [
+        "alessandratrapani"
+      ],
+      "license": "Apache-2.0",
+      "keywords": [],
+      "collections": [
+        "dandi"
+      ],
+      "related": [
+        {
+          "id": "dandi:001172",
+          "relation": "uses_data",
+          "url": "https://dandiarchive.org/dandiset/001172"
+        }
+      ],
+      "notebooks": [
+        {
+          "path": "001172/HigleyLab/001172_demo.ipynb",
+          "title": "Tutorial for Dual-color mesoscopic imaging of both ACh and calcium across the neocortex of awake mice",
+          "test": true,
+          "github_url": "https://github.com/dandi/example-notebooks/blob/master/001172/HigleyLab/001172_demo.ipynb",
+          "colab_url": "https://colab.research.google.com/github/dandi/example-notebooks/blob/master/001172/HigleyLab/001172_demo.ipynb",
+          "docker_image": "ghcr.io/dandi/example-notebooks/001172-higleylab:latest"
+        }
+      ]
+    },
+    {
+      "name": "001528-hnaskolab-lotfi-2025",
+      "version": "0.1.0",
+      "title": "Fiber photometry of SNc/SNr dopamine and GABA neuron responses to optogenetic STN and PPN stimulation in Parkinson's disease",
+      "description": "This tutorial shows how to access and process data from DANDI:001528 for the study detailed in \"Parkinson's Disease-vulnerable and -resilient dopamine neurons display opposite responses to excitatory input\".",
+      "directory": "001528/HnaskoLab/Lotfi_2025",
+      "metadata_url": "https://github.com/dandi/example-notebooks/blob/master/001528/HnaskoLab/Lotfi_2025/notebook.yaml",
+      "authors": [],
+      "maintainers": [
+        "alessandratrapani"
+      ],
+      "license": "Apache-2.0",
+      "keywords": [],
+      "collections": [
+        "dandi"
+      ],
+      "related": [
+        {
+          "id": "dandi:001528",
+          "relation": "uses_data",
+          "url": "https://dandiarchive.org/dandiset/001528"
+        },
+        {
+          "id": "doi:10.1101/2025.06.03.657460",
+          "relation": "references",
+          "url": "https://doi.org/10.1101/2025.06.03.657460"
+        }
+      ],
+      "notebooks": [
+        {
+          "path": "001528/HnaskoLab/Lotfi_2025/001528_demo.ipynb",
+          "title": "Fiber photometry of SNc/SNr dopamine and GABA neuron responses to optogenetic STN and PPN stimulation in Parkinson's disease",
+          "test": true,
+          "github_url": "https://github.com/dandi/example-notebooks/blob/master/001528/HnaskoLab/Lotfi_2025/001528_demo.ipynb",
+          "colab_url": "https://colab.research.google.com/github/dandi/example-notebooks/blob/master/001528/HnaskoLab/Lotfi_2025/001528_demo.ipynb",
+          "docker_image": "ghcr.io/dandi/example-notebooks/001528-hnaskolab-lotfi-2025:latest"
+        }
+      ]
+    },
+    {
+      "name": "001538-catalyst-neuro-zhai-2025",
+      "version": "0.1.0",
+      "title": "Analysis Notebooks for Zhai et al. 2025",
+      "description": "This submission provides Jupyter notebooks for reproducing key figures from Zhai et al. 2025 using data from DANDI:001538 - State-dependent modulation of spiny projection neurons controls levodopa-induced dyskinesia. The notebooks demonstrate how to analyze electrophysiology, optogenetics, and acetylcholine biosensor data to understand cellular mechanisms underlying levodopa-induced dyskinesia in Parkinson's disease.",
+      "directory": "001538/catalyst_neuro/zhai_2025",
+      "metadata_url": "https://github.com/dandi/example-notebooks/blob/master/001538/catalyst_neuro/zhai_2025/notebook.yaml",
+      "authors": [],
+      "maintainers": [
+        "h-mayorquin"
+      ],
+      "license": "Apache-2.0",
+      "keywords": [],
+      "collections": [
+        "dandi"
+      ],
+      "related": [
+        {
+          "id": "dandi:001538",
+          "relation": "uses_data",
+          "url": "https://dandiarchive.org/dandiset/001538"
+        }
+      ],
+      "notebooks": [
+        {
+          "path": "001538/catalyst_neuro/zhai_2025/figure_1E_dspn_somatic_excitability.ipynb",
+          "title": "Reproducing Figure 1E: dSPN Somatic Excitability Analysis",
+          "test": true,
+          "github_url": "https://github.com/dandi/example-notebooks/blob/master/001538/catalyst_neuro/zhai_2025/figure_1E_dspn_somatic_excitability.ipynb",
+          "colab_url": "https://colab.research.google.com/github/dandi/example-notebooks/blob/master/001538/catalyst_neuro/zhai_2025/figure_1E_dspn_somatic_excitability.ipynb",
+          "docker_image": "ghcr.io/dandi/example-notebooks/001538-catalyst-neuro-zhai-2025:latest"
+        },
+        {
+          "path": "001538/catalyst_neuro/zhai_2025/figure_2GH_oepsc_analysis.ipynb",
+          "title": "Reproducing Figure 2G-H: oEPSC Analysis",
+          "test": true,
+          "github_url": "https://github.com/dandi/example-notebooks/blob/master/001538/catalyst_neuro/zhai_2025/figure_2GH_oepsc_analysis.ipynb",
+          "colab_url": "https://colab.research.google.com/github/dandi/example-notebooks/blob/master/001538/catalyst_neuro/zhai_2025/figure_2GH_oepsc_analysis.ipynb",
+          "docker_image": "ghcr.io/dandi/example-notebooks/001538-catalyst-neuro-zhai-2025:latest"
+        },
+        {
+          "path": "001538/catalyst_neuro/zhai_2025/figure_5F_acetylcholine_biosensor.ipynb",
+          "title": "Reproducing Figure 5F: GRABACh3.0 Acetylcholine Biosensor Analysis",
+          "test": true,
+          "github_url": "https://github.com/dandi/example-notebooks/blob/master/001538/catalyst_neuro/zhai_2025/figure_5F_acetylcholine_biosensor.ipynb",
+          "colab_url": "https://colab.research.google.com/github/dandi/example-notebooks/blob/master/001538/catalyst_neuro/zhai_2025/figure_5F_acetylcholine_biosensor.ipynb",
+          "docker_image": "ghcr.io/dandi/example-notebooks/001538-catalyst-neuro-zhai-2025:latest"
+        },
+        {
+          "path": "001538/catalyst_neuro/zhai_2025/how_to_use_this_dataset.ipynb",
+          "title": "State-dependent modulation of spiny projection neurons controlslevodopa-induced dyskinesia in a mouse model of Parkinson\u2019s disease",
+          "test": true,
+          "github_url": "https://github.com/dandi/example-notebooks/blob/master/001538/catalyst_neuro/zhai_2025/how_to_use_this_dataset.ipynb",
+          "colab_url": "https://colab.research.google.com/github/dandi/example-notebooks/blob/master/001538/catalyst_neuro/zhai_2025/how_to_use_this_dataset.ipynb",
+          "docker_image": "ghcr.io/dandi/example-notebooks/001538-catalyst-neuro-zhai-2025:latest"
+        }
+      ]
+    },
+    {
+      "name": "001550-paganlab",
+      "version": "0.1.0",
+      "title": "DANDI:001550 \u2014 Pagan Lab Behavioral and Optogenetics Notebooks",
+      "description": "These notebooks demonstrate how to access data from DANDI:001550, a dataset of behavioral sessions from Long-Evans rats performing multi-sensory decision-making tasks. A subset of sessions (TaskSwitch6, 5 subjects) include wireless optogenetics (Cerebro system, Karpova Lab) used to bilaterally inactivate the Frontal Orienting Field (FOF) via AAV2/5-mDlx-ChR2-mCherry.",
+      "directory": "001550/PaganLab",
+      "metadata_url": "https://github.com/dandi/example-notebooks/blob/master/001550/PaganLab/notebook.yaml",
+      "authors": [],
+      "maintainers": [
+        "weiglszonja"
+      ],
+      "license": "Apache-2.0",
+      "keywords": [],
+      "collections": [
+        "dandi"
+      ],
+      "related": [
+        {
+          "id": "dandi:001550",
+          "relation": "uses_data",
+          "url": "https://dandiarchive.org/dandiset/001550"
+        },
+        {
+          "id": "doi:10.1038/s41586-024-08433-6",
+          "relation": "references",
+          "url": "https://doi.org/10.1038/s41586-024-08433-6"
+        }
+      ],
+      "notebooks": [
+        {
+          "path": "001550/PaganLab/01_behavior_demo.ipynb",
+          "title": "Pagan Lab \u2014 Behavioral Data",
+          "test": true,
+          "github_url": "https://github.com/dandi/example-notebooks/blob/master/001550/PaganLab/01_behavior_demo.ipynb",
+          "colab_url": "https://colab.research.google.com/github/dandi/example-notebooks/blob/master/001550/PaganLab/01_behavior_demo.ipynb",
+          "docker_image": "ghcr.io/dandi/example-notebooks/001550-paganlab:latest"
+        },
+        {
+          "path": "001550/PaganLab/02_optogenetics_demo.ipynb",
+          "title": "Pagan Lab \u2014 Optogenetics Data",
+          "test": true,
+          "github_url": "https://github.com/dandi/example-notebooks/blob/master/001550/PaganLab/02_optogenetics_demo.ipynb",
+          "colab_url": "https://colab.research.google.com/github/dandi/example-notebooks/blob/master/001550/PaganLab/02_optogenetics_demo.ipynb",
+          "docker_image": "ghcr.io/dandi/example-notebooks/001550-paganlab:latest"
+        }
+      ]
+    },
+    {
+      "name": "001636-turnerlab-motor-cortex",
+      "version": "0.1.0",
+      "title": "Turner Lab M1 MPTP Parkinsonism Dataset",
+      "description": "This folder contains example notebooks for DANDI:001636, single-unit electrophysiology recordings from primary motor cortex (M1) of macaque monkeys performing flexion/extension motor tasks before and after MPTP-induced parkinsonism. Pyramidal tract neurons (PTNs) and corticostriatal neurons (CSNs) are identified by antidromic stimulation, allowing the comparison of how Parkinson's pathology affects each projection class.",
+      "directory": "001636/TurnerLab/motor_cortex",
+      "metadata_url": "https://github.com/dandi/example-notebooks/blob/master/001636/TurnerLab/motor_cortex/notebook.yaml",
+      "authors": [],
+      "maintainers": [
+        "h-mayorquin"
+      ],
+      "license": "Apache-2.0",
+      "keywords": [],
+      "collections": [
+        "dandi"
+      ],
+      "related": [
+        {
+          "id": "dandi:001636",
+          "relation": "uses_data",
+          "url": "https://dandiarchive.org/dandiset/001636"
+        }
+      ],
+      "notebooks": [
+        {
+          "path": "001636/TurnerLab/motor_cortex/antidromic_detection_tutorial.ipynb",
+          "title": "Introduction to Antidromic Stimulation",
+          "test": true,
+          "github_url": "https://github.com/dandi/example-notebooks/blob/master/001636/TurnerLab/motor_cortex/antidromic_detection_tutorial.ipynb",
+          "colab_url": "https://colab.research.google.com/github/dandi/example-notebooks/blob/master/001636/TurnerLab/motor_cortex/antidromic_detection_tutorial.ipynb",
+          "docker_image": "ghcr.io/dandi/example-notebooks/001636-turnerlab-motor-cortex:latest"
+        },
+        {
+          "path": "001636/TurnerLab/motor_cortex/turner_m1_glm.ipynb",
+          "title": "GLM Analysis with NeMoS",
+          "test": true,
+          "github_url": "https://github.com/dandi/example-notebooks/blob/master/001636/TurnerLab/motor_cortex/turner_m1_glm.ipynb",
+          "colab_url": "https://colab.research.google.com/github/dandi/example-notebooks/blob/master/001636/TurnerLab/motor_cortex/turner_m1_glm.ipynb",
+          "docker_image": "ghcr.io/dandi/example-notebooks/001636-turnerlab-motor-cortex:latest"
+        },
+        {
+          "path": "001636/TurnerLab/motor_cortex/turner_m1_peth.ipynb",
+          "title": "Peri-Event Time Histogram (PETH) with Pynapple",
+          "test": true,
+          "github_url": "https://github.com/dandi/example-notebooks/blob/master/001636/TurnerLab/motor_cortex/turner_m1_peth.ipynb",
+          "colab_url": "https://colab.research.google.com/github/dandi/example-notebooks/blob/master/001636/TurnerLab/motor_cortex/turner_m1_peth.ipynb",
+          "docker_image": "ghcr.io/dandi/example-notebooks/001636-turnerlab-motor-cortex:latest"
+        },
+        {
+          "path": "001636/TurnerLab/motor_cortex/turner_m1_usage.ipynb",
+          "title": "Turner Lab M1 MPTP Dataset - NWB Usage Guide",
+          "test": true,
+          "github_url": "https://github.com/dandi/example-notebooks/blob/master/001636/TurnerLab/motor_cortex/turner_m1_usage.ipynb",
+          "colab_url": "https://colab.research.google.com/github/dandi/example-notebooks/blob/master/001636/TurnerLab/motor_cortex/turner_m1_usage.ipynb",
+          "docker_image": "ghcr.io/dandi/example-notebooks/001636-turnerlab-motor-cortex:latest"
+        }
+      ]
+    },
+    {
+      "name": "001687-wanglab-figure2-distance-tuning",
+      "version": "0.1.0",
+      "title": "Figure 2: peri-head distance coding in the mouse brainstem",
+      "description": "Reproduces the Figure 2 panels of Xiao, Severson, et al. (2026), Peri-Head Distance Coding in the Mouse Brainstem, from Dandiset 001687.",
+      "directory": "001687/wanglab/figure2-distance-tuning",
+      "metadata_url": "https://github.com/dandi/example-notebooks/blob/master/001687/wanglab/figure2-distance-tuning/notebook.yaml",
+      "authors": [],
+      "maintainers": [
+        "vncntprvst"
+      ],
+      "license": "Apache-2.0",
+      "keywords": [],
+      "collections": [
+        "dandi"
+      ],
+      "related": [
+        {
+          "id": "dandi:001687",
+          "relation": "uses_data",
+          "url": "https://dandiarchive.org/dandiset/001687"
+        }
+      ],
+      "notebooks": [
+        {
+          "path": "001687/wanglab/figure2-distance-tuning/figure2_distance_tuning.ipynb",
+          "title": "Figure 2: peri-head distance coding in the mouse brainstem",
+          "test": true,
+          "github_url": "https://github.com/dandi/example-notebooks/blob/master/001687/wanglab/figure2-distance-tuning/figure2_distance_tuning.ipynb",
+          "colab_url": "https://colab.research.google.com/github/dandi/example-notebooks/blob/master/001687/wanglab/figure2-distance-tuning/figure2_distance_tuning.ipynb",
+          "docker_image": "ghcr.io/dandi/example-notebooks/001687-wanglab-figure2-distance-tuning:latest"
+        }
+      ]
+    },
+    {
+      "name": "001712-ibl-widefield-public-demo",
+      "version": "0.1.0",
+      "title": "IBL Widefield",
+      "description": "This example notebook demonstrates how to access the dataset published at DANDI:001712.",
+      "directory": "001712/IBL-Widefield/public_demo",
+      "metadata_url": "https://github.com/dandi/example-notebooks/blob/master/001712/IBL-Widefield/public_demo/notebook.yaml",
+      "authors": [],
+      "maintainers": [
+        "alessandratrapani"
+      ],
+      "license": "Apache-2.0",
+      "keywords": [],
+      "collections": [
+        "dandi"
+      ],
+      "related": [
+        {
+          "id": "dandi:001712",
+          "relation": "uses_data",
+          "url": "https://dandiarchive.org/dandiset/001712"
+        }
+      ],
+      "notebooks": [
+        {
+          "path": "001712/IBL-Widefield/public_demo/anatomical_localization_widefield.ipynb",
+          "title": "IBL - Anatomical Localization of Widefield Imaging Data with ndx-anatomical-localization",
+          "test": false,
+          "github_url": "https://github.com/dandi/example-notebooks/blob/master/001712/IBL-Widefield/public_demo/anatomical_localization_widefield.ipynb",
+          "colab_url": null,
+          "docker_image": null
+        },
+        {
+          "path": "001712/IBL-Widefield/public_demo/processed_widefield.ipynb",
+          "title": "IBL - Processed Widefield Imaging Data",
+          "test": false,
+          "github_url": "https://github.com/dandi/example-notebooks/blob/master/001712/IBL-Widefield/public_demo/processed_widefield.ipynb",
+          "colab_url": null,
+          "docker_image": null
+        },
+        {
+          "path": "001712/IBL-Widefield/public_demo/raw_widefield.ipynb",
+          "title": "IBL Widefield \u2014 Raw Data Tutorial",
+          "test": true,
+          "github_url": "https://github.com/dandi/example-notebooks/blob/master/001712/IBL-Widefield/public_demo/raw_widefield.ipynb",
+          "colab_url": "https://colab.research.google.com/github/dandi/example-notebooks/blob/master/001712/IBL-Widefield/public_demo/raw_widefield.ipynb",
+          "docker_image": "ghcr.io/dandi/example-notebooks/001712-ibl-widefield-public-demo:latest"
+        }
+      ]
+    },
+    {
+      "name": "001754-catalystneuro",
+      "version": "0.1.0",
+      "title": "Three-dimensional spatial selectivity of hippocampal neurons during space flight",
+      "description": "This example notebook demonstrates how to access and visualize the dataset published at DANDI:001754.",
+      "directory": "001754/CatalystNeuro",
+      "metadata_url": "https://github.com/dandi/example-notebooks/blob/master/001754/CatalystNeuro/notebook.yaml",
+      "authors": [],
+      "maintainers": [
+        "bendichter"
+      ],
+      "license": "Apache-2.0",
+      "keywords": [],
+      "collections": [
+        "dandi"
+      ],
+      "related": [
+        {
+          "id": "dandi:001754",
+          "relation": "uses_data",
+          "url": "https://dandiarchive.org/dandiset/001754"
+        },
+        {
+          "id": "doi:10.1038/72910",
+          "relation": "references",
+          "url": "https://doi.org/10.1038/72910"
+        }
+      ],
+      "notebooks": [
+        {
+          "path": "001754/CatalystNeuro/001754_demo.ipynb",
+          "title": "Hippocampal Place Cells During Space Flight",
+          "test": true,
+          "github_url": "https://github.com/dandi/example-notebooks/blob/master/001754/CatalystNeuro/001754_demo.ipynb",
+          "colab_url": "https://colab.research.google.com/github/dandi/example-notebooks/blob/master/001754/CatalystNeuro/001754_demo.ipynb",
+          "docker_image": "ghcr.io/dandi/example-notebooks/001754-catalystneuro:latest"
+        }
+      ]
+    },
+    {
+      "name": "001933-dombecklab",
+      "version": "0.1.0",
+      "title": "DANDI:001933 \u2014 Dombeck Lab Fiber Photometry Notebook",
+      "description": "This notebook demonstrates how to access data from DANDI:001933, a dataset of in vivo fiber photometry recordings of striatal dopamine release in awake, head-fixed mice expressing the dopamine sensor GRAB-DA3m.",
+      "directory": "001933/DombeckLab",
+      "metadata_url": "https://github.com/dandi/example-notebooks/blob/master/001933/DombeckLab/notebook.yaml",
+      "authors": [],
+      "maintainers": [
+        "bendichter"
+      ],
+      "license": "Apache-2.0",
+      "keywords": [],
+      "collections": [
+        "dandi"
+      ],
+      "related": [
+        {
+          "id": "dandi:001933",
+          "relation": "uses_data",
+          "url": "https://dandiarchive.org/dandiset/001933"
+        }
+      ],
+      "notebooks": [
+        {
+          "path": "001933/DombeckLab/001933_demo.ipynb",
+          "title": "Chen et al. 2026 \u2014 NWB dataset tutorial (streaming from DANDI)",
+          "test": true,
+          "github_url": "https://github.com/dandi/example-notebooks/blob/master/001933/DombeckLab/001933_demo.ipynb",
+          "colab_url": "https://colab.research.google.com/github/dandi/example-notebooks/blob/master/001933/DombeckLab/001933_demo.ipynb",
+          "docker_image": "ghcr.io/dandi/example-notebooks/001933-dombecklab:latest"
+        }
+      ]
+    },
+    {
+      "name": "archive-analysis",
+      "version": "0.1.0",
+      "title": "archive analysis",
+      "description": null,
+      "directory": "archive_analysis",
+      "metadata_url": "https://github.com/dandi/example-notebooks/blob/master/archive_analysis/notebook.yaml",
+      "authors": [],
+      "maintainers": [
+        "bendichter"
+      ],
+      "license": "Apache-2.0",
+      "keywords": [],
+      "collections": [
+        "dandi"
+      ],
+      "related": [
+        {
+          "id": "rrid:SCR_017571",
+          "relation": "tutorial_for",
+          "url": "https://scicrunch.org/resolver/RRID:SCR_017571"
+        }
+      ],
+      "notebooks": [
+        {
+          "path": "archive_analysis/dandiset_size_plot.ipynb",
+          "title": null,
+          "test": false,
+          "github_url": "https://github.com/dandi/example-notebooks/blob/master/archive_analysis/dandiset_size_plot.ipynb",
+          "colab_url": null,
+          "docker_image": null
+        }
+      ]
+    },
+    {
+      "name": "dandi",
+      "version": "0.1.0",
+      "title": "Converting data to NWB",
+      "description": null,
+      "directory": "dandi",
+      "metadata_url": "https://github.com/dandi/example-notebooks/blob/master/dandi/notebook.yaml",
+      "authors": [],
+      "maintainers": [
+        "bendichter",
+        "yarikoptic",
+        "satra"
+      ],
+      "license": "Apache-2.0",
+      "keywords": [
+        "dandi-archive"
+      ],
+      "collections": [
+        "dandi"
+      ],
+      "related": [
+        {
+          "id": "rrid:SCR_017571",
+          "relation": "tutorial_for",
+          "url": "https://scicrunch.org/resolver/RRID:SCR_017571"
+        }
+      ],
+      "notebooks": [
+        {
+          "path": "dandi/DANDI User Guide, Part I.ipynb",
+          "title": "Converting data to NWB",
+          "test": true,
+          "github_url": "https://github.com/dandi/example-notebooks/blob/master/dandi/DANDI%20User%20Guide%2C%20Part%20I.ipynb",
+          "colab_url": "https://colab.research.google.com/github/dandi/example-notebooks/blob/master/dandi/DANDI%20User%20Guide%2C%20Part%20I.ipynb",
+          "docker_image": "ghcr.io/dandi/example-notebooks/dandi-dandi-user-guide-part-i:latest"
+        },
+        {
+          "path": "dandi/DANDI User Guide, Part II.ipynb",
+          "title": "Part II, Interacting with the archive \"in different ways\"",
+          "test": true,
+          "github_url": "https://github.com/dandi/example-notebooks/blob/master/dandi/DANDI%20User%20Guide%2C%20Part%20II.ipynb",
+          "colab_url": "https://colab.research.google.com/github/dandi/example-notebooks/blob/master/dandi/DANDI%20User%20Guide%2C%20Part%20II.ipynb",
+          "docker_image": "ghcr.io/dandi/example-notebooks/dandi-dandi-user-guide-part-ii:latest"
+        },
+        {
+          "path": "dandi/archive_stats.ipynb",
+          "title": null,
+          "test": false,
+          "github_url": "https://github.com/dandi/example-notebooks/blob/master/dandi/archive_stats.ipynb",
+          "colab_url": null,
+          "docker_image": null
+        }
+      ]
+    },
+    {
+      "name": "demos",
+      "version": "0.1.0",
+      "title": "NWB Widgets",
+      "description": null,
+      "directory": "demos",
+      "metadata_url": "https://github.com/dandi/example-notebooks/blob/master/demos/notebook.yaml",
+      "authors": [],
+      "maintainers": [
+        "satra"
+      ],
+      "license": "Apache-2.0",
+      "keywords": [],
+      "collections": [
+        "dandi"
+      ],
+      "related": [
+        {
+          "id": "rrid:SCR_017571",
+          "relation": "tutorial_for",
+          "url": "https://scicrunch.org/resolver/RRID:SCR_017571"
+        }
+      ],
+      "notebooks": [
+        {
+          "path": "demos/NWBWidget-demo.ipynb",
+          "title": "NWB Widgets",
+          "test": true,
+          "github_url": "https://github.com/dandi/example-notebooks/blob/master/demos/NWBWidget-demo.ipynb",
+          "colab_url": "https://colab.research.google.com/github/dandi/example-notebooks/blob/master/demos/NWBWidget-demo.ipynb",
+          "docker_image": "ghcr.io/dandi/example-notebooks/demos:latest"
+        }
+      ]
+    },
+    {
+      "name": "tutorials-bcm-2024",
+      "version": "0.1.0",
+      "title": "Streaming and interacting with NWB data from DANDI",
+      "description": "This example notebook demonstrates how to stream an NWB file from DANDI and perform analyses with the data using pynapple. This notebook is intended to be used at the NWB and DANDI workshops as an interactive tutorial.",
+      "directory": "tutorials/bcm_2024",
+      "metadata_url": "https://github.com/dandi/example-notebooks/blob/master/tutorials/bcm_2024/notebook.yaml",
+      "authors": [],
+      "maintainers": [
+        "stephprince"
+      ],
+      "license": "Apache-2.0",
+      "keywords": [
+        "tutorial",
+        "bcm-2024"
+      ],
+      "collections": [
+        "dandi"
+      ],
+      "related": [
+        {
+          "id": "rrid:SCR_017571",
+          "relation": "tutorial_for",
+          "url": "https://scicrunch.org/resolver/RRID:SCR_017571"
+        },
+        {
+          "id": "dandi:000582",
+          "relation": "uses_data",
+          "url": "https://dandiarchive.org/dandiset/000582"
+        },
+        {
+          "id": "doi:10.1126/science.1125572",
+          "relation": "references",
+          "url": "https://doi.org/10.1126/science.1125572"
+        }
+      ],
+      "notebooks": [
+        {
+          "path": "tutorials/bcm_2024/analysis-demo.ipynb",
+          "title": "Streaming and interacting with NWB data from DANDI",
+          "test": true,
+          "github_url": "https://github.com/dandi/example-notebooks/blob/master/tutorials/bcm_2024/analysis-demo.ipynb",
+          "colab_url": "https://colab.research.google.com/github/dandi/example-notebooks/blob/master/tutorials/bcm_2024/analysis-demo.ipynb",
+          "docker_image": "ghcr.io/dandi/example-notebooks/tutorials-bcm-2024:latest"
+        }
+      ]
+    },
+    {
+      "name": "tutorials-cosyne-2020",
+      "version": "0.1.0",
+      "title": "Cosyne 2019 NWB:N Tutorial - Extracellular Electrophysiology",
+      "description": null,
+      "directory": "tutorials/cosyne_2020",
+      "metadata_url": "https://github.com/dandi/example-notebooks/blob/master/tutorials/cosyne_2020/notebook.yaml",
+      "authors": [],
+      "maintainers": [
+        "bendichter"
+      ],
+      "license": "Apache-2.0",
+      "keywords": [
+        "tutorial",
+        "cosyne-2020"
+      ],
+      "collections": [
+        "dandi"
+      ],
+      "related": [
+        {
+          "id": "rrid:SCR_017571",
+          "relation": "tutorial_for",
+          "url": "https://scicrunch.org/resolver/RRID:SCR_017571"
+        }
+      ],
+      "notebooks": [
+        {
+          "path": "tutorials/cosyne_2020/NWB_tutorial_2019.ipynb",
+          "title": "Cosyne 2019 NWB:N Tutorial - Extracellular Electrophysiology",
+          "test": false,
+          "github_url": "https://github.com/dandi/example-notebooks/blob/master/tutorials/cosyne_2020/NWB_tutorial_2019.ipynb",
+          "colab_url": null,
+          "docker_image": null
+        }
+      ]
+    },
+    {
+      "name": "tutorials-cosyne-2023",
+      "version": "0.1.0",
+      "title": "More specific identification of NWB dandisets",
+      "description": null,
+      "directory": "tutorials/cosyne_2023",
+      "metadata_url": "https://github.com/dandi/example-notebooks/blob/master/tutorials/cosyne_2023/notebook.yaml",
+      "authors": [],
+      "maintainers": [
+        "CodyCBakerPhD"
+      ],
+      "license": "Apache-2.0",
+      "keywords": [
+        "tutorial",
+        "cosyne-2023"
+      ],
+      "collections": [
+        "dandi"
+      ],
+      "related": [
+        {
+          "id": "rrid:SCR_017571",
+          "relation": "tutorial_for",
+          "url": "https://scicrunch.org/resolver/RRID:SCR_017571"
+        }
+      ],
+      "notebooks": [
+        {
+          "path": "tutorials/cosyne_2023/advanced_asset_search.ipynb",
+          "title": "More specific identification of NWB dandisets",
+          "test": false,
+          "github_url": "https://github.com/dandi/example-notebooks/blob/master/tutorials/cosyne_2023/advanced_asset_search.ipynb",
+          "colab_url": null,
+          "docker_image": null
+        },
+        {
+          "path": "tutorials/cosyne_2023/simple_dandiset_search.ipynb",
+          "title": "Identify NWB dandisets",
+          "test": true,
+          "github_url": "https://github.com/dandi/example-notebooks/blob/master/tutorials/cosyne_2023/simple_dandiset_search.ipynb",
+          "colab_url": "https://colab.research.google.com/github/dandi/example-notebooks/blob/master/tutorials/cosyne_2023/simple_dandiset_search.ipynb",
+          "docker_image": "ghcr.io/dandi/example-notebooks/tutorials-cosyne-2023:latest"
+        }
+      ]
+    },
+    {
+      "name": "tutorials-neurodatarehack-2024",
+      "version": "0.1.0",
+      "title": "More specific identification of NWB dandisets",
+      "description": null,
+      "directory": "tutorials/neurodatarehack_2024",
+      "metadata_url": "https://github.com/dandi/example-notebooks/blob/master/tutorials/neurodatarehack_2024/notebook.yaml",
+      "authors": [],
+      "maintainers": [
+        "CodyCBakerPhD"
+      ],
+      "license": "Apache-2.0",
+      "keywords": [
+        "tutorial",
+        "neurodatarehack-2024"
+      ],
+      "collections": [
+        "dandi"
+      ],
+      "related": [
+        {
+          "id": "rrid:SCR_017571",
+          "relation": "tutorial_for",
+          "url": "https://scicrunch.org/resolver/RRID:SCR_017571"
+        }
+      ],
+      "notebooks": [
+        {
+          "path": "tutorials/neurodatarehack_2024/advanced_asset_search.ipynb",
+          "title": "More specific identification of NWB dandisets",
+          "test": true,
+          "github_url": "https://github.com/dandi/example-notebooks/blob/master/tutorials/neurodatarehack_2024/advanced_asset_search.ipynb",
+          "colab_url": "https://colab.research.google.com/github/dandi/example-notebooks/blob/master/tutorials/neurodatarehack_2024/advanced_asset_search.ipynb",
+          "docker_image": "ghcr.io/dandi/example-notebooks/tutorials-neurodatarehack-2024-advanced-asset-search:latest"
+        },
+        {
+          "path": "tutorials/neurodatarehack_2024/simple_dandiset_search.ipynb",
+          "title": "Identify NWB dandisets",
+          "test": true,
+          "github_url": "https://github.com/dandi/example-notebooks/blob/master/tutorials/neurodatarehack_2024/simple_dandiset_search.ipynb",
+          "colab_url": "https://colab.research.google.com/github/dandi/example-notebooks/blob/master/tutorials/neurodatarehack_2024/simple_dandiset_search.ipynb",
+          "docker_image": "ghcr.io/dandi/example-notebooks/tutorials-neurodatarehack-2024-simple-dandiset-search:latest"
+        }
+      ]
+    },
+    {
+      "name": "tutorials-open-data-quick-start-2026",
+      "version": "0.1.0",
+      "title": "DANDI Quick Start Guide",
+      "description": "Developed by request of the Open Data Registry, to briefly showcase the archive and how it helps to answer several key scientific questions.",
+      "directory": "tutorials/open_data_quick_start_2026",
+      "metadata_url": "https://github.com/dandi/example-notebooks/blob/master/tutorials/open_data_quick_start_2026/notebook.yaml",
+      "authors": [],
+      "maintainers": [
+        "CodyCBakerPhD"
+      ],
+      "license": "Apache-2.0",
+      "keywords": [
+        "tutorial",
+        "open-data-quick-start-2026"
+      ],
+      "collections": [
+        "dandi"
+      ],
+      "related": [
+        {
+          "id": "rrid:SCR_017571",
+          "relation": "tutorial_for",
+          "url": "https://scicrunch.org/resolver/RRID:SCR_017571"
+        }
+      ],
+      "notebooks": [
+        {
+          "path": "tutorials/open_data_quick_start_2026/Get-to-know-a-Dandiset.ipynb",
+          "title": "Exploring the DANDI Archive",
+          "test": true,
+          "github_url": "https://github.com/dandi/example-notebooks/blob/master/tutorials/open_data_quick_start_2026/Get-to-know-a-Dandiset.ipynb",
+          "colab_url": "https://colab.research.google.com/github/dandi/example-notebooks/blob/master/tutorials/open_data_quick_start_2026/Get-to-know-a-Dandiset.ipynb",
+          "docker_image": "ghcr.io/dandi/example-notebooks/tutorials-open-data-quick-start-2026:latest"
+        }
+      ]
+    }
+  ]
+}
