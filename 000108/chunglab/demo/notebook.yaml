@@ -6,8 +6,8 @@ name: 000108-chunglab-demo
 version: 0.1.0
 title: Reading volumes from the Chung lab dataset (Dandiset 000108)
 maintainers:
-- github: LeeKamentsky
 - github: satra
+- github: LeeKamentsky
 - github: djarecka
 license: Apache-2.0
 notebooks:

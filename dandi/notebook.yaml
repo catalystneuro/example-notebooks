@@ -6,8 +6,8 @@ name: dandi
 version: 0.1.0
 title: Converting data to NWB
 maintainers:
-- github: bendichter
 - github: yarikoptic
+- github: bendichter
 - github: satra
 license: Apache-2.0
 notebooks:

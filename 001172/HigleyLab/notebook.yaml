@@ -9,6 +9,7 @@ title: Dual-color mesoscopic imaging of both ACh and calcium across the neocorte
 description: This example notebook demonstrates how to access the dataset published at DANDI:001172.
 maintainers:
 - github: alessandratrapani
+- github: bendichter
 license: Apache-2.0
 notebooks:
 - path: 001172_demo.ipynb

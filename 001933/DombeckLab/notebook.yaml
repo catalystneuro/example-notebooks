@@ -9,6 +9,7 @@ description: This notebook demonstrates how to access data from DANDI:001933, a 
   in vivo fiber photometry recordings of striatal dopamine release in awake, head-fixed mice
   expressing the dopamine sensor GRAB-DA3m.
 maintainers:
+- github: weiglszonja
 - github: bendichter
 license: Apache-2.0
 notebooks:

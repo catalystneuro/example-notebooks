@@ -7,6 +7,7 @@ version: 0.1.0
 title: More specific identification of NWB dandisets
 maintainers:
 - github: CodyCBakerPhD
+- github: bendichter
 license: Apache-2.0
 notebooks:
 - path: advanced_asset_search.ipynb

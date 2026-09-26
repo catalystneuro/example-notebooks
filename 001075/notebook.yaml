@@ -10,6 +10,7 @@ description: Randi, Francesco; Sharma, Anuj; Dvali, Sophie; Leifer, Andrew M. (2
   archive. https://doi.org/10.48324/dandi.001075/0.240930.1859
 maintainers:
 - github: CodyCBakerPhD
+- github: bendichter
 license: Apache-2.0
 notebooks:
 - path: 001075_paper_figure_1d.ipynb

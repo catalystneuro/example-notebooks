@@ -10,6 +10,7 @@ description: 'This submission provides 2 notebooks showcasing example sessions f
   striatum promotes compulsive behavior by Seiler et al.'
 maintainers:
 - github: pauladkisson
+- github: bendichter
 license: Apache-2.0
 notebooks:
 - path: fiber_photometry_example_notebook.ipynb

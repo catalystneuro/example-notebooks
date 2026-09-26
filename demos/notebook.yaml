@@ -6,6 +6,7 @@ name: demos
 version: 0.1.0
 title: NWB Widgets
 maintainers:
+- github: bendichter
 - github: satra
 license: Apache-2.0
 notebooks:

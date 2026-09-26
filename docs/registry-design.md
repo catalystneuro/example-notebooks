@@ -433,7 +433,11 @@ flows.
 ## Migration of the existing notebooks
 
 1. Generate a `notebook.yaml` for each current directory with a script:
-   - **Maintainers:** the original PR authors and git history.
+   - **Maintainers:** from git history. Each account's share of the lines
+     added to the entry is counted across its files' full history,
+     following moves. Commits that modify three or more entries (re-locks,
+     codespell runs) are skipped. Anyone with at least 20% qualifies, as
+     does whoever created each notebook, up to four maintainers.
    - **`related`:** the dandiset ID from the path, plus DOIs found in the
      README.
    - **Authors:** left empty for the maintainers to fill in. They are
