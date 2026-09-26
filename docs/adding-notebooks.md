@@ -308,6 +308,29 @@ install cell. Commit both. The lint step fails when a CI-tested notebook's
 install cell disagrees with its lock file — usually because only one of the
 notebooks sharing a `requirements.in` was re-locked.
 
+## Merging changes to your entry
+
+Once an entry is in the registry, its maintainers can merge their own changes
+without write access to the repository. Every PR gets a comment from the
+registry bot listing each part of the PR and who can approve it. When all
+checks have passed, comment
+
+```
+/merge
+```
+
+on the PR. The bot merges it if you are a maintainer of every entry the PR
+touches (as listed in `notebook.yaml` on the default branch). Otherwise it
+replies with what you can't approve. Some changes need someone else:
+
+- **A new entry, or adding an entry to a collection:** a curator of that
+  collection (`collections/<name>.yaml`).
+- **Anything outside an entry directory, or deleting an entry:** the core
+  team.
+
+To add a co-maintainer, add them to `maintainers:` in a PR and merge it
+yourself. They can use `/merge` from then on.
+
 ## The Colab snapshot
 
 [`.github/colab-preinstalled.txt`](../.github/colab-preinstalled.txt) is a

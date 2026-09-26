@@ -190,26 +190,42 @@ a shared repo would also let them approve changes to each other's entries. So
 ownership is enforced by a **merge bot**, modeled on the
 [nixpkgs merge bot](https://github.com/NixOS/nixpkgs-merge-bot).
 
-A maintainer comments `@registry-bot merge` on a PR. The bot merges it when all
-of these hold:
+A maintainer comments `/merge` on a PR. The bot merges it when all of these
+hold:
 
 1. Every changed file is inside entries where the commenter is a maintainer.
-   The bot reads the maintainer list from **`main`**, not from the PR, so a PR
-   can't add its own author as a maintainer and then merge itself.
-2. The PR does not create a new entry, and it does not add the entry to a
-   collection. Both need a curator's approval (see below).
-3. It does not touch tooling, workflows, or shared config. Those also need core
-   review.
-4. All required checks pass: lint, test of the changed notebooks, and the
-   image build dry run.
+   For a moved file, that applies to both the old and the new location. The
+   bot reads the maintainer list from the **default branch**, not from the
+   PR, so a PR can't add its own author as a maintainer and then merge itself.
+2. A new entry, or an existing entry joining a collection, needs a curator of
+   each collection it joins. An entry that names no collection joins
+   `general`, which the core team curates.
+3. Files outside any entry (tooling, workflows, `collections/`, top-level
+   docs) and deleting an entry need the core team, meaning accounts with
+   write access. Core accounts can also use `/merge`.
+4. Every check on the PR's head commit has passed. The merge is pinned to that
+   commit, so a push after the checks ran makes GitHub reject it.
 
 Other rules:
 
-- **Adding a maintainer** needs approval from an existing maintainer. A
-  maintainer can remove themselves at any time.
-- **Notifications.** When a PR touches an entry, the bot @-mentions that
-  entry's maintainers and requests their review. This covers the notification
-  part that CODEOWNERS would otherwise provide.
+- **Adding a maintainer** needs approval from an existing maintainer, which
+  rule 1 already enforces. A maintainer can remove themselves at any time.
+- **Notifications.** On every PR the bot posts one comment, and keeps it up to
+  date, listing each part of the PR and who can approve it. People are
+  @-mentioned only when they can actually merge: no part needs the core team,
+  and the PR touches at most five parts. Sweeping PRs list names without
+  pinging anyone. GitHub can't request reviews from people without repo
+  access, so the mention is the notification.
+- **Implementation:** `.github/scripts/merge_bot.py` and
+  `.github/workflows/registry-bot.yml`. Both triggers (`pull_request_target`
+  and `issue_comment`) run with a write token, so the workflow checks out only
+  the default branch and reads the PR as data through the API. It never
+  checks out PR code.
+- **Token.** Merges made with the default `GITHUB_TOKEN` don't trigger other
+  workflows, including the image build and index deploy. For those to run
+  after a bot merge, the bot needs a GitHub App token
+  (`REGISTRY_BOT_APP_ID` / `REGISTRY_BOT_APP_PRIVATE_KEY`), and the app must
+  be allowed to bypass branch protection if the default branch is protected.
 - **Relock PRs** opened by the bot on an entry can be merged by any of its
   maintainers the same way. The core team can also batch-merge relock PRs that
   pass CI.
