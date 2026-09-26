@@ -1,0 +1,15 @@
+# Collection metadata. Schema: .github/schemas/collection.schema.json
+# Curators approve entries joining this collection (see docs/registry-design.md).
+name: dandi
+title: DANDI Archive
+description: >-
+  Notebooks that use data from the DANDI Archive, plus tutorials for the
+  archive and its tooling.
+homepage: https://dandiarchive.org
+curators:
+  - bendichter
+# No `intake.requires_related_prefix`: the collection also holds archive-level
+# tutorials that reference the DANDI Archive itself (rrid:SCR_017571) rather
+# than a specific dandiset.
+intake:
+  guidelines: https://github.com/dandi/example-notebooks/blob/master/docs/adding-notebooks.md

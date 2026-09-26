@@ -1,8 +1,8 @@
 import datetime
-import fnmatch
 import json
 import os
 import shutil
+import subprocess
 import sys
 from typing import List, Dict, Any, Optional
 
@@ -12,9 +12,9 @@ from dandi.dandiapi import DandiAPIClient
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from build_notebook_image import collect_groups  # noqa: E402
+from registry import flag, registry_index  # noqa: E402
 
 REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
-COLAB_EXCLUSIONS = os.path.join(REPO_ROOT, ".github", "notebook-colab-exclusions.txt")
 IMAGE_PREFIX = "ghcr.io/dandi/example-notebooks"
 
 
@@ -66,6 +66,19 @@ def docker_images_by_notebook() -> Dict[str, str]:
     return mapping
 
 
+def load_health() -> Dict[str, Any]:
+    """The sweep's health.json from the gh-pages branch, or {} if absent.
+
+    The index workflow fetches `origin/gh-pages` before running this.
+    """
+    r = subprocess.run(["git", "show", "origin/gh-pages:health.json"],
+                       cwd=REPO_ROOT, capture_output=True, text=True)
+    if r.returncode != 0:
+        print("No health.json on gh-pages; entry health will be 'unknown'")
+        return {}
+    return json.loads(r.stdout)
+
+
 def get_dandiset_metadata(dandiset_id: str) -> Optional[Dict[str, Any]]:
     """
     Fetch metadata for a given dandiset ID.
@@ -88,30 +101,6 @@ def get_dandiset_metadata(dandiset_id: str) -> Optional[Dict[str, Any]]:
         except Exception as e:
             print(f"Error fetching metadata for dandiset {dandiset_id}: {str(e)}")
             return None
-
-
-def load_exclusion_patterns(path: str) -> List[str]:
-    """Read gitignore-style glob patterns from an exclusion file."""
-    if not os.path.exists(path):
-        return []
-    with open(path) as f:
-        return [
-            line.strip()
-            for line in f
-            if line.strip() and not line.strip().startswith("#")
-        ]
-
-
-def is_excluded(rel_path: str, patterns: List[str]) -> bool:
-    """Match a repo-relative path against gitignore-style patterns."""
-    for pat in patterns:
-        if fnmatch.fnmatch(rel_path, pat):
-            return True
-        if pat.endswith("/**") and (
-            rel_path == pat[:-3] or rel_path.startswith(pat[:-2])
-        ):
-            return True
-    return False
 
 
 def notebook_has_colab_bootstrap(abs_path: str) -> bool:
@@ -155,7 +144,7 @@ def find_notebooks(folder: str) -> List[str]:
     return notebooks
 
 
-def collect_metadata() -> List[Dict[str, Any]]:
+def collect_metadata(docker_images: Dict[str, str]) -> List[Dict[str, Any]]:
     """
     Collect metadata and notebook information for all dandisets in the current directory.
 
@@ -165,19 +154,16 @@ def collect_metadata() -> List[Dict[str, Any]]:
          "colab_url": "<full https URL>" or ""}
 
     Notebooks are eligible for a Colab button iff (a) they begin with a
-    Colab-bootstrap install cell and (b) their repo-relative path is not
-    matched by any pattern in `.github/notebook-colab-exclusions.txt`.
+    Colab-bootstrap install cell and (b) their entry's notebook.yaml does not
+    set `colab: false` for them.
 
-    Note: the colab-exclusions list is intentionally independent of the
-    CI test-exclusions list (`.github/notebook-test-exclusions.txt`). Some
-    notebooks fail headless CI but work fine when a user opens them in
+    Note: the `colab` flag is intentionally independent of the `test` flag.
+    Some notebooks fail headless CI but work fine when a user opens them in
     Colab (eg notebooks that call `webbrowser.open()`, `input()`, or
     depend on libxcb — Colab handles all of those). Conversely, some
     notebooks pass headless CI but we still don't want to advertise them
     as one-click-runnable for other reasons.
     """
-    colab_excl = load_exclusion_patterns(COLAB_EXCLUSIONS)
-    docker_images = docker_images_by_notebook()
 
     dandisets = []
     for folder in os.listdir('.'):
@@ -189,8 +175,7 @@ def collect_metadata() -> List[Dict[str, Any]]:
                 for rel in nb_paths:
                     repo_rel = os.path.join(folder, rel)
                     abs_path = os.path.join(REPO_ROOT, repo_rel)
-                    excluded = is_excluded(repo_rel, colab_excl)
-                    eligible = (not excluded) and notebook_has_colab_bootstrap(abs_path)
+                    eligible = flag(repo_rel, "colab") and notebook_has_colab_bootstrap(abs_path)
                     notebooks.append({
                         "path": rel,
                         "colab_eligible": eligible,
@@ -248,7 +233,7 @@ def machine_readable_index(dandisets: List[Dict[str, Any]]) -> Dict[str, Any]:
     }
 
 
-def render_webpage(dandisets: List[Dict[str, Any]]) -> None:
+def render_webpage(dandisets: List[Dict[str, Any]], registry: Dict[str, Any]) -> None:
     """
     Render the webpage using the collected dandiset information.
 
@@ -256,6 +241,8 @@ def render_webpage(dandisets: List[Dict[str, Any]]) -> None:
     ----------
     dandisets : List[Dict[str, Any]]
         A list of dictionaries containing information about each dandiset.
+    registry : Dict[str, Any]
+        The registry catalog, written as registry.json.
 
     Returns
     -------
@@ -288,10 +275,19 @@ def render_webpage(dandisets: List[Dict[str, Any]]) -> None:
     with open(os.path.join(output_dir, 'notebooks.json'), 'w') as f:
         json.dump(machine_readable_index(dandisets), f, indent=2)
 
+    with open(os.path.join(output_dir, 'registry.json'), 'w') as f:
+        json.dump(registry, f, indent=2)
+
     assets_dir = os.path.join(template_dir, 'assets')
     if os.path.isdir(assets_dir):
         shutil.copytree(assets_dir, output_dir, dirs_exist_ok=True)
 
 if __name__ == "__main__":
-    dandisets = collect_metadata()
-    render_webpage(dandisets)
+    docker_images = docker_images_by_notebook()
+    dandisets = collect_metadata(docker_images)
+    registry = registry_index(
+        has_colab_bootstrap=lambda p: notebook_has_colab_bootstrap(os.path.join(REPO_ROOT, p)),
+        docker_images={p: f"{ref}:latest" for p, ref in docker_images.items()},
+        health=load_health(),
+    )
+    render_webpage(dandisets, registry)

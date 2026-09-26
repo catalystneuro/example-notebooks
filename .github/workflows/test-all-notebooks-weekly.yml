@@ -1,5 +1,10 @@
 name: Test all notebooks (weekly)
 
+# Scheduled runs are tiered (list_notebooks.py --tiered): recently active and
+# featured entries every week, everything on the first Monday of the month.
+# Manual runs test everything (or the filter). Results update each entry's
+# health in health.json on gh-pages and its failure issue (entry_health.py).
+
 on:
   schedule:
     # Mondays at 06:00 UTC — pre-business-hours for both US and EU
@@ -12,27 +17,39 @@ on:
         default: ''
 
 permissions:
-  contents: read
+  contents: write     # publish health.json to gh-pages
   issues: write
 
 jobs:
   list:
     name: List notebooks to test
+    # Forks and staging copies set REGISTRY_QUIET=true: no scheduled sweeps
+    # (and so no failure issues); manual runs still work, without @-mentions.
+    if: github.event_name != 'schedule' || vars.REGISTRY_QUIET != 'true'
     runs-on: ubuntu-latest
     outputs:
       notebooks: ${{ steps.list.outputs.notebooks }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0    # entry activity for the tiers comes from git history
 
       - uses: actions/setup-python@v5
         with:
           python-version: '3.13'
 
-      - name: List all testable notebooks
+      - name: Install registry dependencies
+        run: pip install --no-cache-dir pyyaml
+
+      - name: List notebooks for this run
         id: list
         run: |
           set -euo pipefail
-          all=$(python .github/scripts/list_notebooks.py)
+          if [ "${{ github.event_name }}" = "schedule" ]; then
+            all=$(python .github/scripts/list_notebooks.py --tiered)
+          else
+            all=$(python .github/scripts/list_notebooks.py)
+          fi
           filter='${{ github.event.inputs.filter }}'
           if [ -n "$filter" ]; then
             all=$(echo "$all" | python -c "
@@ -65,7 +82,7 @@ jobs:
           python-version: '3.13'
 
       - name: Install runner dependencies
-        run: pip install --no-cache-dir uv nbformat
+        run: pip install --no-cache-dir uv nbformat pyyaml
 
       - name: Run notebook
         id: run
@@ -89,12 +106,24 @@ jobs:
         run: exit 1
 
   report:
-    name: Aggregate results and file issue on failure
-    needs: test
-    if: always()
+    name: Aggregate results, update entry health and issues
+    needs: [list, test]
+    if: always() && needs.list.result == 'success'
     runs-on: ubuntu-latest
+    # Publishes to gh-pages alongside the index deploy; never run both at once.
+    concurrency:
+      group: gh-pages-deploy
+      cancel-in-progress: false
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0    # entry activity decides `unmaintained`
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+
+      - run: pip install --no-cache-dir pyyaml
 
       - uses: actions/download-artifact@v4
         with:
@@ -127,9 +156,9 @@ jobs:
               lines.append("## Notebooks missing the Colab-bootstrap install cell")
               lines.append("")
               lines.append("These notebooks lack a `!uv pip install --system` install cell. ")
-              lines.append("Either add the bootstrap (see PR #149 for the pattern) or add the ")
-              lines.append("notebook to `.github/notebook-test-exclusions.txt` with a comment ")
-              lines.append("explaining why it can't be tested.")
+              lines.append("Either add the bootstrap (run `lock_notebook.py`) or set ")
+              lines.append("`test: false` with a `test_skip_reason` for the notebook in its ")
+              lines.append("entry's `notebook.yaml`.")
               lines.append("")
               for r in missing_bootstrap:
                   lines.append(f"- `{r['notebook']}`")
@@ -160,32 +189,30 @@ jobs:
               f.write(f"failed_count={len(failed)}\n")
           EOF
 
-      - name: File or update tracking issue if any failures
-        if: steps.report.outputs.failed_count != '0'
-        uses: actions/github-script@v7
+      - name: Update entry health and per-entry issues
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REGISTRY_QUIET: ${{ vars.REGISTRY_QUIET }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          set -euo pipefail
+          mkdir -p health
+          if git fetch --depth 1 origin gh-pages 2>/dev/null \
+             && git show origin/gh-pages:health.json > health/health.json 2>/dev/null; then
+            echo "Loaded previous health.json"
+          else
+            rm -f health/health.json
+            echo "No previous health.json; starting fresh"
+          fi
+          python .github/scripts/entry_health.py \
+            --results results --state health/health.json --run-url "$RUN_URL"
+
+      - name: Publish health.json to gh-pages
+        uses: peaceiris/actions-gh-pages@v3
         with:
-          script: |
-            const fs = require('fs');
-            const body = fs.readFileSync('report.md', 'utf8');
-            const title = `Weekly notebook sweep — failures (${new Date().toISOString().slice(0,10)})`;
-            const issues = await github.rest.issues.listForRepo({
-              owner: context.repo.owner, repo: context.repo.repo,
-              state: 'open',
-              labels: 'weekly-notebook-sweep',
-              per_page: 5,
-            });
-            if (issues.data.length > 0) {
-              const num = issues.data[0].number;
-              await github.rest.issues.createComment({
-                owner: context.repo.owner, repo: context.repo.repo,
-                issue_number: num,
-                body,
-              });
-              console.log(`Commented on existing issue #${num}`);
-            } else {
-              await github.rest.issues.create({
-                owner: context.repo.owner, repo: context.repo.repo,
-                title, body, labels: ['weekly-notebook-sweep'],
-              });
-              console.log('Filed new issue');
-            }
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./health
+          keep_files: true
+          commit_message: "Update entry health from run ${{ github.run_id }}"
+          user_name: 'github-actions[bot]'
+          user_email: 'github-actions[bot]@users.noreply.github.com'
