@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated": "2026-09-26T04:07:37+00:00",
+  "generated": "2026-09-26T04:24:43+00:00",
   "source": "https://github.com/dandi/example-notebooks",
   "collections": {
     "dandi": {
@@ -53,7 +53,10 @@
           "colab_url": null,
           "docker_image": null
         }
-      ]
+      ],
+      "health": {
+        "status": "unknown"
+      }
     },
     {
       "name": "000005-datajoint-dj-nwb-yu-gutnisky-2016",
@@ -92,7 +95,10 @@
           "colab_url": null,
           "docker_image": null
         }
-      ]
+      ],
+      "health": {
+        "status": "unknown"
+      }
     },
     {
       "name": "000006-datajoint-dj-nwb-economo-2018",
@@ -136,7 +142,10 @@
           "colab_url": null,
           "docker_image": null
         }
-      ]
+      ],
+      "health": {
+        "status": "unknown"
+      }
     },
     {
       "name": "000007-datajoint-dj-nwb-gao-2018",
@@ -178,7 +187,10 @@
           "colab_url": null,
           "docker_image": null
         }
-      ]
+      ],
+      "health": {
+        "status": "unknown"
+      }
     },
     {
       "name": "000009-datajoint-dj-nwb-guo-inagaki-2017",
@@ -225,7 +237,10 @@
           "colab_url": null,
           "docker_image": null
         }
-      ]
+      ],
+      "health": {
+        "status": "unknown"
+      }
     },
     {
       "name": "000010-datajoint-dj-nwb-li-2015b",
@@ -277,7 +292,10 @@
           "colab_url": null,
           "docker_image": null
         }
-      ]
+      ],
+      "health": {
+        "status": "unknown"
+      }
     },
     {
       "name": "000010-datajoint-dj-nwb-li-daie-2015-2016",
@@ -329,7 +347,10 @@
           "colab_url": null,
           "docker_image": null
         }
-      ]
+      ],
+      "health": {
+        "status": "unknown"
+      }
     },
     {
       "name": "000013-datajoint-dj-nwb-hires-gutnisky-2015",
@@ -368,7 +389,10 @@
           "colab_url": null,
           "docker_image": null
         }
-      ]
+      ],
+      "health": {
+        "status": "unknown"
+      }
     },
     {
       "name": "000015-datajoint-dj-nwb-chen-2017",
@@ -415,7 +439,10 @@
           "colab_url": null,
           "docker_image": null
         }
-      ]
+      ],
+      "health": {
+        "status": "unknown"
+      }
     },
     {
       "name": "000039-alleninstitute",
@@ -457,7 +484,10 @@
           "colab_url": null,
           "docker_image": null
         }
-      ]
+      ],
+      "health": {
+        "status": "unknown"
+      }
     },
     {
       "name": "000055-bruntonlab-peterson21",
@@ -528,7 +558,10 @@
           "colab_url": null,
           "docker_image": null
         }
-      ]
+      ],
+      "health": {
+        "status": "unknown"
+      }
     },
     {
       "name": "000108-chunglab-demo",
@@ -580,7 +613,10 @@
           "colab_url": null,
           "docker_image": null
         }
-      ]
+      ],
+      "health": {
+        "status": "unknown"
+      }
     },
     {
       "name": "000129-mathislab-schneider2023-cebra",
@@ -614,7 +650,10 @@
           "colab_url": null,
           "docker_image": null
         }
-      ]
+      ],
+      "health": {
+        "status": "unknown"
+      }
     },
     {
       "name": "000363-map-demo",
@@ -648,7 +687,10 @@
           "colab_url": null,
           "docker_image": null
         }
-      ]
+      ],
+      "health": {
+        "status": "unknown"
+      }
     },
     {
       "name": "000402-microns-coregistration",
@@ -697,7 +739,10 @@
           "colab_url": null,
           "docker_image": null
         }
-      ]
+      ],
+      "health": {
+        "status": "unknown"
+      }
     },
     {
       "name": "000402-microns-demo",
@@ -731,7 +776,10 @@
           "colab_url": "https://colab.research.google.com/github/dandi/example-notebooks/blob/master/000402/MICrONS/demo/000402_microns_demo.ipynb",
           "docker_image": "ghcr.io/dandi/example-notebooks/000402-microns-demo:latest"
         }
-      ]
+      ],
+      "health": {
+        "status": "unknown"
+      }
     },
     {
       "name": "000409-ibl",
@@ -765,7 +813,10 @@
           "colab_url": "https://colab.research.google.com/github/dandi/example-notebooks/blob/master/000409/IBL/bwm_usage_notebook.ipynb",
           "docker_image": "ghcr.io/dandi/example-notebooks/000409-ibl:latest"
         }
-      ]
+      ],
+      "health": {
+        "status": "unknown"
+      }
     },
     {
       "name": "000458-alleninstitute",
@@ -804,7 +855,10 @@
           "colab_url": "https://colab.research.google.com/github/dandi/example-notebooks/blob/master/000458/AllenInstitute/reanalysis.ipynb",
           "docker_image": "ghcr.io/dandi/example-notebooks/000458-alleninstitute:latest"
         }
-      ]
+      ],
+      "health": {
+        "status": "unknown"
+      }
     },
     {
       "name": "000458-flatironinstitute",
@@ -846,7 +900,10 @@
           "colab_url": "https://colab.research.google.com/github/dandi/example-notebooks/blob/master/000458/FlatironInstitute/001_summarize_contents.ipynb",
           "docker_image": "ghcr.io/dandi/example-notebooks/000458-flatironinstitute:latest"
         }
-      ]
+      ],
+      "health": {
+        "status": "unknown"
+      }
     },
     {
       "name": "000559-dattalab-markowitz-gillis-nature-2023",
@@ -910,7 +967,10 @@
           "colab_url": null,
           "docker_image": null
         }
-      ]
+      ],
+      "health": {
+        "status": "unknown"
+      }
     },
     {
       "name": "000582-sargolini2006",
@@ -949,7 +1009,10 @@
           "colab_url": "https://colab.research.google.com/github/dandi/example-notebooks/blob/master/000582/Sargolini2006/000582_Sargolini2006_demo.ipynb",
           "docker_image": "ghcr.io/dandi/example-notebooks/000582-sargolini2006:latest"
         }
-      ]
+      ],
+      "health": {
+        "status": "unknown"
+      }
     },
     {
       "name": "000718-cailab-zaki-2024",
@@ -983,7 +1046,10 @@
           "colab_url": "https://colab.research.google.com/github/dandi/example-notebooks/blob/master/000718/CaiLab/zaki_2024/000718_demo.ipynb",
           "docker_image": "ghcr.io/dandi/example-notebooks/000718-cailab-zaki-2024:latest"
         }
-      ]
+      ],
+      "health": {
+        "status": "unknown"
+      }
     },
     {
       "name": "000727-clandinin-simple-data-access",
@@ -1022,7 +1088,10 @@
           "colab_url": "https://colab.research.google.com/github/dandi/example-notebooks/blob/master/000727/clandinin/simple_data_access/reading_data.ipynb",
           "docker_image": "ghcr.io/dandi/example-notebooks/000727-clandinin-simple-data-access:latest"
         }
-      ]
+      ],
+      "health": {
+        "status": "unknown"
+      }
     },
     {
       "name": "000728-alleninstitute",
@@ -1056,7 +1125,10 @@
           "colab_url": "https://colab.research.google.com/github/dandi/example-notebooks/blob/master/000728/AllenInstitute/visual_coding_ophys_tutorial.ipynb",
           "docker_image": "ghcr.io/dandi/example-notebooks/000728-alleninstitute:latest"
         }
-      ]
+      ],
+      "health": {
+        "status": "unknown"
+      }
     },
     {
       "name": "000947-turnerlab-public-demo",
@@ -1090,7 +1162,10 @@
           "colab_url": "https://colab.research.google.com/github/dandi/example-notebooks/blob/master/000947/TurnerLab/public_demo/000947_demo.ipynb",
           "docker_image": "ghcr.io/dandi/example-notebooks/000947-turnerlab-public-demo:latest"
         }
-      ]
+      ],
+      "health": {
+        "status": "unknown"
+      }
     },
     {
       "name": "000971-lernerlab-seiler-2024",
@@ -1138,7 +1213,10 @@
           "colab_url": "https://colab.research.google.com/github/dandi/example-notebooks/blob/master/000971/lernerlab/seiler_2024/optogenetics_example_notebook.ipynb",
           "docker_image": "ghcr.io/dandi/example-notebooks/000971-lernerlab-seiler-2024:latest"
         }
-      ]
+      ],
+      "health": {
+        "status": "unknown"
+      }
     },
     {
       "name": "001038-dombecklab",
@@ -1172,7 +1250,10 @@
           "colab_url": "https://colab.research.google.com/github/dandi/example-notebooks/blob/master/001038/DombeckLab/001038_demo.ipynb",
           "docker_image": "ghcr.io/dandi/example-notebooks/001038-dombecklab:latest"
         }
-      ]
+      ],
+      "health": {
+        "status": "unknown"
+      }
     },
     {
       "name": "001075",
@@ -1207,7 +1288,10 @@
           "colab_url": "https://colab.research.google.com/github/dandi/example-notebooks/blob/master/001075/001075_paper_figure_1d.ipynb",
           "docker_image": "ghcr.io/dandi/example-notebooks/001075:latest"
         }
-      ]
+      ],
+      "health": {
+        "status": "unknown"
+      }
     },
     {
       "name": "001084-howelab",
@@ -1241,7 +1325,10 @@
           "colab_url": "https://colab.research.google.com/github/dandi/example-notebooks/blob/master/001084/HoweLab/001084_demo.ipynb",
           "docker_image": "ghcr.io/dandi/example-notebooks/001084-howelab:latest"
         }
-      ]
+      ],
+      "health": {
+        "status": "unknown"
+      }
     },
     {
       "name": "001170-reimerlab-public-demo",
@@ -1275,7 +1362,10 @@
           "colab_url": "https://colab.research.google.com/github/dandi/example-notebooks/blob/master/001170/ReimerLab/public_demo/001170_demo.ipynb",
           "docker_image": "ghcr.io/dandi/example-notebooks/001170-reimerlab-public-demo:latest"
         }
-      ]
+      ],
+      "health": {
+        "status": "unknown"
+      }
     },
     {
       "name": "001172-higleylab",
@@ -1310,7 +1400,10 @@
           "colab_url": "https://colab.research.google.com/github/dandi/example-notebooks/blob/master/001172/HigleyLab/001172_demo.ipynb",
           "docker_image": "ghcr.io/dandi/example-notebooks/001172-higleylab:latest"
         }
-      ]
+      ],
+      "health": {
+        "status": "unknown"
+      }
     },
     {
       "name": "001528-hnaskolab-lotfi-2025",
@@ -1349,7 +1442,10 @@
           "colab_url": "https://colab.research.google.com/github/dandi/example-notebooks/blob/master/001528/HnaskoLab/Lotfi_2025/001528_demo.ipynb",
           "docker_image": "ghcr.io/dandi/example-notebooks/001528-hnaskolab-lotfi-2025:latest"
         }
-      ]
+      ],
+      "health": {
+        "status": "unknown"
+      }
     },
     {
       "name": "001538-catalyst-neuro-zhai-2025",
@@ -1407,7 +1503,10 @@
           "colab_url": "https://colab.research.google.com/github/dandi/example-notebooks/blob/master/001538/catalyst_neuro/zhai_2025/how_to_use_this_dataset.ipynb",
           "docker_image": "ghcr.io/dandi/example-notebooks/001538-catalyst-neuro-zhai-2025:latest"
         }
-      ]
+      ],
+      "health": {
+        "status": "unknown"
+      }
     },
     {
       "name": "001550-paganlab",
@@ -1454,7 +1553,10 @@
           "colab_url": "https://colab.research.google.com/github/dandi/example-notebooks/blob/master/001550/PaganLab/02_optogenetics_demo.ipynb",
           "docker_image": "ghcr.io/dandi/example-notebooks/001550-paganlab:latest"
         }
-      ]
+      ],
+      "health": {
+        "status": "unknown"
+      }
     },
     {
       "name": "001636-turnerlab-motor-cortex",
@@ -1512,7 +1614,10 @@
           "colab_url": "https://colab.research.google.com/github/dandi/example-notebooks/blob/master/001636/TurnerLab/motor_cortex/turner_m1_usage.ipynb",
           "docker_image": "ghcr.io/dandi/example-notebooks/001636-turnerlab-motor-cortex:latest"
         }
-      ]
+      ],
+      "health": {
+        "status": "unknown"
+      }
     },
     {
       "name": "001687-wanglab-figure2-distance-tuning",
@@ -1546,7 +1651,10 @@
           "colab_url": "https://colab.research.google.com/github/dandi/example-notebooks/blob/master/001687/wanglab/figure2-distance-tuning/figure2_distance_tuning.ipynb",
           "docker_image": "ghcr.io/dandi/example-notebooks/001687-wanglab-figure2-distance-tuning:latest"
         }
-      ]
+      ],
+      "health": {
+        "status": "unknown"
+      }
     },
     {
       "name": "001712-ibl-widefield-public-demo",
@@ -1596,7 +1704,10 @@
           "colab_url": "https://colab.research.google.com/github/dandi/example-notebooks/blob/master/001712/IBL-Widefield/public_demo/raw_widefield.ipynb",
           "docker_image": "ghcr.io/dandi/example-notebooks/001712-ibl-widefield-public-demo:latest"
         }
-      ]
+      ],
+      "health": {
+        "status": "unknown"
+      }
     },
     {
       "name": "001754-catalystneuro",
@@ -1635,7 +1746,10 @@
           "colab_url": "https://colab.research.google.com/github/dandi/example-notebooks/blob/master/001754/CatalystNeuro/001754_demo.ipynb",
           "docker_image": "ghcr.io/dandi/example-notebooks/001754-catalystneuro:latest"
         }
-      ]
+      ],
+      "health": {
+        "status": "unknown"
+      }
     },
     {
       "name": "001933-dombecklab",
@@ -1670,7 +1784,10 @@
           "colab_url": "https://colab.research.google.com/github/dandi/example-notebooks/blob/master/001933/DombeckLab/001933_demo.ipynb",
           "docker_image": "ghcr.io/dandi/example-notebooks/001933-dombecklab:latest"
         }
-      ]
+      ],
+      "health": {
+        "status": "unknown"
+      }
     },
     {
       "name": "archive-analysis",
@@ -1704,7 +1821,10 @@
           "colab_url": null,
           "docker_image": null
         }
-      ]
+      ],
+      "health": {
+        "status": "unknown"
+      }
     },
     {
       "name": "dandi",
@@ -1758,7 +1878,10 @@
           "colab_url": null,
           "docker_image": null
         }
-      ]
+      ],
+      "health": {
+        "status": "unknown"
+      }
     },
     {
       "name": "demos",
@@ -1793,7 +1916,10 @@
           "colab_url": "https://colab.research.google.com/github/dandi/example-notebooks/blob/master/demos/NWBWidget-demo.ipynb",
           "docker_image": "ghcr.io/dandi/example-notebooks/demos:latest"
         }
-      ]
+      ],
+      "health": {
+        "status": "unknown"
+      }
     },
     {
       "name": "tutorials-bcm-2024",
@@ -1840,7 +1966,10 @@
           "colab_url": "https://colab.research.google.com/github/dandi/example-notebooks/blob/master/tutorials/bcm_2024/analysis-demo.ipynb",
           "docker_image": "ghcr.io/dandi/example-notebooks/tutorials-bcm-2024:latest"
         }
-      ]
+      ],
+      "health": {
+        "status": "unknown"
+      }
     },
     {
       "name": "tutorials-cosyne-2020",
@@ -1877,7 +2006,10 @@
           "colab_url": null,
           "docker_image": null
         }
-      ]
+      ],
+      "health": {
+        "status": "unknown"
+      }
     },
     {
       "name": "tutorials-cosyne-2023",
@@ -1923,7 +2055,10 @@
           "colab_url": "https://colab.research.google.com/github/dandi/example-notebooks/blob/master/tutorials/cosyne_2023/simple_dandiset_search.ipynb",
           "docker_image": "ghcr.io/dandi/example-notebooks/tutorials-cosyne-2023:latest"
         }
-      ]
+      ],
+      "health": {
+        "status": "unknown"
+      }
     },
     {
       "name": "tutorials-neurodatarehack-2024",
@@ -1969,7 +2104,10 @@
           "colab_url": "https://colab.research.google.com/github/dandi/example-notebooks/blob/master/tutorials/neurodatarehack_2024/simple_dandiset_search.ipynb",
           "docker_image": "ghcr.io/dandi/example-notebooks/tutorials-neurodatarehack-2024-simple-dandiset-search:latest"
         }
-      ]
+      ],
+      "health": {
+        "status": "unknown"
+      }
     },
     {
       "name": "tutorials-open-data-quick-start-2026",
@@ -2006,7 +2144,10 @@
           "colab_url": "https://colab.research.google.com/github/dandi/example-notebooks/blob/master/tutorials/open_data_quick_start_2026/Get-to-know-a-Dandiset.ipynb",
           "docker_image": "ghcr.io/dandi/example-notebooks/tutorials-open-data-quick-start-2026:latest"
         }
-      ]
+      ],
+      "health": {
+        "status": "unknown"
+      }
     }
   ]
 }
