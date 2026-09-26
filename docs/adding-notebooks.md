@@ -39,7 +39,7 @@ Two workflows execute notebooks:
 | Workflow | Trigger | Scope |
 |---|---|---|
 | [`test-changed-notebooks.yml`](../.github/workflows/test-changed-notebooks.yml) | PR touching `**.ipynb` (or the test harness) | Only the notebooks **added/modified** in the PR |
-| [`test-all-notebooks-weekly.yml`](../.github/workflows/test-all-notebooks-weekly.yml) | Mondays 06:00 UTC + manual dispatch | Every testable notebook; opens an issue on failure |
+| [`test-all-notebooks-weekly.yml`](../.github/workflows/test-all-notebooks-weekly.yml) | Mondays 06:00 UTC + manual dispatch | Recently active and featured entries weekly, every testable notebook on the first Monday of the month; opens one issue per failing entry |
 
 Both call [`.github/scripts/run_notebook.py`](../.github/scripts/run_notebook.py)
 on an `ubuntu-latest` runner with Python 3.13. That script:
@@ -330,6 +330,18 @@ replies with what you can't approve. Some changes need someone else:
 
 To add a co-maintainer, add them to `maintainers:` in a PR and merge it
 yourself. They can use `/merge` from then on.
+
+### What the bots send maintainers
+
+- **Failure issues.** If the scheduled sweep finds a failing notebook in your
+  entry, an issue titled "Notebooks failing in entry <name>" opens and mentions
+  you. Later failures add comments, and the issue closes itself once the entry
+  passes a scheduled run. An entry that fails two runs in a row is shown as
+  `failing`. One that keeps failing for 8 weeks with no commits is marked
+  `unmaintained` and hidden from the catalog's default view. It is never
+  deleted.
+- **Re-lock PRs.** When Colab's runtime moves, a `bot/relock/<name>` PR
+  re-locks just your entry. Once its checks pass, merge it with `/merge`.
 
 ## The Colab snapshot
 

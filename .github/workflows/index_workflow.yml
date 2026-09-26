@@ -23,6 +23,9 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
+    - name: Fetch gh-pages for the sweep's health.json
+      run: git fetch --depth 1 origin gh-pages || true
+
     - name: Set up Python
       uses: actions/setup-python@v5
       with:

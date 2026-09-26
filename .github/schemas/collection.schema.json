@@ -24,6 +24,12 @@
       },
       "uniqueItems": true
     },
+    "featured": {
+      "description": "Entry names tested in every weekly sweep regardless of recent activity.",
+      "type": "array",
+      "items": {"type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"},
+      "uniqueItems": true
+    },
     "intake": {
       "type": "object",
       "additionalProperties": false,

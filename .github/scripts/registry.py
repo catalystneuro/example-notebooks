@@ -25,6 +25,7 @@ import argparse
 import datetime
 import functools
 import json
+import subprocess
 import sys
 from dataclasses import dataclass
 from pathlib import Path
@@ -45,6 +46,9 @@ DEFAULT_BRANCH = "master"
 
 # Directories never searched for entries or notebooks.
 SKIP_DIRS = {".git", "output", "node_modules", ".ipynb_checkpoints", "nwb-cache"}
+# A commit touching this many entries is repo-wide maintenance (re-locks,
+# codespell runs, reorganizations), not activity on any one of them.
+SWEEP_ENTRIES = 3
 
 
 @dataclass(frozen=True)
@@ -178,6 +182,38 @@ def load_collections(root: Path = REPO_ROOT) -> dict[str, dict]:
     return {p.stem: load_yaml(p) for p in sorted(directory.glob("*.yaml"))}
 
 
+def entry_activity(root: Path = REPO_ROOT) -> dict[str, datetime.datetime]:
+    """Entry directory -> time of its last commit that was not a repo-wide sweep.
+
+    Needs full history (`fetch-depth: 0` in Actions). Entries with no such
+    commit are absent.
+    """
+    out = subprocess.run(
+        ["git", "log", "--no-merges", "--name-only", "--format=@@%cI"],
+        cwd=root, capture_output=True, text=True, check=True,
+    ).stdout
+    dirs = sorted((e.directory for e in load_entries(root)), key=len, reverse=True)
+    last: dict[str, datetime.datetime] = {}
+    when: datetime.datetime | None = None
+    touched: set[str] = set()
+
+    def flush() -> None:
+        if when is not None and 0 < len(touched) < SWEEP_ENTRIES:
+            for d in touched:
+                last.setdefault(d, when)   # git log is newest first
+    for line in out.splitlines():
+        if line.startswith("@@"):
+            flush()
+            when, touched = datetime.datetime.fromisoformat(line[2:]), set()
+        elif line.strip():
+            for d in dirs:
+                if d == "" or line.startswith(d + "/"):
+                    touched.add(d)
+                    break
+    flush()
+    return last
+
+
 def github_url(repo_path: str) -> str:
     return f"https://github.com/{GITHUB_REPO}/blob/{DEFAULT_BRANCH}/{quote(repo_path)}"
 
@@ -189,15 +225,18 @@ def colab_url(repo_path: str) -> str:
 
 def registry_index(root: Path = REPO_ROOT,
                    has_colab_bootstrap=None,
-                   docker_images: dict[str, str] | None = None) -> dict:
+                   docker_images: dict[str, str] | None = None,
+                   health: dict | None = None) -> dict:
     """The `registry.json` catalog.
 
     `has_colab_bootstrap(repo_path) -> bool` gates the Colab link on the
     notebook actually carrying the install cell; `docker_images` maps
-    repo-relative notebook paths to public image refs. Both are optional so
-    the catalog can be built offline.
+    repo-relative notebook paths to public image refs; `health` is the
+    scheduled sweep's health.json (entry_health.py). All are optional so the
+    catalog can be built offline.
     """
     docker_images = docker_images or {}
+    health_entries = (health or {}).get("entries", {})
     collections = load_collections(root)
     entries = []
     for entry in load_entries(root):
@@ -231,6 +270,10 @@ def registry_index(root: Path = REPO_ROOT,
                 {**r, "url": identifier_url(r["id"])} for r in d.get("related", [])
             ],
             "notebooks": notebooks,
+            "health": {
+                k: health_entries.get(entry.name, {}).get(k)
+                for k in ("status", "last_run", "last_pass", "consecutive_failures")
+            } if entry.name in health_entries else {"status": "unknown"},
         })
     return {
         "schema_version": 1,

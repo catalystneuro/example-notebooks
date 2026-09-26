@@ -272,9 +272,12 @@ pinned install cell + `requirements.lock.txt` → Docker image.
 - `requirements.lock.txt` is new. It is committed next to the notebooks, so
   lock diffs can be reviewed and the image build has a single input. The
   install cell is still generated from it.
-- The relock bot runs `refresh_colab_snapshot.py --relock` and opens one PR
-  per entry. Today it opens one PR for the whole repo. Splitting it up lets
-  each entry's maintainers merge their own relock.
+- The weekly Colab refresh runs `refresh_colab_snapshot.py --relock`, then
+  `open_relock_prs.py` opens (or updates) one core PR for the snapshot file
+  and one `bot/relock/<entry>` PR per entry with only that entry's re-lock. The
+  PRs don't depend on each other, and each entry's maintainers can `/merge`
+  their own. The token must be a PAT or app token
+  (`COLAB_REFRESH_TOKEN`), so the PRs trigger CI and the registry bot.
 - **Later:** optional `environment.yml`, locked with pixi or conda-lock, for
   notebooks that need non-PyPI dependencies (R, CUDA, compiled tools). Those
   entries get a Docker image, but a Colab button only when a pip lock also
@@ -357,18 +360,32 @@ separately:
   shows that the notebook reproduced, and the image and Zenodo deposit keep
   that result reproducible.
 - **Current status.** Does the entry still run today, on current Colab and
-  against live data? A scheduled sweep sets it to `passing`, `failing` (failed
-  N runs in a row), or `unmaintained` (failing, with no maintainer response
-  for M weeks). It changes over time, and it costs compute on every run.
+  against live data? A scheduled sweep sets it to one of:
+  - `passing`: every notebook tested in the entry's latest run passed.
+  - `failing`: failed 2 runs in a row.
+  - `unmaintained`: failing, first failed more than 8 weeks ago, and no
+    commit to the entry since.
+
+  It changes over time, and it costs compute on every run. The history is kept
+  in `health.json` on gh-pages (`entry_health.py`), and `registry.json` carries
+  each entry's status (`unknown` before its first scheduled run).
+
+**Per-entry failure issues.** An entry's first failing run opens one issue
+(label `notebook-failure`) that @-mentions its maintainers. Later failures
+comment on that issue without mentions, and the first all-green run closes it.
+This replaces the single issue that used to cover every failure.
 
 The scheduled sweep is **tiered** so its cost doesn't grow with the size of
-the registry:
+the registry (`list_notebooks.py --tiered`):
 
-- **Weekly:** entries changed or released in the last 6 months, entries in
-  the top N by views, and entries a collection marks as featured.
-- **Monthly:** everything else.
+- **Weekly:** entries with a non-sweep commit in the last 180 days, and
+  entries a collection lists under `featured`. Later, entries released in that
+  window and the top N by views.
+- **Monthly** (the first Monday): everything.
 - **Immediately:** entries that use a dataset or package that just changed,
-  once dependency and dataset links are indexed.
+  once dependency and dataset links are indexed (later).
+
+Manual runs of the sweep test everything, or whatever the filter matches.
 
 `unmaintained` entries are hidden from the default catalog view but never
 deleted. Their released versions stay citable and runnable from the image.
@@ -493,7 +510,8 @@ flows.
    The current `notebooks.json` keeps working.
 2. **Ownership and curation:** merge bot (maintainer and curator rules),
    maintainer notifications, per-entry failure issues, per-entry relock PRs,
-   and both kinds of status with the tiered sweep.
+   and current status with the tiered sweep. "Verified at release" arrives
+   with releases in phase 3.
 3. **Releases:** version tags, image `vX.Y.Z` tags, Software Heritage
    archival, Zenodo deposits and DOIs (sandbox first), and a citation block
    on each entry.
