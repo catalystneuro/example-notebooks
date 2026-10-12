@@ -39,6 +39,12 @@ def slugify(path: str) -> str:
     return re.sub(r"[^a-zA-Z0-9]+", "_", path).strip("_")
 
 
+def helper_target(cmd_str: str, nb_dir: Path) -> Path | None:
+    """Where a `curl -o <file> <url>` helper line writes, or None if unknown."""
+    m = re.search(r"-o\s+(\S+)", cmd_str)
+    return nb_dir / m.group(1) if m else None
+
+
 def find_install_cell(nb):
     for i, cell in enumerate(nb.cells[:8]):
         if cell.cell_type != "code":
@@ -169,9 +175,15 @@ def main() -> int:
     nb_dir = nb_path.parent
     for h in helpers:
         cmd_str = h.lstrip("!").strip()
-        m = re.search(r"-o\s+(\S+)", cmd_str)
-        if m:
-            target = nb_dir / m.group(1)
+        target = helper_target(cmd_str, nb_dir)
+        if target is not None and target.exists():
+            # The helper is colocated in the checkout. Fetching it would
+            # replace the version under test with the published one, so a PR
+            # that changes a helper would be tested against the old copy.
+            with log_path.open("a") as f:
+                f.write(f"\n=== helper kept from checkout: {target.name} ===\n")
+            continue
+        if target is not None:
             target.parent.mkdir(parents=True, exist_ok=True)
         r = run(["bash", "-c", cmd_str], cwd=str(nb_dir))
         with log_path.open("a") as f:
