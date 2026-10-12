@@ -43,7 +43,7 @@ import nbformat
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from registry import REPO_ROOT, notebooks_with  # noqa: E402
-from run_notebook import find_install_cell  # noqa: E402
+from run_notebook import find_install_cell, helper_target  # noqa: E402
 
 DOCKERFILE = REPO_ROOT / ".github" / "docker" / "Dockerfile"
 DEFAULT_IMAGE_PREFIX = "ghcr.io/dandi/example-notebooks"
@@ -191,12 +191,14 @@ def cmd_prepare(args: argparse.Namespace) -> int:
 
     (context / "requirements.txt").write_text("\n".join(group.pins) + "\n")
 
-    # Bake helper files the same way run_notebook.py fetches them in CI.
+    # Bake helper files the same way run_notebook.py handles them in CI: a
+    # helper that came with the checkout is kept, anything else is fetched.
     for h in group.helpers:
         cmd_str = h.lstrip("!").strip()
-        m = re.search(r"-o\s+(\S+)", cmd_str)
-        if m:
-            target = work / m.group(1)
+        target = helper_target(cmd_str, work)
+        if target is not None and target.exists():
+            continue
+        if target is not None:
             target.parent.mkdir(parents=True, exist_ok=True)
         r = subprocess.run(
             ["bash", "-c", cmd_str], cwd=str(work), capture_output=True, text=True
