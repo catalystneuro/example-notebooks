@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated": "2026-10-12T19:01:45+00:00",
+  "generated": "2026-10-12T19:20:17+00:00",
   "source": "https://github.com/dandi/example-notebooks",
   "collections": {
     "dandi": {
@@ -2057,7 +2057,10 @@
         }
       ],
       "health": {
-        "status": "unknown"
+        "status": "passing",
+        "last_run": "2026-10-12T19:15:57+00:00",
+        "last_pass": "2026-10-12T19:15:57+00:00",
+        "consecutive_failures": 0
       }
     },
     {
@@ -2106,7 +2109,10 @@
         }
       ],
       "health": {
-        "status": "unknown"
+        "status": "passing",
+        "last_run": "2026-10-12T19:15:57+00:00",
+        "last_pass": "2026-10-12T19:15:57+00:00",
+        "consecutive_failures": 0
       }
     },
     {
