@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated": "2026-10-12T19:25:19+00:00",
+  "generated": "2026-10-12T19:43:50+00:00",
   "source": "https://github.com/dandi/example-notebooks",
   "collections": {
     "dandi": {
@@ -521,7 +521,7 @@
         {
           "path": "000055/BruntonLab/peterson21/Fig_coarse_labels.ipynb",
           "title": "Plot example coarse behavioral labelling trace",
-          "test": false,
+          "test": true,
           "github_url": "https://github.com/dandi/example-notebooks/blob/master/000055/BruntonLab/peterson21/Fig_coarse_labels.ipynb",
           "colab_url": null,
           "docker_image": null
@@ -529,7 +529,7 @@
         {
           "path": "000055/BruntonLab/peterson21/Fig_pow_spectra.ipynb",
           "title": "Plot ECoG electrode locations",
-          "test": false,
+          "test": true,
           "github_url": "https://github.com/dandi/example-notebooks/blob/master/000055/BruntonLab/peterson21/Fig_pow_spectra.ipynb",
           "colab_url": null,
           "docker_image": null
@@ -537,7 +537,7 @@
         {
           "path": "000055/BruntonLab/peterson21/Table_coarse_labels.ipynb",
           "title": "Print tables of coarse label durations across participants",
-          "test": false,
+          "test": true,
           "github_url": "https://github.com/dandi/example-notebooks/blob/master/000055/BruntonLab/peterson21/Table_coarse_labels.ipynb",
           "colab_url": null,
           "docker_image": null
@@ -545,7 +545,7 @@
         {
           "path": "000055/BruntonLab/peterson21/Table_part_characteristics.ipynb",
           "title": "Individual participant characteristics",
-          "test": false,
+          "test": true,
           "github_url": "https://github.com/dandi/example-notebooks/blob/master/000055/BruntonLab/peterson21/Table_part_characteristics.ipynb",
           "colab_url": null,
           "docker_image": null
@@ -1215,7 +1215,10 @@
         }
       ],
       "health": {
-        "status": "unknown"
+        "status": "passing",
+        "last_run": "2026-10-12T19:38:50+00:00",
+        "last_pass": "2026-10-12T19:38:50+00:00",
+        "consecutive_failures": 0
       }
     },
     {
@@ -1616,7 +1619,10 @@
         }
       ],
       "health": {
-        "status": "unknown"
+        "status": "passing",
+        "last_run": "2026-10-12T19:38:50+00:00",
+        "last_pass": "2026-10-12T19:38:50+00:00",
+        "consecutive_failures": 0
       }
     },
     {
