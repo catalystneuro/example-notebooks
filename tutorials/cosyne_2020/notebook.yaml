@@ -5,6 +5,9 @@ schema_version: 1
 name: tutorials-cosyne-2020
 version: 0.1.0
 title: Cosyne 2019 NWB:N Tutorial - Extracellular Electrophysiology
+description: NWB tutorial on extracellular electrophysiology that builds an NWB file step by step, starting
+  from the session and subject information. A MATLAB version of the tutorial sits alongside
+  the notebook.
 maintainers:
 - github: bendichter
 license: Apache-2.0

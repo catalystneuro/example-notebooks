@@ -4,7 +4,9 @@
 schema_version: 1
 name: archive-analysis
 version: 0.1.0
-title: archive analysis
+title: Growth of NWB data on DANDI by contributing lab
+description: Queries the metadata of every dandiset and plots how much NWB data the top contributors,
+  grouped by last author, have shared on DANDI over time.
 maintainers:
 - github: bendichter
 license: Apache-2.0

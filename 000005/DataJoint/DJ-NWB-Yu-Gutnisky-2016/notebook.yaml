@@ -5,6 +5,8 @@ schema_version: 1
 name: 000005-datajoint-dj-nwb-yu-gutnisky-2016
 version: 0.1.0
 title: Yu, Gutnisky et al., 2016 - A DataJoint example
+description: DataJoint example notebook for the data of Yu, Gutnisky et al. (2016). A copy of the DJ-NWB-
+  Yu-Gutnisky-2016 repository from the DataJoint NWB Showcase.
 maintainers:
 - github: bendichter
 license: Apache-2.0

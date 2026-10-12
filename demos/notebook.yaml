@@ -4,7 +4,9 @@
 schema_version: 1
 name: demos
 version: 0.1.0
-title: NWB Widgets
+title: Exploring NWB files with NWB Widgets
+description: Demonstrates NWB Widgets, a Python package for interactive exploration of NWB files,
+  including streaming data from the DANDI Archive directly into the widgets.
 maintainers:
 - github: bendichter
 - github: satra

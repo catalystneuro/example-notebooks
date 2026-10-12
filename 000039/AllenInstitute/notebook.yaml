@@ -4,7 +4,7 @@
 schema_version: 1
 name: 000039-alleninstitute
 version: 0.1.0
-title: Compute and plot contrast tuning curves
+title: Contrast tuning analysis and asset manifest for Dandiset 000039
 description: This folder contains notebooks that demonstrate how to work with data in dandiset
   000039.
 maintainers:

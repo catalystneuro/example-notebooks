@@ -5,6 +5,8 @@ schema_version: 1
 name: 000006-datajoint-dj-nwb-economo-2018
 version: 0.1.0
 title: Economo et al., 2018 - A DataJoint example
+description: DataJoint example notebook for the data of Economo et al. (2018). A copy of the DJ-NWB-
+  Economo-2018 repository from the DataJoint NWB Showcase.
 maintainers:
 - github: bendichter
 license: Apache-2.0

@@ -4,7 +4,7 @@
 schema_version: 1
 name: 000409-ibl
 version: 0.1.0
-title: Locate Examples
+title: Accessing the IBL Brain Wide Map dataset in NWB (Dandiset 000409)
 description: This notebook provides a comprehensive guide to accessing and analyzing data
   from the IBL Brain Wide Map dataset (dandiset 000409) in NWB format.
 maintainers:
