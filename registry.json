@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated": "2026-10-12T18:58:14+00:00",
+  "generated": "2026-10-12T19:00:41+00:00",
   "source": "https://github.com/dandi/example-notebooks",
   "collections": {
     "dandi": {
@@ -492,8 +492,8 @@
     {
       "name": "000055-bruntonlab-peterson21",
       "version": "0.1.0",
-      "title": "Plot example coarse behavioral labelling trace",
-      "description": null,
+      "title": "Behavioral and Neural Variability of Naturalistic Arm Movements (Peterson et al. 2021)",
+      "description": "Recreates select figures and tables from Peterson et al. (2021, eNeuro), which analyzed intracranial (ECoG) recordings from 12 human participants during thousands of spontaneous, unstructured arm reaches. The notebooks stream the AJILE12 dataset from DANDI to plot coarse behavioral labels, electrode locations and spectral power, and to tabulate label durations and participant characteristics.",
       "directory": "000055/BruntonLab/peterson21",
       "metadata_url": "https://github.com/dandi/example-notebooks/blob/master/000055/BruntonLab/peterson21/notebook.yaml",
       "authors": [],
@@ -513,7 +513,7 @@
         },
         {
           "id": "doi:10.1523/ENEURO.0007-21.2021",
-          "relation": "references",
+          "relation": "reproduces",
           "url": "https://doi.org/10.1523/ENEURO.0007-21.2021"
         }
       ],
