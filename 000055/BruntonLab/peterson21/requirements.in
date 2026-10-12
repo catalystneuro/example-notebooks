@@ -1,0 +1,12 @@
+dandi
+h5py
+matplotlib
+natsort
+nilearn
+numpy
+pandas
+pynwb
+remfile
+scipy
+seaborn
+tqdm

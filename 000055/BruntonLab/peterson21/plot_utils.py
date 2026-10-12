@@ -10,10 +10,41 @@ from scipy.signal import medfilt
 from nilearn import plotting as ni_plt
 from tqdm import tqdm
 
+import h5py
+import remfile
 from pynwb import NWBHDF5IO
 from dandi.dandiapi import DandiAPIClient
-from nwbwidgets.utils.timeseries import align_by_times, timeseries_time_to_ind
-import ndx_events
+
+
+def open_nwb_stream(s3_path):
+    """Open an NWB file on DANDI for streaming, without downloading it."""
+    h5_file = h5py.File(remfile.File(s3_path), "r")
+    return NWBHDF5IO(file=h5_file, mode="r", load_namespaces=True)
+
+
+def timeseries_time_to_ind(timeseries, time):
+    """Index of the first sample of a time series at or after a time (in s)."""
+    if timeseries.rate is None:
+        ind = int(np.searchsorted(timeseries.timestamps[:], time))
+    else:
+        starting_time = timeseries.starting_time or 0.0
+        ind = int(np.ceil((time - starting_time) * timeseries.rate))
+    return min(max(ind, 0), len(timeseries.data) - 1)
+
+
+def align_by_times(timeseries, starts, stops):
+    """Cut a time series into windows from each start to each stop (in s)."""
+    out = []
+    for start, stop in zip(starts, stops):
+        if timeseries.rate is None:
+            ind_start = int(np.searchsorted(timeseries.timestamps[:], start))
+            ind_stop = int(np.searchsorted(timeseries.timestamps[:], stop))
+        else:
+            starting_time = timeseries.starting_time or 0.0
+            ind_start = int((start - starting_time) * timeseries.rate)
+            ind_stop = int((stop - starting_time) * timeseries.rate)
+        out.append(timeseries.data[ind_start:ind_stop])
+    return np.array(out)
 
 
 def prune_clabels(
@@ -151,7 +182,7 @@ def clabel_table_create(
             with DandiAPIClient() as client:
                 asset = client.get_dandiset("000055", "draft").get_asset_by_path(fid)
                 s3_path = asset.get_content_url(follow_redirects=1, strip_query=True)
-            with NWBHDF5IO(s3_path, mode="r", driver="ros3") as io:
+            with open_nwb_stream(s3_path) as io:
                 nwb = io.read()
 
                 curr_labels = nwb.intervals["epochs"].to_dataframe()
@@ -222,7 +253,7 @@ def load_data_characteristics(nparts=12):
             with DandiAPIClient() as client:
                 asset = client.get_dandiset("000055", "draft").get_asset_by_path(fid)
                 s3_path = asset.get_content_url(follow_redirects=1, strip_query=True)
-            with NWBHDF5IO(s3_path, mode="r", driver="ros3") as io:
+            with open_nwb_stream(s3_path) as io:
                 nwb = io.read()
 
                 # Determine good/total electrodes
@@ -305,7 +336,7 @@ def plot_ecog_descript(
         with DandiAPIClient() as client:
             asset = client.get_dandiset("000055", "draft").get_asset_by_path(fids[0])
             s3_path = asset.get_content_url(follow_redirects=1, strip_query=True)
-        with NWBHDF5IO(s3_path, mode="r", driver="ros3") as io:
+        with open_nwb_stream(s3_path) as io:
             nwb = io.read()
 
             # Determine hemisphere to display
@@ -527,6 +558,7 @@ def _plot_electrodes(
             np.eye(locs.shape[0]),
             locs,
             output_file=None,
+            colorbar=False,
             node_kwargs={
                 "alpha": alpha,
                 "edgecolors": node_edge_colors,
@@ -554,6 +586,7 @@ def _plot_electrodes(
                 np.eye(locs.shape[0]),
                 locs,
                 output_file=None,
+                colorbar=False,
                 node_kwargs={
                     "alpha": alpha,
                     "edgecolors": node_edge_colors,
@@ -572,6 +605,7 @@ def _plot_electrodes(
                 np.eye(locs.shape[0]),
                 locs,
                 output_file=None,
+                colorbar=False,
                 node_kwargs={
                     "alpha": alpha,
                     "edgecolors": node_edge_colors,
@@ -883,9 +917,7 @@ def _get_wrist_trajs(
             with DandiAPIClient() as client:
                 asset = client.get_dandiset("000055", "draft").get_asset_by_path(fid)
                 s3_path = asset.get_content_url(follow_redirects=1, strip_query=True)
-            with NWBHDF5IO(
-                s3_path, mode="r", driver="ros3"
-            ) as io:
+            with open_nwb_stream(s3_path) as io:
                 nwb_file = io.read()
 
                 # Segment data
