@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated": "2026-10-12T19:54:00+00:00",
+  "generated": "2026-10-12T19:55:01+00:00",
   "source": "https://github.com/dandi/example-notebooks",
   "collections": {
     "dandi": {
@@ -24,8 +24,8 @@
     {
       "name": "000004-rutishauserlab",
       "version": "0.1.0",
-      "title": "Read Data and Meta-data",
-      "description": null,
+      "title": "Single-neuron analysis of a human declarative memory task (Chandravadia et al. 2020)",
+      "description": "Tutorial on reading and extracting data from NWB files in dandiset 000004, adapted from the processing pipeline of Chandravadia et al. (2020, Scientific Data). It runs a single-neuron analysis that tests for memory-selective and visually selective cells in human recordings made during a declarative memory task.",
       "directory": "000004/RutishauserLab",
       "metadata_url": "https://github.com/dandi/example-notebooks/blob/master/000004/RutishauserLab/notebook.yaml",
       "authors": [],
@@ -42,6 +42,11 @@
           "id": "dandi:000004",
           "relation": "uses_data",
           "url": "https://dandiarchive.org/dandiset/000004"
+        },
+        {
+          "id": "doi:10.1038/s41597-020-0415-9",
+          "relation": "references",
+          "url": "https://doi.org/10.1038/s41597-020-0415-9"
         }
       ],
       "notebooks": [
