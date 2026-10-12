@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "updated": "2026-10-12T19:15:57+00:00",
+  "entries": {
+    "tutorials-cosyne-2023": {
+      "last_run": "2026-10-12T19:15:57+00:00",
+      "last_run_url": "https://github.com/catalystneuro/example-notebooks/actions/runs/38296105058",
+      "notebooks": {
+        "tutorials/cosyne_2023/simple_dandiset_search.ipynb": {
+          "ok": true,
+          "stage": "done",
+          "duration_s": 128.7
+        }
+      },
+      "status": "passing",
+      "consecutive_failures": 0,
+      "first_failure": null,
+      "last_pass": "2026-10-12T19:15:57+00:00"
+    },
+    "tutorials-neurodatarehack-2024": {
+      "last_run": "2026-10-12T19:15:57+00:00",
+      "last_run_url": "https://github.com/catalystneuro/example-notebooks/actions/runs/38296105058",
+      "notebooks": {
+        "tutorials/neurodatarehack_2024/advanced_asset_search.ipynb": {
+          "ok": true,
+          "stage": "done",
+          "duration_s": 147.3
+        },
+        "tutorials/neurodatarehack_2024/simple_dandiset_search.ipynb": {
+          "ok": true,
+          "stage": "done",
+          "duration_s": 130.1
+        }
+      },
+      "status": "passing",
+      "consecutive_failures": 0,
+      "first_failure": null,
+      "last_pass": "2026-10-12T19:15:57+00:00"
+    }
+  }
+}
