@@ -61,8 +61,8 @@ def find_install_cell(nb):
         "`python .github/scripts/lock_notebook.py <notebook>` to generate the "
         "bootstrap cells (see docs/adding-notebooks.md) — OR, if "
         "the notebook genuinely can't be tested headlessly (needs a database, "
-        "proprietary creds, etc), add its path to `.github/notebook-test-exclusions.txt` "
-        "with a comment explaining why."
+        "proprietary creds, etc), set `test: false` and a `test_skip_reason` for it "
+        "in its entry's notebook.yaml."
     )
 
 

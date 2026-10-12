@@ -1,0 +1,99 @@
+name: Registry bot
+
+# Lets entry maintainers merge PRs that only touch their own entries, without
+# write access to the repo (see .github/scripts/merge_bot.py and
+# docs/registry-design.md, "Ownership and the merge bot").
+#
+#   - On every PR: post/update a comment naming who can approve each part.
+#   - On a `/merge` comment: merge if the commenter may approve every part
+#     and all checks on the head commit passed.
+#
+# SECURITY: both triggers run with a write token and repository secrets.
+# Every job checks out the DEFAULT BRANCH only and never checks out, installs,
+# or executes anything from the PR; the PR is read as data through the API.
+#
+# Merges made with the default GITHUB_TOKEN do not trigger other workflows
+# (image builds, index deploy). Configure a GitHub App so they do: set the
+# repository variable REGISTRY_BOT_APP_ID and the secret
+# REGISTRY_BOT_APP_PRIVATE_KEY (app permissions: contents, pull requests,
+# issues: read/write; checks, statuses: read). If master is protected, add the
+# app to the ruleset's bypass list.
+#
+# Set the repository variable REGISTRY_QUIET=true on forks and staging copies:
+# the bot then names people without @-mentioning them.
+
+on:
+  pull_request_target:
+    types: [opened, reopened, synchronize, ready_for_review]
+  issue_comment:
+    types: [created]
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+  checks: read
+  statuses: read
+
+concurrency:
+  group: registry-bot-${{ github.event.pull_request.number || github.event.issue.number }}
+  cancel-in-progress: false
+
+jobs:
+  registry-bot-notify:
+    if: github.event_name == 'pull_request_target'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.repository.default_branch }}
+          persist-credentials: false
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+
+      - run: pip install --no-cache-dir pyyaml
+
+      - name: Post who can approve this PR
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REGISTRY_QUIET: ${{ vars.REGISTRY_QUIET }}
+        run: python .github/scripts/merge_bot.py notify --pr "${{ github.event.pull_request.number }}"
+
+  registry-bot-merge:
+    if: >-
+      github.event_name == 'issue_comment'
+      && github.event.issue.pull_request
+      && startsWith(github.event.comment.body, '/merge')
+      && github.event.comment.user.type != 'Bot'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.repository.default_branch }}
+          persist-credentials: false
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+
+      - run: pip install --no-cache-dir pyyaml
+
+      - name: Get a GitHub App token
+        id: app
+        if: vars.REGISTRY_BOT_APP_ID != ''
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ vars.REGISTRY_BOT_APP_ID }}
+          private-key: ${{ secrets.REGISTRY_BOT_APP_PRIVATE_KEY }}
+
+      - name: Evaluate and merge
+        env:
+          GH_TOKEN: ${{ steps.app.outputs.token || github.token }}
+          REGISTRY_QUIET: ${{ vars.REGISTRY_QUIET }}
+          PR: ${{ github.event.issue.number }}
+          ACTOR: ${{ github.event.comment.user.login }}
+          COMMENT_ID: ${{ github.event.comment.id }}
+          COMMENT_BODY: ${{ github.event.comment.body }}
+        run: python .github/scripts/merge_bot.py merge --pr "$PR" --actor "$ACTOR" --comment-id "$COMMENT_ID"

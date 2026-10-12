@@ -1,0 +1,153 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://notebooks.dandiarchive.org/schemas/notebook.schema.json",
+  "title": "Notebook registry entry (notebook.yaml)",
+  "description": "Metadata for one registry entry: a directory of notebooks with a shared purpose. See docs/registry-design.md.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "name", "version", "title", "maintainers", "license", "notebooks"],
+  "properties": {
+    "schema_version": {"const": 1},
+    "name": {
+      "description": "Registry-unique slug. Also the container image name.",
+      "type": "string",
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+      "maxLength": 100
+    },
+    "version": {
+      "description": "Semantic version. Bumping it cuts a release; releases >= 1.0.0 get a DOI.",
+      "type": "string",
+      "pattern": "^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)$"
+    },
+    "title": {"type": "string", "minLength": 1, "maxLength": 300},
+    "description": {"type": "string"},
+    "authors": {
+      "description": "People credited for the work, in citation order. Required for releases >= 1.0.0.",
+      "type": "array",
+      "items": {"$ref": "#/$defs/author"}
+    },
+    "maintainers": {
+      "description": "GitHub accounts that may merge changes to this entry.",
+      "type": "array",
+      "minItems": 1,
+      "items": {"$ref": "#/$defs/maintainer"}
+    },
+    "license": {
+      "description": "SPDX license identifier covering the entry's notebooks and helpers.",
+      "type": "string",
+      "minLength": 1
+    },
+    "notebooks": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"$ref": "#/$defs/notebook"}
+    },
+    "related": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/related"}
+    },
+    "keywords": {
+      "type": "array",
+      "items": {"type": "string", "minLength": 1},
+      "uniqueItems": true
+    },
+    "collections": {
+      "description": "Names of collections (collections/<name>.yaml) this entry belongs to.",
+      "type": "array",
+      "items": {"type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"},
+      "uniqueItems": true
+    }
+  },
+  "$defs": {
+    "orcid": {
+      "type": "string",
+      "pattern": "^[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{3}[0-9X]$"
+    },
+    "github": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9](?:[A-Za-z0-9]|-(?=[A-Za-z0-9])){0,38}$"
+    },
+    "author": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name"],
+      "properties": {
+        "name": {"type": "string", "minLength": 1},
+        "orcid": {"$ref": "#/$defs/orcid"},
+        "affiliation": {"type": "string"}
+      }
+    },
+    "maintainer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["github"],
+      "properties": {
+        "github": {"$ref": "#/$defs/github"},
+        "orcid": {"$ref": "#/$defs/orcid"}
+      }
+    },
+    "notebook": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path"],
+      "properties": {
+        "path": {
+          "description": "Path relative to the entry directory.",
+          "type": "string",
+          "pattern": "^(?!/)(?!.*\\.\\./).+\\.ipynb$"
+        },
+        "title": {"type": "string"},
+        "runtime_minutes": {"type": "integer", "minimum": 1},
+        "test": {
+          "description": "Run in the CI test sweep.",
+          "type": "boolean",
+          "default": true
+        },
+        "test_skip_reason": {"type": "string", "minLength": 1},
+        "colab": {
+          "description": "Offer an Open in Colab button (also requires the Colab bootstrap cells).",
+          "type": "boolean",
+          "default": true
+        },
+        "colab_skip_reason": {"type": "string", "minLength": 1},
+        "image": {
+          "description": "Build a container image. Defaults to the value of `test`; set true for notebooks that fail on the slim CI runner but run in the image.",
+          "type": "boolean"
+        }
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"test": {"const": false}}, "required": ["test"]},
+          "then": {"required": ["test_skip_reason"]}
+        },
+        {
+          "if": {"properties": {"colab": {"const": false}}, "required": ["colab"]},
+          "then": {"required": ["colab_skip_reason"]}
+        }
+      ]
+    },
+    "related": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "relation"],
+      "properties": {
+        "id": {
+          "description": "Prefixed identifier, e.g. dandi:000055, doi:10.1523/ENEURO.0007-21.2021, rrid:SCR_017571.",
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_.]*:.+$"
+        },
+        "relation": {
+          "enum": [
+            "uses_data",
+            "reproduces",
+            "describes",
+            "tutorial_for",
+            "derived_from",
+            "uses_software",
+            "references"
+          ]
+        }
+      }
+    }
+  }
+}

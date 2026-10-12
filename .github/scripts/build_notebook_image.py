@@ -1,6 +1,7 @@
 """Group notebooks into container-image build units and prepare build contexts.
 
-Notebooks that carry the Colab-bootstrap install cell are grouped by
+Notebooks with the `image` flag (registry.py; defaults to `test`) that carry
+the Colab-bootstrap install cell are grouped by
 (directory, pin-set): notebooks in the same directory whose install cells pin
 the identical dependency set share one image. The image for a group contains
 every file of that directory (minus notebooks belonging to other groups) plus
@@ -41,27 +42,11 @@ from pathlib import Path
 import nbformat
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from list_notebooks import REPO_ROOT, is_excluded, load_exclusions  # noqa: E402
+from registry import REPO_ROOT, notebooks_with  # noqa: E402
 from run_notebook import find_install_cell  # noqa: E402
 
 DOCKERFILE = REPO_ROOT / ".github" / "docker" / "Dockerfile"
 DEFAULT_IMAGE_PREFIX = "ghcr.io/dandi/example-notebooks"
-IMAGE_INCLUSIONS = REPO_ROOT / ".github" / "notebook-image-inclusions.txt"
-
-
-def load_image_inclusions() -> list[str]:
-    """Patterns for notebooks that are CI-test-excluded but image-runnable.
-
-    The container image ships system libraries the slim CI runner lacks, so
-    the image pipeline rescues these from the shared test-exclusion list.
-    """
-    if not IMAGE_INCLUSIONS.exists():
-        return []
-    return [
-        line.strip()
-        for line in IMAGE_INCLUSIONS.read_text().splitlines()
-        if line.strip() and not line.strip().startswith("#")
-    ]
 
 
 def slug(s: str) -> str:
@@ -94,15 +79,9 @@ class Group:
 
 
 def collect_groups() -> list[Group]:
-    exclusions = load_exclusions()
-    inclusions = load_image_inclusions()
     groups: dict[tuple[str, str], Group] = {}
-    for path in sorted(REPO_ROOT.rglob("*.ipynb")):
-        if ".ipynb_checkpoints" in path.parts:
-            continue
-        rel = str(path.relative_to(REPO_ROOT))
-        if is_excluded(rel, exclusions) and not is_excluded(rel, inclusions):
-            continue
+    for rel in notebooks_with("image"):
+        path = REPO_ROOT / rel
         nb = nbformat.read(path, as_version=4)
         try:
             pins, helpers, _ = find_install_cell(nb)
@@ -150,8 +129,7 @@ INFRA_PREFIXES = (
     ".github/scripts/build_notebook_image.py",
     ".github/scripts/run_notebook.py",
     ".github/workflows/build-notebook-images.yml",
-    ".github/notebook-test-exclusions.txt",
-    ".github/notebook-image-inclusions.txt",
+    ".github/scripts/registry.py",
 )
 
 
@@ -159,7 +137,8 @@ def groups_for_changed_files(groups: list[Group], changed: list[str]) -> list[Gr
     """Groups affected by a set of changed repo paths.
 
     A change to the image tooling affects every group; otherwise a group is
-    affected when any changed path lies inside its directory.
+    affected when any changed path lies inside its directory (including the
+    entry's `notebook.yaml`, which carries the `image` flag).
     """
     if any(p.startswith(INFRA_PREFIXES) for p in changed):
         return groups

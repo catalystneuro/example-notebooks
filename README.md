@@ -10,7 +10,9 @@ example-notebooks/
 └── <dandiset id>/
     └── <org or lab name>/
         └── <mnemonic for paper or analysis>/
+            ├── notebook.yaml
             ├── requirements.in
+            ├── requirements.lock.txt   (generated)
             ├── README.md
             ├── <analysis 1>.ipynb
             ├── <analysis 2>.ipynb
@@ -22,6 +24,12 @@ For example, [000055/bruntonlab/peterson21](./000055/BruntonLab/peterson21)
 
 The `README.md` file should explain the goal of the submission, provide links to relevant scientific publications, and explain the purpose of each notebook file.
 
+The `notebook.yaml` file is the entry's machine-readable metadata: title,
+maintainers (GitHub accounts), license, the notebooks it contains, and the
+datasets and papers it relates to (`dandi:000055`, `doi:10.…`). It also holds
+per-notebook CI flags. See [`notebook.yaml`: entry
+metadata](docs/adding-notebooks.md#notebookyaml-entry-metadata) for the format.
+
 The `requirements.in` file lists the notebooks' **direct** Python dependencies,
 one per line — the packages the notebooks actually import (e.g. `dandi`,
 `pynwb`, `remfile`, `matplotlib`). Do not list transitive dependencies or
@@ -32,8 +40,8 @@ pinned set from this file. After adding it, run
 python .github/scripts/lock_notebook.py <path/to/your-notebook>.ipynb
 ```
 
-which resolves the pins against Colab's runtime and writes the install cell
-and Colab badge into the notebook for you. If a notebook needs a specific
+which resolves the pins against Colab's runtime, writes the install cell and
+Colab badge into the notebook, and writes `requirements.lock.txt`. If a notebook needs a specific
 version range (say it was written against an older matplotlib API), express
 that as a bound in `requirements.in` (e.g. `matplotlib<3.11`).
 
@@ -41,10 +49,12 @@ that as a bound in `requirements.in` (e.g. `matplotlib<3.11`).
 > Colab, and published as self-contained [container
 > images](.github/docker/README.md). The site also publishes a machine-readable
 > index at <https://notebooks.dandiarchive.org/notebooks.json> (per dandiset:
-> notebook paths with GitHub, Colab, and docker links) for other sites to embed. Before opening a PR, see **[Adding a
-> notebook: CI, Colab, and the exclusion lists](docs/adding-notebooks.md)**
-> for how the CI test works, headless-execution gotchas, and the `.github`
-> exclusion lists. (Some older submissions carry an `environment.yml` instead
+> notebook paths with GitHub, Colab, and docker links) for other sites to
+> embed, and the full catalog of entries at
+> <https://notebooks.dandiarchive.org/registry.json>. Before opening a PR, see
+> **[Adding a notebook: metadata, CI, and Colab](docs/adding-notebooks.md)**
+> for the `notebook.yaml` format, how the CI test works, and headless-execution
+> gotchas. (Some older submissions carry an `environment.yml` instead
 > of `requirements.in`; new submissions should use `requirements.in`.)
 
 Feel free to reach out on the [DANDI helpdesk](https://github.com/dandi/helpdesk/issues/new/choose) with any questions.

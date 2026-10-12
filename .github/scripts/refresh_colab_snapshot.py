@@ -32,7 +32,7 @@ from pathlib import Path
 import nbformat
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from list_notebooks import REPO_ROOT, is_excluded, load_exclusions  # noqa: E402
+from registry import REPO_ROOT, notebooks_with  # noqa: E402
 from lock_notebook import CONSTRAINT, requirements_for  # noqa: E402
 from run_notebook import find_install_cell  # noqa: E402
 
@@ -72,16 +72,12 @@ def describe_changes(old: list[str], new: list[str]) -> list[str]:
 def bootstrapped_notebooks() -> list[Path]:
     """Notebooks that carry a locked install cell and a requirements file.
 
-    Notebooks excluded from CI are left alone: their pins cannot be verified
+    Notebooks with `test: false` are left alone: their pins cannot be verified
     after a re-lock, and several are held on an older stack on purpose.
     """
-    exclusions = load_exclusions()
     found = []
-    for nb_path in sorted(REPO_ROOT.rglob("*.ipynb")):
-        if ".ipynb_checkpoints" in nb_path.parts:
-            continue
-        if is_excluded(str(nb_path.relative_to(REPO_ROOT)), exclusions):
-            continue
+    for rel in notebooks_with("test"):
+        nb_path = REPO_ROOT / rel
         try:
             find_install_cell(nbformat.read(nb_path, as_version=4))
             requirements_for(nb_path)

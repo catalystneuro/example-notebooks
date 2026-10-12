@@ -1,0 +1,8 @@
+# Collection metadata. Schema: .github/schemas/collection.schema.json
+# Entries that name no collection join this one; the core team curates it.
+name: general
+title: General
+description: >-
+  Notebooks that don't belong to a more specific collection.
+curators:
+  - bendichter
