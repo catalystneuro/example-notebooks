@@ -153,11 +153,11 @@ def main() -> int:
 
     log_path.write_text("")
 
-    harness_deps = ["ipython", "nbconvert", "nbformat"]
+    # Colab preinstalls ipywidgets; without it tqdm.notebook raises "IProgress
+    # not found" on both paths, and tqdm.auto raises inside a kernel.
+    harness_deps = ["ipython", "nbconvert", "nbformat", "ipywidgets"]
     if args.executed_output:
-        # Colab preinstalls ipywidgets; without it tqdm.auto raises inside a
-        # kernel ("IProgress not found") where the script path was fine.
-        harness_deps += ["ipykernel", "ipywidgets"]
+        harness_deps += ["ipykernel"]
     r = run(["uv", "pip", "install", "--system", *harness_deps, *pins])
     with log_path.open("a") as f:
         f.write(f"=== install rc={r.returncode} ===\n")
