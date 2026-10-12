@@ -4,7 +4,11 @@
 schema_version: 1
 name: 000004-rutishauserlab
 version: 0.1.0
-title: Read Data and Meta-data
+title: Single-neuron analysis of a human declarative memory task (Chandravadia et al. 2020)
+description: Tutorial on reading and extracting data from NWB files in dandiset 000004, adapted
+  from the processing pipeline of Chandravadia et al. (2020, Scientific Data). It runs a
+  single-neuron analysis that tests for memory-selective and visually selective cells in human
+  recordings made during a declarative memory task.
 maintainers:
 - github: bendichter
 license: Apache-2.0
@@ -20,5 +24,7 @@ notebooks:
 related:
 - id: dandi:000004
   relation: uses_data
+- id: doi:10.1038/s41597-020-0415-9
+  relation: references
 collections:
 - dandi
