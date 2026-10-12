@@ -41,7 +41,9 @@ jobs:
           set -euo pipefail
           changed=$(git diff --name-only --diff-filter=AM \
             origin/${{ github.base_ref }}...HEAD || true)
-          notebooks=$(echo "$changed" | python .github/scripts/list_notebooks.py --changed-only)
+          # --base lets purely descriptive notebook.yaml edits skip the tests.
+          base=$(git merge-base origin/${{ github.base_ref }} HEAD || true)
+          notebooks=$(echo "$changed" | python .github/scripts/list_notebooks.py --changed-only ${base:+--base "$base"})
           echo "notebooks=$notebooks" >> "$GITHUB_OUTPUT"
           count=$(echo "$notebooks" | python -c "import json,sys;print(len(json.load(sys.stdin)))")
           echo "Detected $count Colab-testable notebooks changed in this PR:"

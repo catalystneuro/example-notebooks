@@ -171,3 +171,52 @@ def test_repo_lints_clean():
     entries = lint_registry.lint_entries(report, collections)
     lint_registry.lint_notebooks(report, entries, max_mb=5.0)
     assert report.errors == []
+
+
+# --- list_notebooks: which notebooks a notebook.yaml edit affects -------------
+
+from list_notebooks import notebooks_changed_by_metadata  # noqa: E402
+
+_ENTRY = {
+    "schema_version": 1, "name": "x", "version": "0.1.0", "title": "Old",
+    "maintainers": [{"github": "a"}], "license": "Apache-2.0",
+    "notebooks": [{"path": "a.ipynb", "title": "A"},
+                  {"path": "b.ipynb", "test": False, "test_skip_reason": "broken"}],
+    "related": [{"id": "dandi:000001", "relation": "uses_data"}],
+}
+
+
+def _edited(**changes):
+    import copy
+    entry = copy.deepcopy(_ENTRY)
+    entry.update(changes)
+    return entry
+
+
+def test_descriptive_edits_affect_no_notebooks():
+    new = _edited(title="New", description="Now described", license="MIT",
+                  maintainers=[{"github": "b"}], related=[], keywords=["k"])
+    new["notebooks"][0]["title"] = "Renamed"
+    new["notebooks"][1]["test_skip_reason"] = "reworded"
+    assert notebooks_changed_by_metadata(_ENTRY, new) == set()
+
+
+def test_a_flag_change_affects_only_that_notebook():
+    new = _edited()
+    new["notebooks"][1] = {"path": "b.ipynb"}
+    assert notebooks_changed_by_metadata(_ENTRY, new) == {"b.ipynb"}
+
+
+def test_an_added_notebook_is_affected():
+    new = _edited()
+    new["notebooks"].append({"path": "c.ipynb"})
+    assert notebooks_changed_by_metadata(_ENTRY, new) == {"c.ipynb"}
+
+
+@pytest.mark.parametrize("new", [_edited(version="0.2.0"), _edited(some_new_field=True)])
+def test_other_entry_fields_affect_every_notebook(new):
+    assert notebooks_changed_by_metadata(_ENTRY, new) is None
+
+
+def test_a_new_entry_affects_every_notebook():
+    assert notebooks_changed_by_metadata(None, _ENTRY) is None
