@@ -16,48 +16,28 @@ license: Apache-2.0
 notebooks:
 - path: Fig_coarse_labels.ipynb
   title: Plot example coarse behavioral labelling trace
-  test: false
-  test_skip_reason: Colocated plot_utils.py imports nwbwidgets.utils.timeseries.align_by_times,
-    which was removed in nwbwidgets 0.11.x (split into align_by_times_with_timestamps / align_by_time_intervals
-    with a different signature). ~10-line update to plot_utils.py would unblock this and the
-    Fig_pow_spectra / Table_* notebooks above.
   colab: false
-  colab_skip_reason: Colocated plot_utils.py imports nwbwidgets.utils.timeseries.align_by_times,
-    removed in nwbwidgets 0.11.x. The three related notebooks share this helper — all four
-    can come off this list together after a ~10-line plot_utils update.
+  colab_skip_reason: Needs the colocated plot_utils.py, which Colab does not have. Fetching it
+    from dandi/example-notebooks master would get the old version that imports the removed
+    nwbwidgets.utils.timeseries.align_by_times.
 - path: Fig_pow_spectra.ipynb
   title: Plot ECoG electrode locations
-  test: false
-  test_skip_reason: Colocated plot_utils.py imports nwbwidgets.utils.timeseries.align_by_times,
-    which was removed in nwbwidgets 0.11.x (split into align_by_times_with_timestamps / align_by_time_intervals
-    with a different signature). ~10-line update to plot_utils.py would unblock this and the
-    Fig_pow_spectra / Table_* notebooks above.
   colab: false
-  colab_skip_reason: Colocated plot_utils.py imports nwbwidgets.utils.timeseries.align_by_times,
-    removed in nwbwidgets 0.11.x. The three related notebooks share this helper — all four
-    can come off this list together after a ~10-line plot_utils update.
+  colab_skip_reason: Needs the colocated plot_utils.py, which Colab does not have. Fetching it
+    from dandi/example-notebooks master would get the old version that imports the removed
+    nwbwidgets.utils.timeseries.align_by_times.
 - path: Table_coarse_labels.ipynb
   title: Print tables of coarse label durations across participants
-  test: false
-  test_skip_reason: Colocated plot_utils.py imports nwbwidgets.utils.timeseries.align_by_times,
-    which was removed in nwbwidgets 0.11.x (split into align_by_times_with_timestamps / align_by_time_intervals
-    with a different signature). ~10-line update to plot_utils.py would unblock this and the
-    Fig_pow_spectra / Table_* notebooks above.
   colab: false
-  colab_skip_reason: Colocated plot_utils.py imports nwbwidgets.utils.timeseries.align_by_times,
-    removed in nwbwidgets 0.11.x. The three related notebooks share this helper — all four
-    can come off this list together after a ~10-line plot_utils update.
+  colab_skip_reason: Needs the colocated plot_utils.py, which Colab does not have. Fetching it
+    from dandi/example-notebooks master would get the old version that imports the removed
+    nwbwidgets.utils.timeseries.align_by_times.
 - path: Table_part_characteristics.ipynb
   title: Individual participant characteristics
-  test: false
-  test_skip_reason: Colocated plot_utils.py imports nwbwidgets.utils.timeseries.align_by_times,
-    which was removed in nwbwidgets 0.11.x (split into align_by_times_with_timestamps / align_by_time_intervals
-    with a different signature). ~10-line update to plot_utils.py would unblock this and the
-    Fig_pow_spectra / Table_* notebooks above.
   colab: false
-  colab_skip_reason: Colocated plot_utils.py imports nwbwidgets.utils.timeseries.align_by_times,
-    removed in nwbwidgets 0.11.x. The three related notebooks share this helper — all four
-    can come off this list together after a ~10-line plot_utils update.
+  colab_skip_reason: Needs the colocated plot_utils.py, which Colab does not have. Fetching it
+    from dandi/example-notebooks master would get the old version that imports the removed
+    nwbwidgets.utils.timeseries.align_by_times.
 - path: dashboard.ipynb
   test: false
   test_skip_reason: Use h5py's ros3 driver, which the PyPI Linux x86_64 h5py wheel is built
