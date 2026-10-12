@@ -28,7 +28,11 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from run_notebook import slugify  # noqa: E402
 
 REPO = os.environ.get("GITHUB_REPOSITORY", "dandi/example-notebooks")
-PREVIEW_BASE = "https://notebooks.dandiarchive.org/pr-preview/{pr}/notebooks"
+# Forks and staging copies set the repository variable REGISTRY_SITE_URL to
+# their own Pages address so links do not point at the main site.
+SITE_URL = (os.environ.get("REGISTRY_SITE_URL")
+            or "https://notebooks.dandiarchive.org").rstrip("/")
+PREVIEW_BASE = SITE_URL + "/pr-preview/{pr}/notebooks"
 # Same marker marocchino/sticky-pull-request-comment used before, so the
 # comment on PRs opened under the old workflow is updated rather than duplicated.
 COMMENT_MARKER = "<!-- Sticky Pull Request Commentexecuted-notebooks -->"

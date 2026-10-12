@@ -197,7 +197,10 @@ def collect_metadata(docker_images: Dict[str, str]) -> List[Dict[str, Any]]:
     return dandisets
 
 
-SITE_URL = "https://notebooks.dandiarchive.org"
+# Forks and staging copies set the repository variable REGISTRY_SITE_URL to
+# their own Pages address so links do not point at the main site.
+SITE_URL = (os.environ.get("REGISTRY_SITE_URL")
+            or "https://notebooks.dandiarchive.org").rstrip("/")
 
 
 def machine_readable_index(dandisets: List[Dict[str, Any]]) -> Dict[str, Any]:

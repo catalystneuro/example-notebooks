@@ -37,6 +37,8 @@ jobs:
         pip install requests jinja2 nbformat pyyaml 'dandi>=0.74.0'
 
     - name: Run metadata collector and renderer
+      env:
+        REGISTRY_SITE_URL: ${{ vars.REGISTRY_SITE_URL }}
       run: python .github/scripts/collect_and_render.py
 
     - name: Deploy to GitHub Pages
@@ -45,4 +47,6 @@ jobs:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_dir: ./output
         keep_files: true
-        cname: notebooks.dandiarchive.org
+        # A fork or staging copy (REGISTRY_SITE_URL set) must not claim the
+        # main site's domain.
+        cname: ${{ vars.REGISTRY_SITE_URL == '' && 'notebooks.dandiarchive.org' || '' }}

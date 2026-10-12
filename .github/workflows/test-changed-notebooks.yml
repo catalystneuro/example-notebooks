@@ -124,6 +124,7 @@ jobs:
         if: always() && steps.run.outputs.slug != '' && github.event.pull_request.head.repo.full_name == github.repository
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REGISTRY_SITE_URL: ${{ vars.REGISTRY_SITE_URL }}
         run: |
           gh workflow run deploy-executed-notebooks.yml --ref ${{ github.event.repository.default_branch }} \
             -f pr=${{ github.event.pull_request.number }} \
