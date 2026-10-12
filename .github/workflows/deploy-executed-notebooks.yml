@@ -46,6 +46,7 @@ jobs:
       - name: Download the executed notebooks produced so far
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REGISTRY_SITE_URL: ${{ vars.REGISTRY_SITE_URL }}
         run: |
           pip install --no-cache-dir nbformat
           mkdir -p executed publish
