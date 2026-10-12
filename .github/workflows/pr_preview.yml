@@ -77,19 +77,39 @@ jobs:
         with:
           ref: gh-pages
 
-      - name: Remove preview folder
+      # Removes the folder of every PR that is no longer open, not only this
+      # one: a queued cleanup is cancelled when another deploy queues behind it
+      # in the gh-pages-deploy group, so earlier PRs' folders can be left over.
+      - name: Remove preview folders of closed PRs
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
-          PR_DIR="pr-preview/${{ github.event.pull_request.number }}"
-          if [ -d "$PR_DIR" ]; then
-            rm -rf "$PR_DIR"
-            git config user.name 'github-actions[bot]'
-            git config user.email 'github-actions[bot]@users.noreply.github.com'
-            git add -A
-            git commit -m "Remove preview for closed PR #${{ github.event.pull_request.number }}"
-            git push
-          else
-            echo "No preview directory to remove."
+          set -euo pipefail
+          open=$(gh pr list --repo "${{ github.repository }}" --state open --limit 1000 \
+            --json number --jq '.[].number')
+          removed=""
+          for dir in pr-preview/*/; do
+            [ -d "$dir" ] || continue
+            n=$(basename "$dir")
+            case "$n" in ''|*[!0-9]*) continue ;; esac
+            if ! echo "$open" | grep -qx "$n"; then
+              rm -rf "$dir"
+              removed="$removed #$n"
+            fi
+          done
+          if [ -z "$removed" ]; then
+            echo "No preview directories to remove."
+            exit 0
           fi
+          git config user.name 'github-actions[bot]'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
+          git add -A
+          git commit -m "Remove previews for closed PRs:$removed"
+          for attempt in 1 2 3; do
+            git push && exit 0
+            git pull --rebase
+          done
+          exit 1
 
       - name: Update preview comment
         uses: marocchino/sticky-pull-request-comment@v2
