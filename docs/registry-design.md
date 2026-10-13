@@ -341,6 +341,38 @@ fixed version. So each entry has **its own versioned releases**.
   directly (as DANDI does), with landing pages on the catalog. Zenodo would
   remain the file archive.
 
+### How releases are implemented
+
+`release.yml` runs `.github/scripts/release.py` on every push to the default
+branch that changes a `notebook.yaml`.
+
+- **What counts as a release.** An entry whose `version` differs from its
+  version in the previous commit. Adding a new entry does not release it; its
+  first release is the first time its version changes. A version that goes
+  down, a tag that already exists, or a `>= 1.0.0` version without `authors`
+  is reported as an error and not released.
+- **Versions below 1.0.0** get the git tag, the image tags and the Software
+  Heritage ID, but no Zenodo deposit.
+- **Software Heritage ID.** A `swh:1:dir:` ID is the git tree hash of the
+  entry directory, so it is computed from the checkout. Archival of the
+  repository is requested separately, and not at all in quiet mode.
+- **Where releases are recorded.** `releases.json` on the `gh-pages` branch,
+  next to `health.json`. It holds each entry's concept DOI and, per release,
+  the version, date, tag, commit, Software Heritage ID, images and DOI.
+  `registry.json` copies these into each entry, with a citation line once a
+  release has a DOI. Nothing is committed back to the default branch.
+- **Sandbox by default.** Deposits go to Zenodo's sandbox unless the
+  repository variable `ZENODO_API` is set to `https://zenodo.org/api`. Without
+  a `ZENODO_TOKEN` secret the deposit is skipped with a warning and the rest
+  of the release still happens.
+- **Quiet mode.** With `REGISTRY_QUIET=true` a push only reports what would be
+  released. Running the workflow by hand with "dry run" unchecked cuts the
+  release for real, which is how a fork or staging copy tests it.
+
+Not implemented yet: executed notebooks as HTML in the deposit, the image
+digest as a related identifier, Zenodo communities, and linking external
+entries to an upstream DOI (external entries arrive in phase 5).
+
 ## CI
 
 Almost everything carries over. The changes:

@@ -1,0 +1,165 @@
+name: Release entries
+
+# Cuts a release for every entry whose `version` changed in the pushed commits
+# (see .github/scripts/release.py and docs/registry-design.md, "Releases and
+# DOIs"): a git tag, version tags on the entry's images, a Software Heritage
+# ID, and for versions >= 1.0.0 a Zenodo deposit.
+#
+# Forks and staging copies set REGISTRY_QUIET=true: a push there only reports
+# what would be released. Run the workflow by hand to cut a release for real.
+#
+# The Zenodo token is read only here, on the default branch after merge, never
+# in a pull request. ZENODO_API defaults to Zenodo's sandbox; set the
+# repository variable to https://zenodo.org/api to mint real DOIs.
+
+on:
+  push:
+    branches: [ master ]
+    paths:
+      - '**/notebook.yaml'
+      - 'notebook.yaml'
+  workflow_dispatch:
+    inputs:
+      base:
+        description: "Git ref to compare versions against (default: the previous commit)"
+        default: ''
+      entry:
+        description: "Only release this entry (its `name`); empty for every changed entry"
+        default: ''
+      dry_run:
+        description: "Only report what would be released"
+        type: boolean
+        default: true
+
+permissions:
+  contents: write     # push tags, publish releases.json to gh-pages
+  packages: write     # tag images
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    outputs:
+      any_released: ${{ steps.run.outputs.any_released }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0    # versions are compared against an earlier commit; tags must be known
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+
+      - name: Install dependencies
+        run: pip install --no-cache-dir pyyaml requests nbformat
+
+      - name: Load the release state from gh-pages
+        run: |
+          mkdir -p releases
+          if git fetch --depth 1 origin gh-pages 2>/dev/null \
+             && git show FETCH_HEAD:releases.json > releases/releases.json 2>/dev/null; then
+            echo "Loaded previous releases.json"
+          else
+            rm -f releases/releases.json
+            echo "No previous releases.json; starting fresh"
+          fi
+
+      - name: Cut releases
+        id: run
+        env:
+          ZENODO_TOKEN: ${{ secrets.ZENODO_TOKEN }}
+          ZENODO_API: ${{ vars.ZENODO_API }}
+          REGISTRY_QUIET: ${{ vars.REGISTRY_QUIET }}
+          REGISTRY_SITE_URL: ${{ vars.REGISTRY_SITE_URL }}
+        run: |
+          set -euo pipefail
+          if [ '${{ github.event_name }}' = 'push' ]; then
+            base='${{ github.event.before }}'
+            entry=''
+            # A fork or staging copy only reports on push.
+            if [ "${REGISTRY_QUIET:-}" = 'true' ]; then dry='--dry-run'; else dry=''; fi
+          else
+            base='${{ inputs.base }}'
+            entry='${{ inputs.entry }}'
+            if [ '${{ inputs.dry_run }}' = 'true' ]; then dry='--dry-run'; else dry=''; fi
+          fi
+          if [ -z "$base" ] || ! git cat-file -e "$base^{commit}" 2>/dev/null; then
+            base='HEAD~1'
+          fi
+          python .github/scripts/release.py run --base "$base" \
+            --state releases/releases.json ${entry:+--entry "$entry"} $dry
+
+      - name: Log in to ghcr.io
+        if: steps.run.outputs.any_released == 'true'
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Tag the released entries' images
+        if: steps.run.outputs.any_released == 'true'
+        env:
+          RELEASED: ${{ steps.run.outputs.released }}
+        run: |
+          set -euo pipefail
+          # The image for this commit may still be building: wait for it.
+          echo "$RELEASED" | python -c "
+          import json, sys
+          for plan in json.load(sys.stdin):
+              for group in plan['images']:
+                  print(group, plan['version'])
+          " | while read -r group version; do
+            out=$(python .github/scripts/build_notebook_image.py prepare \
+              --name "$group" --context-dir "$RUNNER_TEMP/context-$group" \
+              --image-prefix "ghcr.io/${{ github.repository }}")
+            image=$(echo "$out" | python -c "import json,sys; print(json.load(sys.stdin)['image'])")
+            hash=$(echo "$out" | python -c "import json,sys; print(json.load(sys.stdin)['build_hash_short'])")
+            found=''
+            for attempt in $(seq 1 40); do
+              if docker manifest inspect "$image:hash-$hash" >/dev/null 2>&1; then found=1; break; fi
+              echo "Waiting for $image:hash-$hash ($attempt/40)"
+              sleep 60
+            done
+            if [ -z "$found" ]; then
+              echo "::warning::$image:hash-$hash was not published; v$version image tag skipped"
+              continue
+            fi
+            docker buildx imagetools create -t "$image:v$version" "$image:hash-$hash"
+            echo "Tagged $image:v$version"
+          done
+
+      - name: Keep releases.json for the publish job
+        if: steps.run.outputs.any_released == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: releases
+          path: releases/releases.json
+
+  publish:
+    needs: release
+    if: needs.release.outputs.any_released == 'true'
+    runs-on: ubuntu-latest
+    # Every gh-pages deploy across workflows shares this group so pushes to
+    # the branch never race.
+    concurrency:
+      group: gh-pages-deploy
+      cancel-in-progress: false
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: releases
+          path: releases
+
+      - name: Publish releases.json to gh-pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./releases
+          keep_files: true
+          commit_message: "Record releases"
+          user_name: 'github-actions[bot]'
+          user_email: 'github-actions[bot]@users.noreply.github.com'

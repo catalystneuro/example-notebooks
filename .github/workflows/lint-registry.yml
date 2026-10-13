@@ -33,7 +33,7 @@ jobs:
           python-version: '3.13'
 
       - name: Install dependencies
-        run: pip install --no-cache-dir pyyaml jsonschema nbformat pytest
+        run: pip install --no-cache-dir pyyaml jsonschema nbformat pytest requests
 
       - name: Lint
         env:

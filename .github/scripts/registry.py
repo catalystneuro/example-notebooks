@@ -235,20 +235,38 @@ def colab_url(repo_path: str) -> str:
             f"{DEFAULT_BRANCH}/{quote(repo_path)}")
 
 
+def citation(data: dict, released: dict) -> str | None:
+    """How to cite the entry's latest release with a DOI, or None without one."""
+    with_doi = [r for r in released.get("releases", []) if r.get("doi")]
+    if not with_doi or not data.get("authors"):
+        return None
+    latest = with_doi[-1]
+    names = [a["name"] for a in data["authors"]]
+    if len(names) > 2:
+        authors = ", ".join(names[:-1]) + ", and " + names[-1]
+    else:
+        authors = " and ".join(names)
+    return (f"{authors} ({latest['date'][:4]}). {data['title']} (v{latest['version']}). "
+            f"Zenodo. https://doi.org/{latest['doi']}")
+
+
 def registry_index(root: Path = REPO_ROOT,
                    has_colab_bootstrap=None,
                    docker_images: dict[str, str] | None = None,
-                   health: dict | None = None) -> dict:
+                   health: dict | None = None,
+                   releases: dict | None = None) -> dict:
     """The `registry.json` catalog.
 
     `has_colab_bootstrap(repo_path) -> bool` gates the Colab link on the
     notebook actually carrying the install cell; `docker_images` maps
     repo-relative notebook paths to public image refs; `health` is the
-    scheduled sweep's health.json (entry_health.py). All are optional so the
-    catalog can be built offline.
+    scheduled sweep's health.json (entry_health.py); `releases` is the release
+    state, releases.json (release.py). All are optional so the catalog can be
+    built offline.
     """
     docker_images = docker_images or {}
     health_entries = (health or {}).get("entries", {})
+    release_entries = (releases or {}).get("entries", {})
     collections = load_collections(root)
     entries = []
     for entry in load_entries(root):
@@ -286,6 +304,9 @@ def registry_index(root: Path = REPO_ROOT,
                 k: health_entries.get(entry.name, {}).get(k)
                 for k in ("status", "last_run", "last_pass", "consecutive_failures")
             } if entry.name in health_entries else {"status": "unknown"},
+            "concept_doi": release_entries.get(entry.name, {}).get("concept_doi"),
+            "releases": release_entries.get(entry.name, {}).get("releases", []),
+            "citation": citation(d, release_entries.get(entry.name, {})),
         })
     return {
         "schema_version": 1,

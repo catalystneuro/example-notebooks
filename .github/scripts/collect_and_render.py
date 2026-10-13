@@ -79,6 +79,15 @@ def load_health() -> Dict[str, Any]:
     return json.loads(r.stdout)
 
 
+def load_releases() -> Dict[str, Any]:
+    """The release state, releases.json, from the gh-pages branch, or {} if absent."""
+    r = subprocess.run(["git", "show", "origin/gh-pages:releases.json"],
+                       cwd=REPO_ROOT, capture_output=True, text=True)
+    if r.returncode != 0:
+        return {}
+    return json.loads(r.stdout)
+
+
 def get_dandiset_metadata(dandiset_id: str) -> Optional[Dict[str, Any]]:
     """
     Fetch metadata for a given dandiset ID.
@@ -292,5 +301,6 @@ if __name__ == "__main__":
         has_colab_bootstrap=lambda p: notebook_has_colab_bootstrap(os.path.join(REPO_ROOT, p)),
         docker_images={p: f"{ref}:latest" for p, ref in docker_images.items()},
         health=load_health(),
+        releases=load_releases(),
     )
     render_webpage(dandisets, registry)

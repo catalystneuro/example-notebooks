@@ -5,9 +5,9 @@ on:
     branches: [ master ]
   workflow_dispatch:
   # Re-render after images publish so docker badges appear without waiting
-  # for the weekly refresh.
+  # for the weekly refresh, and after a release so registry.json lists it.
   workflow_run:
-    workflows: ["Build notebook images"]
+    workflows: ["Build notebook images", "Release entries"]
     types: [completed]
   schedule:
     - cron: '30 6 * * 1'  # weekly, after the notebook test sweep, to refresh docker badges
