@@ -3,24 +3,28 @@
 This repository contains example notebooks associated with datasets, conference tools, or more generally notebooks that illustrate the use of data on DANDI. This repository is cloned into the [DANDI JupyterHub environment](https://hub.dandiarchive.org). Please note that you will need to visit https://dandiarchive.org and sign in once to get access to the JupyterHub.
 
 ## Submission instructions
-To add new notebooks, please send a Pull Request. Submissions should use the following file structure:
+To add new notebooks, please send a Pull Request. Each submission is one directory, an **entry**, with this content:
 
 ```
 example-notebooks/
-└── <dandiset id>/
-    └── <org or lab name>/
-        └── <mnemonic for paper or analysis>/
-            ├── notebook.yaml
-            ├── requirements.in
-            ├── requirements.lock.txt   (generated)
-            ├── README.md
-            ├── <analysis 1>.ipynb
-            ├── <analysis 2>.ipynb
-            ├── ...
-            └── <analysis n>.ipynb
+└── entries/
+    └── <short name for the entry>/
+        ├── notebook.yaml
+        ├── requirements.in
+        ├── requirements.lock.txt   (generated)
+        ├── README.md
+        ├── <analysis 1>.ipynb
+        ├── <analysis 2>.ipynb
+        ├── ...
+        └── <analysis n>.ipynb
 ```
 
-For example, [000055/bruntonlab/peterson21](./000055/BruntonLab/peterson21)
+Where the directory sits carries no meaning. The dandisets and papers an entry
+belongs to come from the `related` list in its `notebook.yaml`, and that is what
+the index and the catalog are built from. Older entries live under
+`<dandiset id>/<org or lab name>/<mnemonic>/`, for example
+[000055/BruntonLab/peterson21](./000055/BruntonLab/peterson21), and stay there
+so existing links keep working. An entry cannot be nested inside another entry.
 
 The `README.md` file should explain the goal of the submission, provide links to relevant scientific publications, and explain the purpose of each notebook file.
 

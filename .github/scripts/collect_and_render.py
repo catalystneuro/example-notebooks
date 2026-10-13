@@ -1,6 +1,7 @@
 import datetime
 import json
 import os
+import re
 import shutil
 import subprocess
 import sys
@@ -12,9 +13,12 @@ from dandi.dandiapi import DandiAPIClient
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from build_notebook_image import collect_groups  # noqa: E402
-from registry import flag, registry_index  # noqa: E402
+from registry import flag, load_entries, registry_index  # noqa: E402
 
 REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
+
+# `dandi:000055` or `dandi:000055/0.220127.0436`
+DANDISET_ID = re.compile(r"dandi:(\d{6})(?:/.+)?")
 IMAGE_PREFIX = "ghcr.io/dandi/example-notebooks"
 
 
@@ -121,37 +125,38 @@ def notebook_has_colab_bootstrap(abs_path: str) -> bool:
     return False
 
 
-def find_notebooks(folder: str) -> List[str]:
-    """
-    Recursively find all Jupyter notebooks in a given folder.
+def notebooks_by_dandiset() -> Dict[str, List[str]]:
+    """Repo paths of the notebooks that relate to each dandiset.
 
-    Parameters
-    ----------
-    folder : str
-        The path to the folder to search in.
-
-    Returns
-    -------
-    List[str]
-        A list of relative paths to the found notebooks.
+    The mapping comes from each entry's `related` list in notebook.yaml (any
+    `dandi:<id>` identifier, with or without a version), not from where the
+    entry sits in the repo. An entry that relates to several dandisets is
+    listed under each of them.
     """
-    notebooks = []
-    for root, _, files in os.walk(folder):
-        for file in files:
-            if file.endswith('.ipynb'):
-                rel_path = os.path.relpath(os.path.join(root, file), folder)
-                notebooks.append(rel_path)
-    return notebooks
+    out: Dict[str, List[str]] = {}
+    for entry in load_entries():
+        ids = set()
+        for rel in entry.data.get("related", []):
+            m = DANDISET_ID.fullmatch(rel.get("id", ""))
+            if m:
+                ids.add(m.group(1))
+        for dandiset_id in ids:
+            out.setdefault(dandiset_id, []).extend(spec.repo_path for spec in entry.notebooks)
+    return {k: sorted(set(v)) for k, v in out.items()}
 
 
 def collect_metadata(docker_images: Dict[str, str]) -> List[Dict[str, Any]]:
     """
-    Collect metadata and notebook information for all dandisets in the current directory.
+    Collect metadata and notebook information for every dandiset an entry relates to.
 
     Each notebook is represented as a dict:
-        {"path": "<relative-to-dandiset-folder>",
+        {"path": "<path shown on the index>",
+         "repo_path": "<path from the repo root>",
          "colab_eligible": bool,
          "colab_url": "<full https URL>" or ""}
+
+    "path" is relative to the dandiset's own folder when the notebook lives
+    under `<dandiset id>/`, and the full repo path otherwise.
 
     Notebooks are eligible for a Colab button iff (a) they begin with a
     Colab-bootstrap install cell and (b) their entry's notebook.yaml does not
@@ -166,31 +171,31 @@ def collect_metadata(docker_images: Dict[str, str]) -> List[Dict[str, Any]]:
     """
 
     dandisets = []
-    for folder in os.listdir('.'):
-        if os.path.isdir(folder) and folder.isdigit():
-            metadata = get_dandiset_metadata(folder)
-            if metadata:
-                nb_paths = find_notebooks(folder)
-                notebooks = []
-                for rel in nb_paths:
-                    repo_rel = os.path.join(folder, rel)
-                    abs_path = os.path.join(REPO_ROOT, repo_rel)
-                    eligible = flag(repo_rel, "colab") and notebook_has_colab_bootstrap(abs_path)
-                    notebooks.append({
-                        "path": rel,
-                        "colab_eligible": eligible,
-                        "colab_url": (
-                            f"https://colab.research.google.com/github/"
-                            f"dandi/example-notebooks/blob/master/{repo_rel}"
-                            if eligible else ""
-                        ),
-                        "docker_image": docker_images.get(repo_rel, ""),
-                    })
-                dandisets.append({
-                    'id': folder,
-                    'metadata': metadata,
-                    'notebooks': notebooks,
-                })
+    for dandiset_id, repo_paths in notebooks_by_dandiset().items():
+        metadata = get_dandiset_metadata(dandiset_id)
+        if not metadata:
+            continue
+        notebooks = []
+        for repo_rel in repo_paths:
+            abs_path = os.path.join(REPO_ROOT, repo_rel)
+            eligible = flag(repo_rel, "colab") and notebook_has_colab_bootstrap(abs_path)
+            prefix = dandiset_id + "/"
+            notebooks.append({
+                "path": repo_rel[len(prefix):] if repo_rel.startswith(prefix) else repo_rel,
+                "repo_path": repo_rel,
+                "colab_eligible": eligible,
+                "colab_url": (
+                    f"https://colab.research.google.com/github/"
+                    f"dandi/example-notebooks/blob/master/{repo_rel}"
+                    if eligible else ""
+                ),
+                "docker_image": docker_images.get(repo_rel, ""),
+            })
+        dandisets.append({
+            'id': dandiset_id,
+            'metadata': metadata,
+            'notebooks': notebooks,
+        })
 
     # newest dandisets first
     dandisets.sort(key=lambda x: x['id'], reverse=True)
@@ -210,7 +215,7 @@ def machine_readable_index(dandisets: List[Dict[str, Any]]) -> Dict[str, Any]:
     for ds in dandisets:
         notebooks = []
         for nb in ds["notebooks"]:
-            repo_rel = f"{ds['id']}/{nb['path']}"
+            repo_rel = nb["repo_path"]
             entry = {
                 "path": repo_rel,
                 "github_url": f"https://github.com/dandi/example-notebooks/blob/master/{repo_rel}",

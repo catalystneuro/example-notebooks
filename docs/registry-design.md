@@ -97,6 +97,14 @@ Existing directories (`000055/BruntonLab/peterson21/`, `tutorials/…`) **stay
 where they are** and get a `notebook.yaml`. That way no GitHub, Colab, or
 paper link breaks. Only new entries go under `entries/`.
 
+**The directory layout carries no meaning.** Which datasets and papers an
+entry belongs to comes only from `related` in its `notebook.yaml`, and every
+view is built from that: the catalog, the per-resource lookup, and the DANDI
+index and `notebooks.json` (any `dandi:<id>` in `related` lists the entry
+under that dandiset). The old `<dandiset id>/<lab>/<mnemonic>/` layout is not
+required, and an entry that relates to several dandisets appears under each.
+Two rules remain: an entry is one directory, and entries are not nested.
+
 ### External entries
 
 The code stays in the author's repository. The registry keeps only metadata
