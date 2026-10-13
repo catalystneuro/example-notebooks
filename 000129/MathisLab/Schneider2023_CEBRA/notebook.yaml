@@ -4,7 +4,9 @@
 schema_version: 1
 name: 000129-mathislab-schneider2023-cebra
 version: 0.1.0
-title: NeuroDataReHack 2023 -- CEBRA workshop
+title: CEBRA workshop tutorial (NeuroDataReHack 2023)
+description: Tutorial from the NeuroDataReHack 2023 workshop on CEBRA, a contrastive learning algorithm
+  for building embeddings from neural and behavioral data.
 maintainers:
 - github: bendichter
 license: Apache-2.0

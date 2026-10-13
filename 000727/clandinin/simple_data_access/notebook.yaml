@@ -4,7 +4,7 @@
 schema_version: 1
 name: 000727-clandinin-simple-data-access
 version: 0.1.0
-title: How to use the data in this dandiset
+title: Reading the Clandinin lab Drosophila locomotion imaging data (Dandiset 000727)
 description: This is just a simple notebook to demonstrate how to access data on DANDI using
   the Python API.
 maintainers:

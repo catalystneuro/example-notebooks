@@ -4,7 +4,10 @@
 schema_version: 1
 name: tutorials-neurodatarehack-2024
 version: 0.1.0
-title: More specific identification of NWB dandisets
+title: Searching DANDI for NWB dandisets (NeuroDataReHack 2024)
+description: Two tutorials on querying DANDI metadata with the Python client. The simple one finds the
+  dandisets that contain NWB files; the advanced one identifies them by NWB's RRID and
+  computes the average age of subjects in a dandiset.
 maintainers:
 - github: CodyCBakerPhD
 - github: bendichter

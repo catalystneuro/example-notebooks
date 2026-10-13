@@ -4,7 +4,11 @@
 schema_version: 1
 name: dandi
 version: 0.1.0
-title: Converting data to NWB
+title: DANDI User Guide (User Training, November 2021)
+description: Notebooks from the DANDI User Training of November 1, 2021. Part I covers converting data to
+  NWB, and Part II covers interacting with the archive through the web interface, the command
+  line and the Python library. A third notebook computes summary statistics across the
+  archive.
 maintainers:
 - github: yarikoptic
 - github: bendichter

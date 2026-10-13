@@ -4,7 +4,11 @@
 schema_version: 1
 name: 000108-chunglab-demo
 version: 0.1.0
-title: Reading volumes from the Chung lab dataset (Dandiset 000108)
+title: Reading light-sheet image volumes from the Chung lab human brain dataset
+description: Shows how to read image volumes from the Chung lab's Dandiset 000108, a whole human brain
+  cut into roughly 2 mm slabs and imaged on a light-sheet microscope with nuclear, NeuN and
+  blood-vessel stains. Two further notebooks build a dashboard of the dandiset's assets and
+  run checks on them.
 maintainers:
 - github: satra
 - github: LeeKamentsky

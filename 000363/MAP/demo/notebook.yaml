@@ -4,7 +4,7 @@
 schema_version: 1
 name: 000363-map-demo
 version: 0.1.0
-title: Browse datasets on DANDI
+title: Browsing an NWB file from the Mesoscale Activity Map dataset (Dandiset 000363)
 description: This folder contains a notebook that demonstrates how to work with dandiset 000363.
 maintainers:
 - github: kushalbakshi
