@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated": "2026-10-13T10:00:54+00:00",
+  "generated": "2026-10-13T10:02:55+00:00",
   "source": "https://github.com/dandi/example-notebooks",
   "collections": {
     "dandi": {
@@ -67,7 +67,7 @@
       "name": "000005-datajoint-dj-nwb-yu-gutnisky-2016",
       "version": "0.1.0",
       "title": "Yu, Gutnisky et al., 2016 - A DataJoint example",
-      "description": null,
+      "description": "DataJoint example notebook for the data of Yu, Gutnisky et al. (2016). A copy of the DJ-NWB- Yu-Gutnisky-2016 repository from the DataJoint NWB Showcase.",
       "directory": "000005/DataJoint/DJ-NWB-Yu-Gutnisky-2016",
       "metadata_url": "https://github.com/dandi/example-notebooks/blob/master/000005/DataJoint/DJ-NWB-Yu-Gutnisky-2016/notebook.yaml",
       "authors": [],
@@ -109,7 +109,7 @@
       "name": "000006-datajoint-dj-nwb-economo-2018",
       "version": "0.1.0",
       "title": "Economo et al., 2018 - A DataJoint example",
-      "description": null,
+      "description": "DataJoint example notebook for the data of Economo et al. (2018). A copy of the DJ-NWB- Economo-2018 repository from the DataJoint NWB Showcase.",
       "directory": "000006/DataJoint/DJ-NWB-Economo-2018",
       "metadata_url": "https://github.com/dandi/example-notebooks/blob/master/000006/DataJoint/DJ-NWB-Economo-2018/notebook.yaml",
       "authors": [],
@@ -452,7 +452,7 @@
     {
       "name": "000039-alleninstitute",
       "version": "0.1.0",
-      "title": "Compute and plot contrast tuning curves",
+      "title": "Contrast tuning analysis and asset manifest for Dandiset 000039",
       "description": "This folder contains notebooks that demonstrate how to work with data in dandiset 000039.",
       "directory": "000039/AllenInstitute",
       "metadata_url": "https://github.com/dandi/example-notebooks/blob/master/000039/AllenInstitute/notebook.yaml",
@@ -571,8 +571,8 @@
     {
       "name": "000108-chunglab-demo",
       "version": "0.1.0",
-      "title": "Reading volumes from the Chung lab dataset (Dandiset 000108)",
-      "description": null,
+      "title": "Reading light-sheet image volumes from the Chung lab human brain dataset",
+      "description": "Shows how to read image volumes from the Chung lab's Dandiset 000108, a whole human brain cut into roughly 2 mm slabs and imaged on a light-sheet microscope with nuclear, NeuN and blood-vessel stains. Two further notebooks build a dashboard of the dandiset's assets and run checks on them.",
       "directory": "000108/chunglab/demo",
       "metadata_url": "https://github.com/dandi/example-notebooks/blob/master/000108/chunglab/demo/notebook.yaml",
       "authors": [],
@@ -626,8 +626,8 @@
     {
       "name": "000129-mathislab-schneider2023-cebra",
       "version": "0.1.0",
-      "title": "NeuroDataReHack 2023 -- CEBRA workshop",
-      "description": null,
+      "title": "CEBRA workshop tutorial (NeuroDataReHack 2023)",
+      "description": "Tutorial from the NeuroDataReHack 2023 workshop on CEBRA, a contrastive learning algorithm for building embeddings from neural and behavioral data.",
       "directory": "000129/MathisLab/Schneider2023_CEBRA",
       "metadata_url": "https://github.com/dandi/example-notebooks/blob/master/000129/MathisLab/Schneider2023_CEBRA/notebook.yaml",
       "authors": [],
@@ -663,7 +663,7 @@
     {
       "name": "000363-map-demo",
       "version": "0.1.0",
-      "title": "Browse datasets on DANDI",
+      "title": "Browsing an NWB file from the Mesoscale Activity Map dataset (Dandiset 000363)",
       "description": "This folder contains a notebook that demonstrates how to work with dandiset 000363.",
       "directory": "000363/MAP/demo",
       "metadata_url": "https://github.com/dandi/example-notebooks/blob/master/000363/MAP/demo/notebook.yaml",
@@ -752,8 +752,8 @@
     {
       "name": "000402-microns-demo",
       "version": "0.1.0",
-      "title": "MICrONS NWB tutorial",
-      "description": null,
+      "title": "Accessing the MICrONS functional imaging data",
+      "description": "Demonstrates how to access the MICrONS functional data on DANDI, which holds calcium imaging from multiple cortical visual areas, with behavioral measurements, recorded while a mouse viewed natural movies and parametric stimuli.",
       "directory": "000402/MICrONS/demo",
       "metadata_url": "https://github.com/dandi/example-notebooks/blob/master/000402/MICrONS/demo/notebook.yaml",
       "authors": [],
@@ -789,7 +789,7 @@
     {
       "name": "000409-ibl",
       "version": "0.1.0",
-      "title": "Locate Examples",
+      "title": "Accessing the IBL Brain Wide Map dataset in NWB (Dandiset 000409)",
       "description": "This notebook provides a comprehensive guide to accessing and analyzing data from the IBL Brain Wide Map dataset (dandiset 000409) in NWB format.",
       "directory": "000409/IBL",
       "metadata_url": "https://github.com/dandi/example-notebooks/blob/master/000409/IBL/notebook.yaml",
@@ -1059,7 +1059,7 @@
     {
       "name": "000727-clandinin-simple-data-access",
       "version": "0.1.0",
-      "title": "How to use the data in this dandiset",
+      "title": "Reading the Clandinin lab Drosophila locomotion imaging data (Dandiset 000727)",
       "description": "This is just a simple notebook to demonstrate how to access data on DANDI using the Python API.",
       "directory": "000727/clandinin/simple_data_access",
       "metadata_url": "https://github.com/dandi/example-notebooks/blob/master/000727/clandinin/simple_data_access/notebook.yaml",
@@ -1803,8 +1803,8 @@
     {
       "name": "archive-analysis",
       "version": "0.1.0",
-      "title": "archive analysis",
-      "description": null,
+      "title": "Growth of NWB data on DANDI by contributing lab",
+      "description": "Queries the metadata of every dandiset and plots how much NWB data the top contributors, grouped by last author, have shared on DANDI over time.",
       "directory": "archive_analysis",
       "metadata_url": "https://github.com/dandi/example-notebooks/blob/master/archive_analysis/notebook.yaml",
       "authors": [],
@@ -1840,8 +1840,8 @@
     {
       "name": "dandi",
       "version": "0.1.0",
-      "title": "Converting data to NWB",
-      "description": null,
+      "title": "DANDI User Guide (User Training, November 2021)",
+      "description": "Notebooks from the DANDI User Training of November 1, 2021. Part I covers converting data to NWB, and Part II covers interacting with the archive through the web interface, the command line and the Python library. A third notebook computes summary statistics across the archive.",
       "directory": "dandi",
       "metadata_url": "https://github.com/dandi/example-notebooks/blob/master/dandi/notebook.yaml",
       "authors": [],
@@ -1897,8 +1897,8 @@
     {
       "name": "demos",
       "version": "0.1.0",
-      "title": "NWB Widgets",
-      "description": null,
+      "title": "Exploring NWB files with NWB Widgets",
+      "description": "Demonstrates NWB Widgets, a Python package for interactive exploration of NWB files, including streaming data from the DANDI Archive directly into the widgets.",
       "directory": "demos",
       "metadata_url": "https://github.com/dandi/example-notebooks/blob/master/demos/notebook.yaml",
       "authors": [],
@@ -1986,7 +1986,7 @@
       "name": "tutorials-cosyne-2020",
       "version": "0.1.0",
       "title": "Cosyne 2019 NWB:N Tutorial - Extracellular Electrophysiology",
-      "description": null,
+      "description": "NWB tutorial on extracellular electrophysiology that builds an NWB file step by step, starting from the session and subject information. A MATLAB version of the tutorial sits alongside the notebook.",
       "directory": "tutorials/cosyne_2020",
       "metadata_url": "https://github.com/dandi/example-notebooks/blob/master/tutorials/cosyne_2020/notebook.yaml",
       "authors": [],
@@ -2025,8 +2025,8 @@
     {
       "name": "tutorials-cosyne-2023",
       "version": "0.1.0",
-      "title": "More specific identification of NWB dandisets",
-      "description": null,
+      "title": "Searching DANDI for NWB dandisets (Cosyne 2023)",
+      "description": "Two tutorials on querying DANDI metadata with the Python client. The simple one finds the dandisets that contain NWB files; the advanced one identifies them by NWB's RRID and computes the average age of subjects in a dandiset.",
       "directory": "tutorials/cosyne_2023",
       "metadata_url": "https://github.com/dandi/example-notebooks/blob/master/tutorials/cosyne_2023/notebook.yaml",
       "authors": [],
@@ -2077,8 +2077,8 @@
     {
       "name": "tutorials-neurodatarehack-2024",
       "version": "0.1.0",
-      "title": "More specific identification of NWB dandisets",
-      "description": null,
+      "title": "Searching DANDI for NWB dandisets (NeuroDataReHack 2024)",
+      "description": "Two tutorials on querying DANDI metadata with the Python client. The simple one finds the dandisets that contain NWB files; the advanced one identifies them by NWB's RRID and computes the average age of subjects in a dandiset.",
       "directory": "tutorials/neurodatarehack_2024",
       "metadata_url": "https://github.com/dandi/example-notebooks/blob/master/tutorials/neurodatarehack_2024/notebook.yaml",
       "authors": [],
