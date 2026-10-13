@@ -9,7 +9,7 @@ where that leaves off.
 
 ## TL;DR — checklist for a new notebook
 
-- [ ] Place it under `<dandiset id>/<org or lab>/<mnemonic>/` with a `README.md`
+- [ ] Give it its own directory, `entries/<short name>/`, with a `README.md`
       and a `requirements.in` listing the notebook's **direct** dependencies
       (see main README).
 - [ ] Add a [`notebook.yaml`](#notebookyaml-entry-metadata) describing the

@@ -567,7 +567,7 @@
                                 {% for notebook in dandiset.notebooks %}
                                 <li>
                                     <div class="nb-row">
-                                        <a class="nb-link" href="https://github.com/dandi/example-notebooks/blob/master/{{ dandiset.id }}/{{ notebook.path }}" target="_blank" rel="noopener">{{ notebook.path }}</a>
+                                        <a class="nb-link" href="https://github.com/dandi/example-notebooks/blob/master/{{ notebook.repo_path }}" target="_blank" rel="noopener">{{ notebook.path }}</a>
                                         {% if notebook.colab_eligible %}
                                         <a class="colab-badge" href="{{ notebook.colab_url }}" target="_blank" rel="noopener" aria-label="Open in Colab"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"></a>
                                         {% endif %}
