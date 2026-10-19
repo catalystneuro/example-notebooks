@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated": "2026-10-13T10:07:57+00:00",
+  "generated": "2026-10-19T13:50:15+00:00",
   "source": "https://github.com/dandi/example-notebooks",
   "index_url": "https://catalystneuro.github.io/example-notebooks/",
   "docker_help_url": "https://catalystneuro.github.io/example-notebooks/docker-help.html",
