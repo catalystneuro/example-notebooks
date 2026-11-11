@@ -3,6 +3,7 @@ h5py
 matplotlib
 numpy
 pandas
+psutil
 pynwb
 remfile
 pynwb<4
